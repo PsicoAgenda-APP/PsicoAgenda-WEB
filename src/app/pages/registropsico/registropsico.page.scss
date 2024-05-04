@@ -1,0 +1,108 @@
+/* registropsico.css */
+ion-form {
+    background-color: var(--ion-background-color);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+ion-item {
+    --background: #fff;
+    --color: var(--ion-color-primary);
+    --placeholder-color: var(--ion-color-primary);
+    --placeholder-opacity: 0.8;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+ion-input {
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --placeholder-color: var(--ion-input-placeholder-color);
+}
+
+/* Estilos para los botones */
+ion-button {
+    --background: #009688; /* Establece el color de fondo principal para los botones */
+    color: #fff; /* Establece el color del texto en los botones */
+  }
+  
+  /* Estilos para el hover (cuando el mouse pasa sobre el botón) */
+  ion-button:hover {
+    --background: #00796b; /* Cambia el color de fondo al pasar el mouse sobre el botón */
+  }
+  
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Estilos para el footer */
+ion-footer {
+    ion-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      --background: #333; /* Si quieres mantener este color para el footer, está bien */
+      color: #fff; /* Esto hará que el texto dentro del footer sea blanco */
+      padding: 1rem;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+  
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+  
+    .footer-left {
+      flex: 1; /* Ocupa el espacio disponible */
+      text-align: center;
+    }
+  
+    .footer-right {
+      text-align: right;
+    }
+  
+    /* Para los enlaces dentro del footer */
+    .footer-right a {
+      color: var(--ion-text-color); /* Color del texto para los enlaces */
+      text-decoration: none; /* Elimina el subrayado de los enlaces */
+    }
+  
+    /* Eliminar la clase 'button' para que no afecte a los iconos */
+    .footer-right ion-icon {
+      --color: var(--ion-text-color); /* Restablece el color del icono */
+    }
+  }
+  
+  /* Estilos para los iconos */
+  ion-icon {
+    font-size: 2em; /* Tamaño de ícono más grande */
+    margin-right: 8px; /* Espacio entre el icono y el texto */
+    color: #009688; /* Asegúrate de que el color sea el definido para el texto */
+  }
+
+  .imagen {
+    max-width: 80%; /* La imagen se ajustará al 80% del ancho del contenedor */
+    height: auto; /* Altura automática para mantener la proporción */
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
+    margin-left: 200px;
+  }
+
+  .options-list {
+    flex-direction: column; /* Mostrar la lista de opciones en una columna */
+    width: 100%; /* Asegurarse de que la lista ocupe todo el ancho disponible */
+    margin-top: 5px; /* Espacio superior para separar el botón de las opciones */
+  }
+  ion-title {
+    text-decoration: none; /* Anular la decoración de texto (como el subrayado) */
+    color: inherit; /* Usar el color heredado del padre */
+  }
+  
+  

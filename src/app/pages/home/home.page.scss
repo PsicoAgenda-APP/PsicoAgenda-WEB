@@ -105,6 +105,19 @@
     width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
     margin-left: 200px;
   }
+
+  .options-list {
+    flex-direction: column; /* Mostrar la lista de opciones en una columna */
+    width: 100%; /* Asegurarse de que la lista ocupe todo el ancho disponible */
+    margin-top: 5px; /* Espacio superior para separar el botón de las opciones */
+  }
+  ion-title {
+    text-decoration: none; /* Anular la decoración de texto (como el subrayado) */
+    color: inherit; /* Usar el color heredado del padre */
+  }
+  
+
+  
   
   
   
