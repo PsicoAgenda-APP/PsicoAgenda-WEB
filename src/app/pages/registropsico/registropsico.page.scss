@@ -1,4 +1,27 @@
 /* registropsico.css */
+
+:root {
+  --ion-color-primary: #4a90e2; /* Color primario de la marca */
+  --ion-background-color: #f5f5f5; /* Color de fondo general */
+}
+
+ion-header {
+  --background: #fff; /* Fondo del encabezado */
+}
+
+ion-toolbar {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --background: transparent;
+}
+
+.main-banner {
+  background-color: #009688;
+  color: #000000;
+  padding: 5rem;
+  text-align: center;
+}
+
 ion-form {
     background-color: var(--ion-background-color);
     padding: 20px;
@@ -11,7 +34,8 @@ ion-item {
     --placeholder-color: var(--ion-color-primary);
     --placeholder-opacity: 0.8;
     margin-bottom: 10px;
-    border-radius: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc; /* Borde sutil para cada campo */
 }
 
 ion-input {
@@ -20,89 +44,49 @@ ion-input {
     --placeholder-color: var(--ion-input-placeholder-color);
 }
 
-/* Estilos para los botones */
 ion-button {
-    --background: #009688; /* Establece el color de fondo principal para los botones */
-    color: #fff; /* Establece el color del texto en los botones */
-  }
-  
-  /* Estilos para el hover (cuando el mouse pasa sobre el botón) */
-  ion-button:hover {
-    --background: #00796b; /* Cambia el color de fondo al pasar el mouse sobre el botón */
-  }
-  
+    --background: #009688;
+    color: #fff;
+}
+
+ion-button:hover {
+    --background: #00796b;
+}
 
 .form-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    width: 100%; /* Ajuste para responsividad */
+    max-width: 600px; /* Ancho máximo para el contenedor */
+    margin: 20px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 10px;
 }
 
-/* Estilos para el footer */
 ion-footer {
     ion-toolbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      --background: #333; /* Si quieres mantener este color para el footer, está bien */
-      color: #fff; /* Esto hará que el texto dentro del footer sea blanco */
+      --background: #333;
+      color: #fff;
       padding: 1rem;
       font-size: 0.8rem;
       text-align: center;
     }
-  
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-  
-    .footer-left {
-      flex: 1; /* Ocupa el espacio disponible */
-      text-align: center;
-    }
-  
-    .footer-right {
-      text-align: right;
-    }
-  
-    /* Para los enlaces dentro del footer */
-    .footer-right a {
-      color: var(--ion-text-color); /* Color del texto para los enlaces */
-      text-decoration: none; /* Elimina el subrayado de los enlaces */
-    }
-  
-    /* Eliminar la clase 'button' para que no afecte a los iconos */
-    .footer-right ion-icon {
-      --color: var(--ion-text-color); /* Restablece el color del icono */
-    }
-  }
-  
-  /* Estilos para los iconos */
-  ion-icon {
-    font-size: 2em; /* Tamaño de ícono más grande */
-    margin-right: 8px; /* Espacio entre el icono y el texto */
-    color: #009688; /* Asegúrate de que el color sea el definido para el texto */
-  }
+}
 
-  .imagen {
-    max-width: 80%; /* La imagen se ajustará al 80% del ancho del contenedor */
-    height: auto; /* Altura automática para mantener la proporción */
-    width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
-    margin-left: 200px;
-  }
+ion-icon {
+  font-size: 2em;
+  margin-right: 8px;
+  color: #009688;
+}
 
-  .options-list {
-    flex-direction: column; /* Mostrar la lista de opciones en una columna */
-    width: 100%; /* Asegurarse de que la lista ocupe todo el ancho disponible */
-    margin-top: 5px; /* Espacio superior para separar el botón de las opciones */
-  }
-  ion-title {
-    text-decoration: none; /* Anular la decoración de texto (como el subrayado) */
-    color: inherit; /* Usar el color heredado del padre */
-  }
-  
-  
+ion-content {
+  padding: 16px; /* Agregado para mantener el padding en todo el contenido */
+}
