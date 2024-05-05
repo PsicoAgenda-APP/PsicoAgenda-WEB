@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'psicologo',
     loadChildren: () => import('./pages/psicologo/psicologo.module').then( m => m.PsicologoPageModule)
   },
+  {
+    path: 'atencionespaciente',
+    loadChildren: () => import('./pages/atencionespaciente/atencionespaciente.module').then( m => m.AtencionespacientePageModule)
+  },
 
   
 
