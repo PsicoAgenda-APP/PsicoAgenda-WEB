@@ -22,13 +22,14 @@ const routes: Routes = [
   {
     path: 'registropsico',
     loadChildren: () => import('./pages/registropsico/registropsico.module').then( m => m.RegistropsicoPageModule)
-  },  {
+  },
+  {
     path: 'psicologo',
     loadChildren: () => import('./pages/psicologo/psicologo.module').then( m => m.PsicologoPageModule)
   },
   {
     path: 'atencionespaciente',
-    loadChildren: () => import('./pages/atencionespaciente/atencionespaciente.module').then( m => m.AtencionespacientePageModule)
+    loadChildren: () => import('./pages/atencionespaciente/atencionespaciente.module').then( m => m.AtencionesPacientePageModule)
   },
 
   

@@ -1,0 +1,88 @@
+ion-footer {
+    ion-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      --background: #333; /* Mantener el color oscuro para el footer */
+      color: #fff; /* Texto blanco para mejorar la legibilidad */
+      padding: 1rem;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+  
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+  
+    .footer-left {
+      flex: 1;
+      text-align: center;
+    }
+  
+    .footer-right {
+      text-align: right;
+    }
+  
+    .footer-right a {
+      color: var(--ion-text-color);
+      text-decoration: none;
+    }
+  
+    .footer-right ion-icon {
+      --color: var(--ion-text-color);
+    }
+  }
+  
+  ion-icon {
+    font-size: 2em;
+    margin-right: 8px;
+    color: #009688; /* Color característico */
+  }
+  
+  /* Adaptación para el diseño de las tarjetas y tabla */
+  ion-card {
+    margin: 20px auto; /* Centrado y espacio alrededor de la tarjeta */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra ligera para la tarjeta */
+    width: 75%; /* La tarjeta ocupa el 75% del ancho de la pantalla */
+  }
+  
+  ion-grid {
+    --ion-grid-padding: 0;
+    width: 100%;
+  }
+  
+  ion-row {
+    border-bottom: 1px solid #ccc;
+  }
+  
+  ion-col {
+    text-align: center;
+    padding: 8px;
+    border-right: 1px solid #ccc;
+  }
+  
+  ion-col:last-child {
+    border-right: none;
+  }
+  
+  ion-card-header {
+    background-color: #009688; /* Color turquesa para la cabecera */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  ion-card-title {
+    font-size: 1.2rem;
+  }
+  
+  /* Mejora del responsive */
+  @media (max-width: 600px) {
+    ion-card {
+      width: 90%; /* Más ancho en pantallas pequeñas */
+    }
+  }
+  
