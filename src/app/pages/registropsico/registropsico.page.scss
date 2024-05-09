@@ -3,17 +3,11 @@
 :root {
   --ion-color-primary: #4a90e2; /* Color primario de la marca */
   --ion-background-color: #f5f5f5; /* Color de fondo general */
+  
+
 }
 
-ion-header {
-  --background: #fff; /* Fondo del encabezado */
-}
 
-ion-toolbar {
-  --padding-start: 16px;
-  --padding-end: 16px;
-  --background: transparent;
-}
 
 .main-banner {
   background-color: #009688;
@@ -68,42 +62,8 @@ ion-button:hover {
     border-radius: 10px;
 }
 
-ion-footer {
-  ion-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    --background: #333; /* Si quieres mantener este color para el footer, está bien */
-    color: #fff; /* Esto hará que el texto dentro del footer sea blanco */
-    padding: 1rem;
-    font-size: 0.8rem;
-    text-align: center;
-  }
-
-  .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-
-  .footer-left {
-    flex: 1; /* Ocupa el espacio disponible */
-    text-align: center;
-  }
-
-  .footer-right {
-    text-align: right;
-  }
-
-  /* Para los enlaces dentro del footer */
-  .footer-right a {
-    color: var(--ion-text-color); /* Color del texto para los enlaces */
-    text-decoration: none; /* Elimina el subrayado de los enlaces */
-  }
-
-  /* Eliminar la clase 'button' para que no afecte a los iconos */
-  .footer-right ion-icon {
-    --color: var(--ion-text-color); /* Restablece el color del icono */
-  }
+ion-icon {
+  font-size: 2em; /* Tamaño de ícono más grande */
+  margin-right: 8px; /* Espacio entre el icono y el texto */
+  color: #009688; /* Asegúrate de que el color sea el definido para el texto */
 }

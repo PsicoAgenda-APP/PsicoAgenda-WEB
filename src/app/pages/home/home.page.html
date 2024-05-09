@@ -1,25 +1,17 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="toolbarheader">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button routerLink="/login">Entrar</ion-button>
-      <ion-button>Registrarse</ion-button>
-      <ion-button (click)="toggleOptions()">Profesionales</ion-button>
-      <ion-list *ngIf="showOptions">
-        <ion-item (click)="redirectTo('/login')">Ingresa</ion-item>
-        <ion-item (click)="redirectTo('/registropsico')">Registrate</ion-item>
-      </ion-list>
-    </ion-buttons>
-    <ion-title style="text-decoration: none;">
-      <a routerLink="/home" style="text-decoration: none;">
-        <img src="../../assets/icon/psicoagendalogo.png" style="height: 40px; margin-right: 8px;" alt="Logo"/>
+    <ion-title class="header-title">
+      <a routerLink="/home" class="logo-link">
+        <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo"/>
+        PsicoAgenda
       </a>
-      PsicoAgenda
     </ion-title>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content>
   <!-- Banner principal -->
@@ -38,18 +30,13 @@
       <img src="assets/icon/paciente-psicologo.png" alt="Imagen de un psicólogo con paciente" class="imagen">
     </ion-card>
   </ion-card>
-</ion-content>
-
-<!-- Footer -->
+  <!-- Footer -->
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar class="toolbarfooter">
     <div class="footer-content">
       <div class="footer-left">
         <p>©2024 - PsicoAgenda APP</p>
         <p>Todos los Derechos Reservados</p>
-      </div>
-      <div class="footer-center">
-        <!-- Aquí puedes agregar el contenido del bloque central -->
       </div>
       <div class="footer-right">
         <p><a href="phone"><ion-icon name="call-outline"></ion-icon> Telefono Contacto: 920256865</a> </p>
@@ -58,3 +45,6 @@
     </div>
   </ion-toolbar>
 </ion-footer>
+</ion-content>
+
+
