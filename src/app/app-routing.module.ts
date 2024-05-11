@@ -30,7 +30,19 @@ const routes: Routes = [
   {
     path: 'atencionespaciente',
     loadChildren: () => import('./pages/atencionespaciente/atencionespaciente.module').then( m => m.AtencionesPacientePageModule)
+  },  {
+    path: 'fichapaciente',
+    loadChildren: () => import('./pages/fichapaciente/fichapaciente.module').then( m => m.FichapacientePageModule)
   },
+  {
+    path: 'fichapsicologo',
+    loadChildren: () => import('./pages/fichapsicologo/fichapsicologo.module').then( m => m.FichapsicologoPageModule)
+  },
+  {
+    path: 'registropaciente',
+    loadChildren: () => import('./pages/registropaciente/registropaciente.module').then( m => m.RegistropacientePageModule)
+  },
+
 
   
 

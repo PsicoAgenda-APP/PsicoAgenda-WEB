@@ -4,10 +4,8 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title class="header-title">
-      <a  class="logo-link">
-      <a routerLink="/home">        
+      <a routerLink="/home" class="logo-link">
         <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo"/>
-       </a>
         PsicoAgenda
       </a>
     </ion-title>
@@ -23,9 +21,10 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
   <div class="form-container">
-    <ion-title class="titulo-formulario">Únete como psicólogo</ion-title>
+    <ion-title class="titulo-formulario">Únete como paciente</ion-title>
     <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
       <ion-item>
         <ion-label position="floating">Calle</ion-label>
@@ -56,7 +55,7 @@
         <ion-input type="text" formControlName="Telefono"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Fecha de Nacimiento</ion-label>
+        <ion-label position="floating">Fecha de Nacimiento </ion-label>
         <ion-input type="text" formControlName="FechaNacimiento"></ion-input>
       </ion-item>
       <ion-item>
@@ -70,10 +69,6 @@
       <ion-item>
         <ion-label position="floating">Rut</ion-label>
         <ion-input type="text" formControlName="Rut"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Valor por la sesión</ion-label>
-        <ion-input type="text" formControlName="ValorSesion"></ion-input>
       </ion-item>
       <ion-button class= "ion-button-registar" expand="block" type="submit" [disabled]="!userForm.valid">Registrar</ion-button>
     </form>

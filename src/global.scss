@@ -43,7 +43,7 @@
 
 /* Global Variables */
 :root {
-    --ion-color-primary: #009688; /* Verde para elementos primarios */
+    --ion-color-primary: #060606; /* Verde para elementos primarios */
     --ion-background-color: #f5f5f5; /* Fondo general de la aplicación */
     --ion-text-color: #000; /* Color de texto general */
     --ion-footer-background: #000; /* Fondo del footer en negro */
@@ -65,6 +65,7 @@
 .toolbarheader {
   --background: white;
   width: 100%; /* Asegura que el toolbar ocupe todo el ancho disponible */
+  
 }
 
 .header-title {

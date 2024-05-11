@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-atencionespaciente',
   templateUrl: './atencionespaciente.page.html',
@@ -22,11 +22,12 @@ export class AtencionesPacientePage implements OnInit {
   ];
   
 
-  constructor() { }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
-    // Aquí se podría integrar la carga de datos desde una API
+  redirectTo(route: string) {
+    this.router.navigate([route]);
   }
 
-  // Métodos adicionales para la lógica del negocio podrían ser definidos aquí
+  ngOnInit() {
+  }
 }

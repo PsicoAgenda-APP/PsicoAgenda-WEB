@@ -4,9 +4,10 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button>Editar datos</ion-button>
-      <ion-button routerLink="/atencionespaciente" expand="full" >Mis atenciones</ion-button>
-      <ion-button routerLink="/home" expand="full" >Salir</ion-button>
+      <ion-button (click)="redirectTo('/home')">Editar datos</ion-button>
+      <ion-button (click)="redirectTo('/atencionespaciente')">Historial de atenciones</ion-button>
+      <ion-button (click)="redirectTo('/fichapaciente')">Fichas clinicas</ion-button>
+      <ion-button (click)="redirectTo('/home')">Cerrar sesión</ion-button>
     </ion-buttons>
     <ion-title style="text-decoration: none;">
       <a routerLink="/home" style="text-decoration: none;">
@@ -45,16 +46,58 @@
       <ion-button class="button-agenda" >Confirmar Cita con Rocío</ion-button>
     </ion-card-content>
   </ion-card>
-   <!-- Footer -->
+  <ion-card class ="ioncard">
+    <ion-card-header>
+      <ion-card-title>Agendar Cita con Roberto Gutierrez</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Componente de calendario para Gerardo -->
+      <!--<ion-calendar></ion-calendar>-->    <!-- FULL CALENDAR IONIC-->
+      <!-- Botón para confirmar la cita con Gerardo -->
+      <ion-button  class="button-agenda">Confirmar Cita con Roberto</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class ="ioncard">
+    <ion-card-header>
+      <ion-card-title>Agendar Cita con Francisco Salgado</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Componente de calendario para Gerardo -->
+      <!--<ion-calendar></ion-calendar>-->    <!-- FULL CALENDAR IONIC-->
+      <!-- Botón para confirmar la cita con Gerardo -->
+      <ion-button  class="button-agenda">Francisco Salgado</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class ="ioncard">
+    <ion-card-header>
+      <ion-card-title>Agendar Cita con Pamela Leiva</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Componente de calendario para Gerardo -->
+      <!--<ion-calendar></ion-calendar>-->    <!-- FULL CALENDAR IONIC-->
+      <!-- Botón para confirmar la cita con Gerardo -->
+      <ion-button  class="button-agenda">Confirmar Cita con Pamela</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class ="ioncard">
+    <ion-card-header>
+      <ion-card-title>Agendar Cita con Rodrigo Sepulveda</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Componente de calendario para Gerardo -->
+      <!--<ion-calendar></ion-calendar>-->    <!-- FULL CALENDAR IONIC-->
+      <!-- Botón para confirmar la cita con Gerardo -->
+      <ion-button  class="button-agenda">Confirmar Cita con Rodrigo</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<!-- Footer -->
 <ion-footer>
   <ion-toolbar class="toolbarfooter">
     <div class="footer-content">
       <div class="footer-left">
         <p>©2024 - PsicoAgenda APP</p>
         <p>Todos los Derechos Reservados</p>
-      </div>
-      <div class="footer-center">
-        <!-- Aquí puedes agregar el contenido del bloque central -->
       </div>
       <div class="footer-right">
         <p><a href="phone"><ion-icon name="call-outline"></ion-icon> Telefono Contacto: 920256865</a> </p>
@@ -63,5 +106,4 @@
     </div>
   </ion-toolbar>
 </ion-footer>
-</ion-content>
 

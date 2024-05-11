@@ -3,23 +3,7 @@
   --ion-background-color: #f5f5f5; /* Fondo general de la aplicación */
 }
 
-/* Estilos para los botones */
-.button-agenda {
-  --background: #009688; /* Establece el color de fondo principal para los botones */
-  color: #fff; /* Establece el color del texto en los botones */
-}
 
-
-
-ion-header {
-  --background: #fff; /* Fondo del header */
-}
-
-ion-toolbar {
-  --padding-start: 16px;
-  --padding-end: 16px;
-  --background: transparent;
-}
 
 /* Estilos para el banner principal */
 .main-banner {
@@ -40,19 +24,45 @@ ion-toolbar {
   font-size: 1rem;
 }
 
-/* Estilos para la barra de búsqueda */
-ion-searchbar {
-  --background: #fff;
-  --placeholder-color: rgba(5, 5, 5, 0.8); /* Mejora la visibilidad del placeholder */
-  --icon-color: rgba(255, 255, 255, 0.8);
+
+
+/* Estilos para el footer */
+/* Estilos para los iconos */
+ion-icon {
+  font-size: 2em; /* Tamaño de ícono más grande */
+  margin-right: 8px; /* Espacio entre el icono y el texto */
+  color: #009688; /* Asegúrate de que el color sea el definido para el texto */
 }
+
+.imagen {
+  max-width: 80%; /* La imagen se ajustará al 80% del ancho del contenedor */
+  height: auto; /* Altura automática para mantener la proporción */
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
+  margin-left: 200px;
+}
+
+.options-list {
+  flex-direction: column; /* Mostrar la lista de opciones en una columna */
+  width: 100%; /* Asegurarse de que la lista ocupe todo el ancho disponible */
+  margin-top: 5px; /* Espacio superior para separar el botón de las opciones */
+}
+ion-title {
+  text-decoration: none; /* Anular la decoración de texto (como el subrayado) */
+  color: inherit; /* Usar el color heredado del padre */
+}
+
+
 /* Estilos de la tarjeta de bienvenida */
 ion-card {
   text-align: center; /* Alineación del texto al centro */
+  width: 30%; /* La tarjeta ocupa el 75% del ancho de la pantalla */
+  margin-left: auto; /* Centrado horizontalmente */
+  margin-right: auto; /* Centrado horizontalmente */
+  background-color: #009688;
 }
 
 ion-card-title {
-  color: #4a4a4a; /* Color del título de la tarjeta */
+  color: white; /* Color del título de la tarjeta */
   font-size: 1.2em; /* Tamaño de fuente más grande para el título */
 }
 
@@ -66,6 +76,10 @@ ion-icon {
 /* Ajustes de padding y margen según tu diseño */
 ion-card-content {
   padding: 1em;
+
 }
 /*FOOTER*/
 /* Elimina cualquier estilo adicional de la clase .button que no quieras */
+.button-agenda{
+  background-color: #009688;
+}

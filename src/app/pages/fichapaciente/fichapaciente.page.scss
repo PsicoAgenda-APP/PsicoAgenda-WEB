@@ -1,14 +1,35 @@
+ 
   ion-icon {
     font-size: 2em;
     margin-right: 8px;
-    color: #009688; /* Color característico */
+    color: #009688;
   }
   
-  /* Adaptación para el diseño de las tarjetas y tabla */
+  .imagen {
+    max-width: 80%;
+    height: auto;
+    width: 100%;
+    margin-left: 200px;
+  }
+  
+  .options-list {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 5px;
+  }
+  
+  ion-title {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Estilos específicos para la tabla de citas */
   ion-card {
-    margin: 20px auto; /* Centrado y espacio alrededor de la tarjeta */
+    margin: 20px; /* Espacio alrededor de la tarjeta */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra ligera para la tarjeta */
     width: 75%; /* La tarjeta ocupa el 75% del ancho de la pantalla */
+    margin-left: auto; /* Centrado horizontalmente */
+    margin-right: auto; /* Centrado horizontalmente */
   }
   
   ion-grid {
@@ -31,7 +52,7 @@
   }
   
   ion-card-header {
-    background-color: #009688; /* Color turquesa para la cabecera */
+    background-color: #009688;
     color: white;
     text-align: center;
     padding: 10px 0;
@@ -39,16 +60,5 @@
   
   ion-card-title {
     font-size: 1.2rem;
-  }
-  
-  /* Mejora del responsive */
-  @media (max-width: 600px) {
-    ion-card {
-      width: 90%; /* Más ancho en pantallas pequeñas */
-    }
-  }
-  .citasencurso{
-    width: 20%;
-    text-align: center;
   }
   

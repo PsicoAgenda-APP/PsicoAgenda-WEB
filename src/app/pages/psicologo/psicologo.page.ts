@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-psicologo',
@@ -13,7 +15,12 @@ export class PsicologoPage implements OnInit {
     { fechaHora: '03/01/2024 12:00 PM', idCita: '1236', datosPaciente: 'Mario Bros', estado: 'Cancelada' }
   ];
 
-  constructor() { }
+
+  constructor(private router: Router) {}
+
+  redirectTo(route: string) {
+    this.router.navigate([route]);
+  }
 
   ngOnInit() {
   }

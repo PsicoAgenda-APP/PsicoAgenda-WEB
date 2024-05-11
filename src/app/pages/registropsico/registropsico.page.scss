@@ -7,13 +7,22 @@
 
 }
 
-
-
 .main-banner {
   background-color: #009688;
   color: #000000;
   padding: 5rem;
   text-align: center;
+}
+
+.main-banner h1 {
+  margin-bottom: 1rem;
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+
+.main-banner p {
+  margin-bottom: 2rem;
+  font-size: 1rem;
 }
 
 ion-form {
@@ -23,28 +32,30 @@ ion-form {
 }
 
 ion-item {
-    --background: #fff;
-    --color: var(--ion-color-primary);
-    --placeholder-color: var(--ion-color-primary);
-    --placeholder-opacity: 0.8;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc; /* Borde sutil para cada campo */
+  --border-color: #fff;
+  --background: #fff;
+  --color: var(--ion-color-primary);
+  --placeholder-color: var(--ion-color-primary);
+  --placeholder-opacity: 0.8;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc; /* Borde sutil para cada campo */
 }
 
 ion-input {
-    --padding-start: 10px;
-    --padding-end: 10px;
-    --placeholder-color: var(--ion-input-placeholder-color);
+  --border-color: #fff;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  --placeholder-color: var(--ion-input-placeholder-color);
 }
 
-ion-button {
+.ion-button-registar {
     --background: #009688;
     color: #fff;
 }
 
-ion-button:hover {
-    --background: #00796b;
+.ion-button-registar:hover {
+  --background: #004d40; 
 }
 
 .form-container {
@@ -66,4 +77,17 @@ ion-icon {
   font-size: 2em; /* Tamaño de ícono más grande */
   margin-right: 8px; /* Espacio entre el icono y el texto */
   color: #009688; /* Asegúrate de que el color sea el definido para el texto */
+}
+.options-list {
+  flex-direction: column; /* Mostrar la lista de opciones en una columna */
+  width: 100%; /* Asegurarse de que la lista ocupe todo el ancho disponible */
+  margin-top: 5px; /* Espacio superior para separar el botón de las opciones */
+}
+ion-title {
+  text-decoration: none; /* Anular la decoración de texto (como el subrayado) */
+  color: inherit; /* Usar el color heredado del padre */
+}
+.titulo-formulario{
+  margin-bottom: 30px;
+  font-size: 28px;
 }

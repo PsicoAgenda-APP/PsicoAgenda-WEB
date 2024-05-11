@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-cliente',
   templateUrl: './cliente.page.html',
@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClientePage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) {}
+
+  redirectTo(route: string) {
+    this.router.navigate([route]);
+  }
 
   ngOnInit() {
   }
-
 }

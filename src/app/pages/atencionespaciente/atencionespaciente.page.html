@@ -4,8 +4,10 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button>Editar datos</ion-button>
-      <ion-button routerLink="/home">Salir</ion-button>
+      <ion-button (click)="redirectTo('/home')">Editar datos</ion-button>
+      <ion-button (click)="redirectTo('/atencionespaciente')">Historial de atenciones</ion-button>
+      <ion-button (click)="redirectTo('/fichapaciente')">Fichas clinicas</ion-button>
+      <ion-button (click)="redirectTo('/home')">Cerrar sesión</ion-button>
     </ion-buttons>
     <ion-title style="text-decoration: none;">
       <a routerLink="/home" style="text-decoration: none;">
@@ -18,7 +20,7 @@
 
 <ion-content>
   <!-- Sección de Cita en Curso -->
-  <ion-card>
+  <ion-card class="citasencurso">
     <ion-card-header>
       <ion-card-title>Cita en Curso</ion-card-title>
     </ion-card-header>
@@ -40,7 +42,7 @@
         <ion-row>
           <ion-col><strong>Fecha/Hora</strong></ion-col>
           <ion-col><strong>ID Cita</strong></ion-col>
-          <ion-col><strong>Datos Paciente</strong></ion-col>
+          <ion-col><strong>Datos Psicologo</strong></ion-col>
           <ion-col><strong>Estado</strong></ion-col>
         </ion-row>
         <!-- ngFor para iterar sobre el array del historial de citas -->

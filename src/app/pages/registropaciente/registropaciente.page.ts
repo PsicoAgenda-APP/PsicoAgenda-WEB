@@ -3,11 +3,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-registropsico',
-  templateUrl: './registropsico.page.html',
-  styleUrls: ['./registropsico.page.scss'],
+  selector: 'app-registropaciente',
+  templateUrl: './registropaciente.page.html',
+  styleUrls: ['./registropaciente.page.scss'],
 })
-export class RegistropsicoPage implements OnInit {
+export class RegistropacientePage implements OnInit {
   userForm: FormGroup;
   showOptions: boolean = false;  // Añade esta propiedad para manejar el despliegue de opciones
 
@@ -25,8 +25,6 @@ export class RegistropsicoPage implements OnInit {
       CorreoElectronico: new FormControl('', [Validators.required, Validators.email]),
       Contrasena: new FormControl('', [Validators.required, Validators.minLength(6)]),
       Rut: new FormControl('', Validators.required),
-      ValorSesion: new FormControl('', Validators.required),
-      IdEspecialidad: new FormControl('', Validators.required)
     });
   }
 
