@@ -3,48 +3,73 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/login">Entrar</ion-button>
+      <ion-button>Registrarse</ion-button>
+      <ion-button (click)="toggleOptions()">Profesionales</ion-button>
+      <ion-list *ngIf="showOptions">
+        <ion-item (click)="redirectTo('/login')">Ingresa</ion-item>
+        <ion-item (click)="redirectTo('/registropsico')">Registrate</ion-item>
+      </ion-list>
+    </ion-buttons>
     <ion-title class="header-title">
-      <a routerLink="/home" class="logo-link">
-        <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo"/>
+      <a style="color: #000000;" routerLink="/home" class="logo-link">
+        <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo" />
         PsicoAgenda
       </a>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
   <!-- Banner principal -->
   <div class="main-banner">
     <h1>Encuentra tu Psicólogo</h1>
-    <p>Aquí podrás encontrar ayuda de diferentes profesionales con diversas especialidades en psicología</p>
-    <ion-searchbar placeholder="Puede buscar por nombre y/o apellido, RUT o especialidad"></ion-searchbar>
-  </div>
-
-  <!-- Sección de Testimonios -->
-  <ion-card class="testimonials-section">
-    <ion-card-header>
-      <ion-card-title>Pacientes y Psicólogos</ion-card-title>
-    </ion-card-header>
-    <ion-card>
-      <img src="assets/icon/paciente-psicologo.png" alt="Imagen de un psicólogo con paciente" class="imagen">
+    <p>Aquí podrás encontrar ayuda de diferentes profesionales
+      <br>con diversas especialidades en psicología
+    </p>
+    <ion-card class="fondo_busqueda">
+      <p style="margin-bottom: 0;">Puede buscar por nombre y/o apellido, RUN o especialidad</p>
+      <ion-searchbar placeholder="Ingrese la información" [(ngModel)]="mdl_dato"></ion-searchbar>
+      <ion-button (click)="buscar()">Buscar</ion-button>
     </ion-card>
-  </ion-card>
+  </div>
+  <br>
+  <div class="titulo">
+    <h1>Pacientes y Psicologos</h1>
+    <p>Revisa algunos testimonios de los pacientes y psicologos</p>
+  </div>
+  <div class="container">
+    <ion-card class="card_testimonio" *ngFor="let testimonial of testimonials">
+      <ion-img class="imagen_usr" src="../../../assets/icon/User_Circle.png"></ion-img>
+      <ion-card-header>
+        <ion-card-title>{{ testimonial.author }}</ion-card-title>
+        <ion-card-subtitle>{{ testimonial.role }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{ testimonial.quote }}
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <br>
+  <br>
   <!-- Footer -->
-<ion-footer>
-  <ion-toolbar class="toolbarfooter">
-    <div class="footer-content">
-      <div class="footer-left">
-        <p>©2024 - PsicoAgenda APP</p>
-        <p>Todos los Derechos Reservados</p>
+  <ion-footer>
+    <ion-toolbar>
+      <div class="footer-content">
+        <div class="footer-left">
+          <p>©2024 - PsicoAgenda APP</p>
+          <p>Todos los Derechos Reservados</p>
+        </div>
+        <div class="footer-center">
+          <!-- Aquí puedes agregar el contenido del bloque central -->
+        </div>
+        <div class="footer-right">
+          <p class="logo-link"><ion-icon class="header-logo" name="call-outline"></ion-icon>Teléfono Contacto: 920256865
+          </p>
+          <p class="logo-link"><ion-icon class="header-logo"
+              name="logo-instagram"></ion-icon>www.instagram.com/psicoagenda</p>
+        </div>
       </div>
-      <div class="footer-right">
-        <p><a href="phone"><ion-icon name="call-outline"></ion-icon> Telefono Contacto: 920256865</a> </p>
-        <p><a href="www.instagram.com/psicoagenda"><ion-icon name="logo-instagram"></ion-icon> www.instagram.com/psicoagenda</a></p>
-      </div>
-    </div>
-  </ion-toolbar>
-</ion-footer>
-</ion-content>
-
-
+    </ion-toolbar>
+  </ion-footer>

@@ -1,48 +1,27 @@
-<ion-header>
-  <ion-toolbar class="toolbarheader">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title style="text-decoration: none;">
-      <a routerLink="/home" style="text-decoration: none;">
-        <img src="../../assets/icon/psicoagendalogo.png" style="height: 40px; margin-right: 8px;" alt="Logo"/>
-      </a>
-      PsicoAgenda
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding">
-  <div class="login-container">
+<ion-content>
+  <ion-card>
+    <button (click)=navigateHome() style="background-color: transparent;">
+      <ion-img src="../../../assets/icon/psicoagendalogo.png"  ></ion-img>
+    </button>
     <h1>Iniciar Sesión</h1>
     <ion-item>
       <ion-label position="floating"></ion-label>
-      <ion-input label="Correo" labelPlacement="floating" [(ngModel)]="mdl_correo" ></ion-input>
+      <ion-input label="Correo" labelPlacement="floating" [(ngModel)]="mdl_correo"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating"></ion-label>
       <ion-input type="password" label="Contraseña" labelPlacement="floating" [(ngModel)]="mdl_contrasena"></ion-input>
     </ion-item>
+    <ion-text>¿Olvido su Clave?</ion-text>
+    <br>
+    <ion-text>Cambiar Clave</ion-text>
     <ion-button (click)=login() expand="full">Entrar</ion-button>
-  </div>
-</ion-content>
-   <!-- Footer -->
-   <ion-footer>
-    <ion-toolbar class="toolbarfooter">
-      <div class="footer-content">
-        <div class="footer-left">
-          <p>©2024 - PsicoAgenda APP</p>
-          <p>Todos los Derechos Reservados</p>
-        </div>
-        <div class="footer-center">
-          <!-- Aquí puedes agregar el contenido del bloque central -->
-        </div>
-        <div class="footer-right">
-          <p><a href="phone"><ion-icon name="call-outline"></ion-icon> Telefono Contacto: 920256865</a> </p>
-          <p><a href="www.instagram.com/psicoagenda"><ion-icon name="logo-instagram"></ion-icon> www.instagram.com/psicoagenda</a></p>
-        </div>
-      </div>
-    </ion-toolbar>
-  </ion-footer>
+  </ion-card>
 
+  <ion-alert [isOpen]="isAlertOpen" header="Información" message="No puede dejar campos vacios" [buttons]="alertButtons"
+    (didDismiss)="setOpen(false)">
+  </ion-alert>
 
+  <ion-alert [isOpen]="isAlertOpen2" header="Información" message="Credenciales Invalidas" [buttons]="alertButtons"
+    (didDismiss)="setOpen(false)">
+  </ion-alert>
