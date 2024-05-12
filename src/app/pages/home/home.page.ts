@@ -11,6 +11,7 @@ export class HomePage {
   showOptions: boolean = false;
   dato: string = '';
   mdl_dato: string = '';
+  login: boolean = false;
 
   // Testimonials data
   testimonials = [
@@ -47,7 +48,8 @@ export class HomePage {
   buscar() {
     let parametros: NavigationExtras = {
       state: {
-        param: this.dato
+        dato: this.dato,
+        login: this.login
       },
       replaceUrl: true
     }

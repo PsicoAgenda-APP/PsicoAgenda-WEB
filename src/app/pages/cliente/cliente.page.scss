@@ -25,15 +25,6 @@
 }
 
 
-
-/* Estilos para el footer */
-/* Estilos para los iconos */
-ion-icon {
-  font-size: 2em; /* Tamaño de ícono más grande */
-  margin-right: 8px; /* Espacio entre el icono y el texto */
-  color: #009688; /* Asegúrate de que el color sea el definido para el texto */
-}
-
 .imagen {
   max-width: 80%; /* La imagen se ajustará al 80% del ancho del contenedor */
   height: auto; /* Altura automática para mantener la proporción */
@@ -54,32 +45,91 @@ ion-title {
 
 /* Estilos de la tarjeta de bienvenida */
 ion-card {
-  text-align: center; /* Alineación del texto al centro */
-  width: 30%; /* La tarjeta ocupa el 75% del ancho de la pantalla */
+  text-align: left; /* Alineación del texto al centro */
+  width: 40%; /* La tarjeta ocupa el 75% del ancho de la pantalla */
   margin-left: auto; /* Centrado horizontalmente */
   margin-right: auto; /* Centrado horizontalmente */
-  background-color: #009688;
+  background-color: #F4EFEF;
+  padding: 0; 
 }
 
 ion-card-title {
-  color: white; /* Color del título de la tarjeta */
+  color: black; /* Color del título de la tarjeta */
   font-size: 1.2em; /* Tamaño de fuente más grande para el título */
+  padding: 0;
 }
 
 /* Estilos de los íconos */
-ion-icon {
-  font-size: 2em; /* Tamaño de ícono más grande */
-  margin-right: 8px; /* Espacio entre el icono y el texto */
-  color: #009688; /* Asegúrate de que el color sea el definido para el texto */
-}
 
 /* Ajustes de padding y margen según tu diseño */
 ion-card-content {
-  padding: 1em;
+  padding-top: 0;
+  margin-left: auto; /* Centrado horizontalmente */
+  margin-right: auto; /* Centrado horizontalmente */
 
 }
 /*FOOTER*/
 /* Elimina cualquier estilo adicional de la clase .button que no quieras */
 .button-agenda{
+  font-size: 0.7em;
+  width: 200px;
   background-color: #009688;
+}
+
+ion-footer {
+  ion-toolbar {
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos dentro de ion-title */
+    justify-content: center;
+    align-items: center;
+    --background: #333; /* Si quieres mantener este color para el footer, está bien */
+    color: #fff; /* Esto hará que el texto dentro del footer sea blanco */
+    padding: 1.5rem;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  .footer-content {
+    display: flexbox;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .footer-left {
+    flex: 1; /* Ocupa el espacio disponible */
+    text-align:center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .footer-right {
+    text-align: right;
+    position: absolute;
+  }
+
+  /* Para los enlaces dentro del footer */
+  .footer-right a {
+    color: var(--ion-text-color); /* Color del texto para los enlaces */
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+  }
+
+  /* Eliminar la clase 'button' para que no afecte a los iconos */
+  .footer-right ion-icon {
+    --color: var(--ion-text-color); /* Restablece el color del icono */
+  }
+}
+
+ion-icon {
+  font-size: 2em; /* Tamaño de ícono más grande */ /* Espacio entre el icono y el texto */
+  color: #009688; /* Asegúrate de que el color sea el definido para el texto */
+  width: 24px; /* Ajusta el tamaño del icono si es necesario */
+  height: 24px; /* Ajusta el tamaño del icono si es necesario */
+}
+
+ion-toolbar {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --background: #32E0C4;
 }

@@ -9,11 +9,11 @@
       <ion-button (click)="redirectTo('/fichapaciente')">Fichas clinicas</ion-button>
       <ion-button (click)="redirectTo('/home')">Cerrar sesión</ion-button>
     </ion-buttons>
-    <ion-title style="text-decoration: none;">
-      <a routerLink="/home" style="text-decoration: none;">
-        <img src="../../assets/icon/psicoagendalogo.png" style="height: 40px; margin-right: 8px;" alt="Logo"/>
+    <ion-title class="header-title">
+      <a style="color: #000000;" routerLink="/home" class="logo-link">
+        <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo" />
+        PsicoAgenda
       </a>
-      PsicoAgenda
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -22,88 +22,61 @@
 
 <ion-content>
   <!-- Sección para agendar cita con Gerardo Gutierrez -->
-    <ion-card class ="ioncard">
+  <ion-card class="ioncard" style="margin-top: 2.4rem;">
     <ion-card-header>
-      <ion-card-title>Agendar Cita con Gerardo Gutierrez</ion-card-title>
+      <ion-card-title>Agendar cita un Psicologo</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <!-- Componente de calendario para Gerardo -->
-      <!--<ion-calendar></ion-calendar>-->    <!-- FULL CALENDAR IONIC-->
-      <!-- Botón para confirmar la cita con Gerardo -->
-      <ion-button  class="button-agenda">Confirmar Cita con Gerardo</ion-button>
+      <ion-card-content>
+        Aqui podras encontrar ayuda de diferentes psicologos
+      </ion-card-content>
+      <ion-button (click)="buscar()" class="button-agenda">Agenda tu hora</ion-button>
     </ion-card-content>
   </ion-card>
 
-  <!-- Sección para agendar cita con Rocío Valenzuela -->
-  <ion-card class ="ioncard">
+  <ion-card class="ioncard" style="margin-top: 1.5rem;">
     <ion-card-header>
-      <ion-card-title>Agendar Cita con Rocío Valenzuela</ion-card-title>
+      <ion-card-title>Realizar una consulta</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <!-- Componente de calendario para Rocío -->
-      <!--<ion-calendar></ion-calendar> -->
-      <!-- Botón para confirmar la cita con Rocío -->
-      <ion-button class="button-agenda" >Confirmar Cita con Rocío</ion-button>
+      <ion-card-content>
+        Aqui puedes realizar tus consultas urgentes a los psicologos
+      </ion-card-content>
+      <ion-button class="button-agenda">Consulta</ion-button>
     </ion-card-content>
   </ion-card>
-  <ion-card class ="ioncard">
+
+  <ion-card class="ioncard" style="margin-top: 1.5rem;">
     <ion-card-header>
-      <ion-card-title>Agendar Cita con Roberto Gutierrez</ion-card-title>
+      <ion-card-title>Solicita un presupuesto</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <!-- Componente de calendario para Gerardo -->
-      <!--<ion-calendar></ion-calendar>-->    <!-- FULL CALENDAR IONIC-->
-      <!-- Botón para confirmar la cita con Gerardo -->
-      <ion-button  class="button-agenda">Confirmar Cita con Roberto</ion-button>
+      <ion-card-content>
+        Aqui puedes realizar tus consultas urgentes a los psicologos
+      </ion-card-content>
+      <ion-button class="button-agenda">Solicita</ion-button>
     </ion-card-content>
   </ion-card>
-  <ion-card class ="ioncard">
-    <ion-card-header>
-      <ion-card-title>Agendar Cita con Francisco Salgado</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <!-- Componente de calendario para Gerardo -->
-      <!--<ion-calendar></ion-calendar>-->    <!-- FULL CALENDAR IONIC-->
-      <!-- Botón para confirmar la cita con Gerardo -->
-      <ion-button  class="button-agenda">Francisco Salgado</ion-button>
-    </ion-card-content>
-  </ion-card>
-  <ion-card class ="ioncard">
-    <ion-card-header>
-      <ion-card-title>Agendar Cita con Pamela Leiva</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <!-- Componente de calendario para Gerardo -->
-      <!--<ion-calendar></ion-calendar>-->    <!-- FULL CALENDAR IONIC-->
-      <!-- Botón para confirmar la cita con Gerardo -->
-      <ion-button  class="button-agenda">Confirmar Cita con Pamela</ion-button>
-    </ion-card-content>
-  </ion-card>
-  <ion-card class ="ioncard">
-    <ion-card-header>
-      <ion-card-title>Agendar Cita con Rodrigo Sepulveda</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <!-- Componente de calendario para Gerardo -->
-      <!--<ion-calendar></ion-calendar>-->    <!-- FULL CALENDAR IONIC-->
-      <!-- Botón para confirmar la cita con Gerardo -->
-      <ion-button  class="button-agenda">Confirmar Cita con Rodrigo</ion-button>
-    </ion-card-content>
-  </ion-card>
+
 </ion-content>
+
 <!-- Footer -->
 <ion-footer>
-  <ion-toolbar class="toolbarfooter">
+  <ion-toolbar>
     <div class="footer-content">
       <div class="footer-left">
         <p>©2024 - PsicoAgenda APP</p>
         <p>Todos los Derechos Reservados</p>
       </div>
+      <div class="footer-center">
+        <!-- Aquí puedes agregar el contenido del bloque central -->
+      </div>
       <div class="footer-right">
-        <p><a href="phone"><ion-icon name="call-outline"></ion-icon> Telefono Contacto: 920256865</a> </p>
-        <p><a href="www.instagram.com/psicoagenda"><ion-icon name="logo-instagram"></ion-icon> www.instagram.com/psicoagenda</a></p>
+        <p class="logo-link"><ion-icon class="header-logo" name="call-outline"></ion-icon>Teléfono Contacto: 920256865
+        </p>
+        <p class="logo-link"><ion-icon class="header-logo"
+            name="logo-instagram"></ion-icon>www.instagram.com/psicoagenda</p>
       </div>
     </div>
   </ion-toolbar>
 </ion-footer>
-

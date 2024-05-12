@@ -19,6 +19,7 @@ export class LoginPage implements OnInit {
   isAlertOpen2 = false;
   alertButtons = ['OK'];
   error_mensaje: any = '';
+  idTipo: number = 0;
 
 
   constructor(private router: Router, private apiService: ApiService) { }
@@ -43,13 +44,21 @@ export class LoginPage implements OnInit {
           console.log(this.lista_respuesta);
           this.contrasena = this.lista_respuesta[x].Contrasena;
           this.correo = this.lista_respuesta[x].CorreoElectronico;
+          this.idTipo = this.lista_respuesta[x].IdTipoUsuario;
           console.log(this.contrasena)
           console.log(this.correo)
           if (this.mdl_contrasena == this.contrasena && this.mdl_correo == this.correo) {
-            let parametros: NavigationExtras = {
-              replaceUrl: true
+            if (this.idTipo == 1) {
+              let parametros: NavigationExtras = {
+                replaceUrl: true
+              }
+              this.router.navigate(['cliente'],parametros);
+            } else if (this.idTipo == 2) {
+              let parametros: NavigationExtras = {
+                replaceUrl: true
+              }
+              this.router.navigate(['psicolgo'],parametros);
             }
-            this.router.navigate(['cliente'],parametros);
           }
         }
       } catch (error) {

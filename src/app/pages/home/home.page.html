@@ -7,10 +7,6 @@
       <ion-button routerLink="/login">Entrar</ion-button>
       <ion-button>Registrarse</ion-button>
       <ion-button (click)="toggleOptions()">Profesionales</ion-button>
-      <ion-list *ngIf="showOptions">
-        <ion-item (click)="redirectTo('/login')">Ingresa</ion-item>
-        <ion-item (click)="redirectTo('/registropsico')">Registrate</ion-item>
-      </ion-list>
     </ion-buttons>
     <ion-title class="header-title">
       <a style="color: #000000;" routerLink="/home" class="logo-link">
@@ -19,7 +15,14 @@
       </a>
     </ion-title>
   </ion-toolbar>
+    <ion-list class="opciones-lista" *ngIf="showOptions">
+      <ion-button class="opciones-item" (click)="redirectTo('/login')">Ingresa</ion-button>
+      <ion-button class="opciones-item" (click)="redirectTo('/registropsico')">Registrate</ion-button>
+    </ion-list>
 </ion-header>
+
+
+
 
 <ion-content>
   <!-- Banner principal -->

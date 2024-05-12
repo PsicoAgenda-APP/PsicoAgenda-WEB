@@ -1,16 +1,36 @@
-<ion-header>
+<ion-header *ngIf="!login">
   <ion-toolbar class="toolbarheader">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button routerLink="/login">Entrar</ion-button>
-      <ion-button>Registrarse</ion-button>
+      <ion-button routerLink="/registropaciente">Registrarse</ion-button>
       <ion-button (click)="toggleOptions()">Profesionales</ion-button>
-      <ion-list *ngIf="showOptions">
-        <ion-item (click)="redirectTo('/login')">Ingresa</ion-item>
-        <ion-item (click)="redirectTo('/registropsico')">Registrate</ion-item>
-      </ion-list>
+    </ion-buttons>
+    <ion-title class="header-title">
+      <a style="color: #000000;" routerLink="/home" class="logo-link">
+        <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo" />
+        PsicoAgenda
+      </a>
+    </ion-title>
+  </ion-toolbar>
+    <ion-list class="opciones-lista" *ngIf="showOptions">
+      <ion-button class="opciones-item" (click)="redirectTo('/login')">Ingresa</ion-button>
+      <ion-button class="opciones-item" (click)="redirectTo('/registropsico')">Registrate</ion-button>
+    </ion-list>
+</ion-header>
+
+<ion-header *ngIf="login">
+  <ion-toolbar class="toolbarheader">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="redirectTo('/home')">Editar datos</ion-button>
+      <ion-button (click)="redirectTo('/atencionespaciente')">Historial de atenciones</ion-button>
+      <ion-button (click)="redirectTo('/fichapaciente')">Fichas clinicas</ion-button>
+      <ion-button (click)="redirectTo('/home')">Cerrar sesión</ion-button>
     </ion-buttons>
     <ion-title class="header-title">
       <a style="color: #000000;" routerLink="/home" class="logo-link">
@@ -20,8 +40,14 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
+
+
 <br>
 <ion-content>
+  <div class="search-bar-container">
+    <ion-searchbar placeholder="Buscar Psicólogo"></ion-searchbar>
+    <ion-button>Buscar</ion-button>
+  </div>
   <div class="card-container">
     <ion-card class="custom-card" *ngFor="let x of paginatedItems">
       <ion-item-divider>

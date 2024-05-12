@@ -14,6 +14,11 @@ export class BusquedaPage implements OnInit {
 
   ngOnInit() {
     this.busqueda();
+    let parametros = this.router.getCurrentNavigation();
+    if(parametros?.extras.state){
+      this.dato = parametros?.extras.state['dato'];
+      this.login = parametros?.extras.state['login'];
+    }
   }
 
   showOptions: boolean = false;
@@ -22,6 +27,7 @@ export class BusquedaPage implements OnInit {
   currentPage = 1;
   itemsPerPage = 5;
   totalPages: number = 0;
+  login: boolean = false;
 
   async busqueda() {
     let data = this.apiService.listaPsicologos();

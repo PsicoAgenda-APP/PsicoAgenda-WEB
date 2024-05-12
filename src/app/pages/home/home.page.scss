@@ -16,7 +16,6 @@ ion-toolbar {
 
 
 
-
 /* Estilos para el banner principal */
 .main-banner {
   background: url(../../../assets/icon/fondo_final_login.png) no-repeat center center / cover; /* Color de fondo del banner */
@@ -92,6 +91,7 @@ ion-footer {
   .footer-right a {
     color: var(--ion-text-color); /* Color del texto para los enlaces */
     text-decoration: none; /* Elimina el subrayado de los enlaces */
+    position: absolute;
   }
 
   /* Eliminar la clase 'button' para que no afecte a los iconos */
