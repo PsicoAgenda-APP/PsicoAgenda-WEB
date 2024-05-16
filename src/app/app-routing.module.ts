@@ -46,7 +46,11 @@ const routes: Routes = [
   {
     path: 'registropaciente',
     loadChildren: () => import('./pages/registropaciente/registropaciente.module').then( m => m.RegistropacientePageModule)
+  },  {
+    path: 'calendario',
+    loadChildren: () => import('./pages/calendario/calendario.module').then( m => m.CalendarioPageModule)
   },
+
 
 
   

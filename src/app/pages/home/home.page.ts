@@ -46,6 +46,7 @@ export class HomePage {
   }
 
   buscar() {
+    this.login = false;
     let parametros: NavigationExtras = {
       state: {
         dato: this.dato,

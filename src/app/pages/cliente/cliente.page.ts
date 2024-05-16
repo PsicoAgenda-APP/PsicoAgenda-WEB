@@ -9,16 +9,18 @@ export class ClientePage implements OnInit {
 
   constructor(private router: Router) {}
 
-  login: boolean = true;
+  login: boolean = false;
 
   redirectTo(route: string) {
     this.router.navigate([route]);
   }
 
   ngOnInit() {
+    
   }
 
   buscar() {
+    this.login = true;
     let parametros: NavigationExtras = {
       state: {
         login: this.login

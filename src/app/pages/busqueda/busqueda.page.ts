@@ -12,15 +12,6 @@ export class BusquedaPage implements OnInit {
 
   constructor(private router: Router, private apiService: ApiService) { }
 
-  ngOnInit() {
-    this.busqueda();
-    let parametros = this.router.getCurrentNavigation();
-    if(parametros?.extras.state){
-      this.dato = parametros?.extras.state['dato'];
-      this.login = parametros?.extras.state['login'];
-    }
-  }
-
   showOptions: boolean = false;
   lista_respuesta: any[] = [];
   dato: string = '';
@@ -28,6 +19,42 @@ export class BusquedaPage implements OnInit {
   itemsPerPage = 5;
   totalPages: number = 0;
   login: boolean = false;
+  idUsuario: string = '';
+  idPsicologo: string = '';
+
+  ngOnInit() {
+    this.busqueda();
+    let parametros = this.router.getCurrentNavigation();
+    if (parametros?.extras.state) {
+      this.dato = parametros?.extras.state['dato'];
+      var login: boolean = parametros?.extras.state['login'];
+      console.log(login)
+      this.login = login;
+      console.log(this.login)
+    }
+  }
+
+  agendarCita(index: number) {
+    if (this.login) {
+      const elemento2 = document.getElementById('id_psicologo_' + index);
+      const idPsicologoString = elemento2 ? elemento2.textContent : null;
+      const idPsicologo = parseInt(idPsicologoString!, 10);
+      this.idPsicologo = idPsicologo.toString();
+      console.log('El ID del usuario como texto es:', this.idPsicologo);
+      let parametros: NavigationExtras = {
+        state: {
+          idPsicologo: this.idPsicologo
+        },
+        replaceUrl: true
+      }
+      this.router.navigate(['calendario'], parametros);
+    } else if (!this.login) {
+      let parametros: NavigationExtras = {
+        replaceUrl: true
+      }
+      this.router.navigate(['login'], parametros);
+    }
+  }
 
   async busqueda() {
     let data = this.apiService.listaPsicologos();
@@ -58,7 +85,11 @@ export class BusquedaPage implements OnInit {
     this.currentPage = page;
   }
 
-  
-
+  goHome() {
+    let parametros: NavigationExtras = {
+      replaceUrl: true
+    }
+    this.router.navigate(['home'], parametros);
+  }
 
 }

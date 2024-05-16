@@ -8,9 +8,9 @@
       <ion-button routerLink="/registropaciente">Registrarse</ion-button>
       <ion-button (click)="toggleOptions()">Profesionales</ion-button>
     </ion-buttons>
-    <ion-title class="header-title">
-      <a style="color: #000000;" routerLink="/home" class="logo-link">
-        <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo" />
+    <ion-title class="header-title" (click)="goHome()">
+      <a style="color: #000000;" class="logo-link">
+        <img src="../../assets/icon/psicoagendalogo.png" alt="Logo"  class="header-logo" />
         PsicoAgenda
       </a>
     </ion-title>
@@ -49,7 +49,7 @@
     <ion-button>Buscar</ion-button>
   </div>
   <div class="card-container">
-    <ion-card class="custom-card" *ngFor="let x of paginatedItems">
+    <ion-card class="custom-card" *ngFor="let x of paginatedItems; let i = index">
       <ion-item-divider>
         <ion-card-header>
           <ion-card-title style="--color: #027f99; font-weight: bold;">{{ x.Nombre }}</ion-card-title>
@@ -61,11 +61,17 @@
       <ion-item-divider>
         <ion-card-content>
           <p>{{ x.Descripcion }}</p>
+          <p hidden id="id_psicologo_{{i}}">{{ x.IdPsicologo }}</p>
         </ion-card-content>
       </ion-item-divider>
       <ion-item-divider>
         <ion-card-content>
           <p>Desde ${{ x.ValorSesion }}/sesión.</p>
+        </ion-card-content>
+      </ion-item-divider>
+      <ion-item-divider>
+        <ion-card-content>
+          <ion-button class="botonagenda" (click)="agendarCita(i)" >Agenda Tu Hora</ion-button>
         </ion-card-content>
       </ion-item-divider>
     </ion-card>
