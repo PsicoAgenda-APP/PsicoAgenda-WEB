@@ -3,6 +3,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 
+
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.page.html',
@@ -18,8 +19,10 @@ export class CalendarioPage implements OnInit {
   horas: boolean = false;
   idPsicologoString: string = '';
   idPsicologo: number = 0;
+  idCita: string = '';
   lista_respuesta: any[] = [];
   validadorHora: number = 1;
+  botonPago: boolean = false;
 
   constructor(private router: Router, private apiService: ApiService) { }
 
@@ -49,6 +52,8 @@ export class CalendarioPage implements OnInit {
     this.fechaFinal = fechaFormat;
   }
 
+  
+
   async loadAvailableTimes() {
     this.horas = false;
     this.availableTimes = [];
@@ -59,31 +64,32 @@ export class CalendarioPage implements OnInit {
     console.log('Fecha formateada:', this.fechaFinal);
 
     if (this.selectedDate) {
-        let data = this.apiService.obtenerHoras(this.idPsicologo, this.fechaFinal);
-        let respuesta = await lastValueFrom(data);
-        console.log('Respuesta completa de la API:', respuesta);
+      this.botonPago = false;
+      let data = this.apiService.obtenerHoras(this.idPsicologo, this.fechaFinal);
+      let respuesta = await lastValueFrom(data);
+      console.log('Respuesta completa de la API:', respuesta);
 
-        // Asegurarse de que la respuesta es un array
-        if (Array.isArray(respuesta)) {
-            if (respuesta.length === 0) {
-                this.horas = true;
-                console.log('No hay horas disponibles.');
-            } else {
-                this.titulo = true;  // Asumimos que hay datos válidos
-                respuesta.forEach(hora => {
-                    this.availableTimes.push(hora);
-                    console.log('Hora disponible:', hora);
-                });
-                // Verificar si hay al menos un elemento para tomar el IdCita
-                if (this.availableTimes.length > 0) {
-                    this.validadorHora = this.availableTimes[0].IdCita;
-                }
-            }
+      // Asegurarse de que la respuesta es un array
+      if (Array.isArray(respuesta)) {
+        if (respuesta.length === 0) {
+          this.horas = true;
+          console.log('No hay horas disponibles.');
         } else {
-            console.log('Respuesta no es un arreglo. Revisar el formato de los datos recibidos de la API.');
+          this.titulo = true;  // Asumimos que hay datos válidos
+          respuesta.forEach(hora => {
+            this.availableTimes.push(hora);
+            console.log('Hora disponible:', hora);
+          });
+          // Verificar si hay al menos un elemento para tomar el IdCita
+          if (this.availableTimes.length > 0) {
+            this.validadorHora = this.availableTimes[0].IdCita;
+          }
         }
+      } else {
+        console.log('Respuesta no es un arreglo. Revisar el formato de los datos recibidos de la API.');
+      }
     }
-}
+  }
 
   scheduleAppointment(time: string) {
     console.log('Cita agendada para', this.selectedDate, 'a las', time);
@@ -106,9 +112,25 @@ export class CalendarioPage implements OnInit {
     this.router.navigate(['home'], parametros);
   }
 
-  pagoTransbank() {
-    
+  confirmarCita(index: number) {
+    const elemento = document.getElementById('id_cita_' + index);
+    const idCitaString = elemento ? elemento.textContent : null;
+    const idCita = parseInt(idCitaString!, 10);
+    this.idCita = idCita.toString();
+    console.log(this.idCita);
+    this.botonPago = true;  
   }
 
+  getRandomInt(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  webpay_plus_create() {
+      console.log("Webpay Plus Transaction.create")
+      const buyOrder: string = this.getRandomInt(1000000, 99999999).toString();
+      const sessionId: string = this.getRandomInt(1000000, 99999999).toString(); 
+      console.log(buyOrder)
+      console.log(sessionId)
+  }
 
 }

@@ -17,13 +17,12 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<br>
 <ion-content class="center-content">
   <div class="horizontal-layout">
     <ion-card class="custom-card" *ngFor="let x of lista_respuesta">
       <ion-card-header>
         <ion-card-title style="--color: #027f99; font-weight: bold;">{{ x.Nombre }}</ion-card-title>
-        <ion-img class="imagen1" src="../../../assets/icon/User_Circle.png"></ion-img>  
+        <ion-img class="imagen1" src="../../../assets/icon/User_Circle.png"></ion-img>
       </ion-card-header>
       <ion-card-content>
         <p>{{ x.Descripcion }}</p>
@@ -33,16 +32,20 @@
       </ion-card-content>
     </ion-card>
     <ion-item class="calendario">
-      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="selectedDate" (ionChange)="loadAvailableTimes()"></ion-datetime>
+      <ion-datetime displayFormat="MM/DD/YYYY" presentation="date" [(ngModel)]="selectedDate"
+        (ionChange)="loadAvailableTimes()"></ion-datetime>
     </ion-item>
   </div>
   <ion-list class="calendario-lista">
     <p *ngIf="titulo">Horas Disponibles</p>
     <p *ngIf="horas">No hay horas disponibles este día</p>
-    <ion-button *ngFor="let c of availableTimes; let j = index">
+    <ion-button (click)="confirmarCita(j)" *ngFor="let c of availableTimes; let j = index">
       <ion-label>{{ c.HoraCita }}</ion-label>
       <p hidden id="id_cita_{{j}}">{{ c.IdCita }}</p>
     </ion-button>
+    <form action="">
+      <ion-button class="botonpago" (click)="webpay_plus_create()" *ngIf="botonPago">Reservar Hora</ion-button>
+    </form>
   </ion-list>
 </ion-content>
 
