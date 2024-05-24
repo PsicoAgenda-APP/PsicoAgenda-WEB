@@ -50,6 +50,14 @@ const routes: Routes = [
     path: 'calendario',
     loadChildren: () => import('./pages/calendario/calendario.module').then( m => m.CalendarioPageModule)
   },
+  {
+    path: 'atencionespsicologo',
+    loadChildren: () => import('./pages/atencionespsicologo/atencionespsicologo.module').then( m => m.AtencionespsicologoPageModule)
+  },
+  {
+    path: 'historialpsicologo',
+    loadChildren: () => import('./pages/historialpsicologo/historialpsicologo.module').then( m => m.HistorialpsicologoPageModule)
+  },
 
 
 

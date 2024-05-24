@@ -4,12 +4,12 @@ import { ApiService } from 'src/app/services/api.service';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'app-fichapsicologo',
-  templateUrl: './fichapsicologo.page.html',
-  styleUrls: ['./fichapsicologo.page.scss'],
+  selector: 'app-historialpsicologo',
+  templateUrl: './historialpsicologo.page.html',
+  styleUrls: ['./historialpsicologo.page.scss'],
 })
-export class FichapsicologoPage implements OnInit {
-  citaspsicologo: any[] = [];
+export class HistorialpsicologoPage implements OnInit {
+  historialCitas: any[] = [];
   isAlertOpen = false;
   alertButtons = ['OK'];
   error_mensaje: any = '';
@@ -17,15 +17,15 @@ export class FichapsicologoPage implements OnInit {
   constructor(private router: Router, private apiService: ApiService) {}
 
   ngOnInit() {
-    this.obtenerCitasPsicologo();
+    this.obtenerHistorialPsicologo();
   }
 
-  async obtenerCitasPsicologo() {
+  async obtenerHistorialPsicologo() {
     const IdPsicologo = '4'; // Reemplaza esto con el IdPsicologo real
     try {
-      const data = this.apiService.obtenerCitaPsicologo(IdPsicologo);
+      const data = this.apiService.obtenerHistorialPsicologo(IdPsicologo);
       const respuesta = await lastValueFrom(data) as any[];
-      this.citaspsicologo = respuesta;
+      this.historialCitas = respuesta;
     } catch (error) {
       this.isAlertOpen = true;
       this.error_mensaje = 'Error al obtener el historial de citas';

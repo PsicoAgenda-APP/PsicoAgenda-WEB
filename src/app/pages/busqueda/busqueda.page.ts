@@ -21,8 +21,12 @@ export class BusquedaPage implements OnInit {
   login: boolean = false;
   idUsuario: string = '';
   idPsicologo: string = '';
+  loading: boolean = false;
 
   ngOnInit() {
+    setTimeout(() => {
+      this.loading = true;
+    }, 1500);
     this.busqueda();
     let parametros = this.router.getCurrentNavigation();
     if (parametros?.extras.state) {

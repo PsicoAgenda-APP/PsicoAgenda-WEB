@@ -4,12 +4,12 @@ import { ApiService } from 'src/app/services/api.service';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'app-fichapsicologo',
-  templateUrl: './fichapsicologo.page.html',
-  styleUrls: ['./fichapsicologo.page.scss'],
+  selector: 'app-atencionespsicologo',
+  templateUrl: './atencionespsicologo.page.html',
+  styleUrls: ['./atencionespsicologo.page.scss'],
 })
-export class FichapsicologoPage implements OnInit {
-  citaspsicologo: any[] = [];
+export class AtencionespsicologoPage implements OnInit {
+  atencionesCitas: any[] = [];
   isAlertOpen = false;
   alertButtons = ['OK'];
   error_mensaje: any = '';
@@ -17,19 +17,19 @@ export class FichapsicologoPage implements OnInit {
   constructor(private router: Router, private apiService: ApiService) {}
 
   ngOnInit() {
-    this.obtenerCitasPsicologo();
+    this.obtenerAtencionesPsicologo();
   }
 
-  async obtenerCitasPsicologo() {
+  async obtenerAtencionesPsicologo() {
     const IdPsicologo = '4'; // Reemplaza esto con el IdPsicologo real
     try {
-      const data = this.apiService.obtenerCitaPsicologo(IdPsicologo);
+      const data = this.apiService.obtenerAtencionesPsicologo(IdPsicologo);
       const respuesta = await lastValueFrom(data) as any[];
-      this.citaspsicologo = respuesta;
+      this.atencionesCitas = respuesta;
     } catch (error) {
       this.isAlertOpen = true;
-      this.error_mensaje = 'Error al obtener el historial de citas';
-      console.error('Error al obtener el historial de citas', error);
+      this.error_mensaje = 'Error al obtener las atenciones';
+      console.error('Error al obtener las atenciones', error);
     }
   }
 

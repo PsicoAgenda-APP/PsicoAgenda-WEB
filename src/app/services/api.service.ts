@@ -1,19 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  ruta = 'http://localhost:3000/usuarios/login/';
-  ruta_ps = 'http://127.0.0.1:3000/psicologos/get_psicologos/';
-  ruta_busqueda_ps = 'http://127.0.0.1:3000/psicologos/datos_psicologo/';
+  ruta = 'https://psicoagenda-api.azurewebsites.net/usuarios/login/';
+  ruta_ps = 'https://psicoagenda-api.azurewebsites.net/psicologos/get_psicologos/';
+  ruta_busqueda_ps = 'https://psicoagenda-api.azurewebsites.net/psicologos/datos_psicologo/';
   ruta_prestadores = 'https://prestadores.azurewebsites.net/profesionales/get_profesionales/';
-  ruta_horas = 'http://127.0.0.1:3000/psicologos/horas_psicologo/';
-  ruta_detalles_citas = 'http://127.0.0.1:3000/usuarios/get_citas_by_id';
-  ruta_proxima_cita = 'http://127.0.0.1:3000/usuarios/get_proxima_cita_by_id';
-  ruta_historial_psicologo = 'http://127.0.0.1:3000/psicologos/get_citas_psicologo';
+  ruta_horas = 'https://psicoagenda-api.azurewebsites.net/psicologos/horas_psicologo/';
+  ruta_detalles_citas = 'https://psicoagenda-api.azurewebsites.net/usuarios/get_citas_by_id';
+  ruta_proxima_cita = 'https://psicoagenda-api.azurewebsites.net/usuarios/get_proxima_cita_by_id';
+  ruta_citas_psicologo = 'https://psicoagenda-api.azurewebsites.net/psicologos/get_citas_psicologo';
+  ruta_atenciones_psicologo = 'https://psicoagenda-api.azurewebsites.net/psicologos/get_atenciones_psicologo';
+  ruta_historial_psicologo = 'https://psicoagenda-api.azurewebsites.net/psicologos/get_historial_psicologo';
+  
 
   constructor(private http: HttpClient) {}
 
@@ -45,7 +49,27 @@ export class ApiService {
     return this.http.get(this.ruta_proxima_cita + '?IdPaciente=' + IdPaciente).pipe();    //Próxima Cita
   }
 
-async obtenerHistorialPsicologo(IdPsicologo: string) {
-    return this.http.get(this.ruta_historial_psicologo + '?IdPsicologo=' + IdPsicologo).toPromise();    //Historial Psicologo
+  obtenerCitaPsicologo(IdPsicologo: string) {
+    return this.http.get(this.ruta_citas_psicologo + '?IdPsicologo=' + IdPsicologo).pipe();    //Historial Psicologo
   }
+
+  obtenerHistorialPsicologo(IdPsicologo: string) {
+    return this.http.get(this.ruta_historial_psicologo + '?IdPsicologo=' + IdPsicologo).pipe();    //Historial Psicologo
+  }
+
+  obtenerAtencionesPsicologo(IdPsicologo: string) {
+    return this.http.get(this.ruta_atenciones_psicologo + '?IdPsicologo=' + IdPsicologo).pipe();    //Atenciones Psicologo
+  }
+
+  createTransaction(buyOrder: string, sessionId: string, amount: number, returnUrl: string): Observable<any> {
+    const url = `https://psicoagenda-api.azurewebsites.net/api/v1/transbank/transaction/create`;
+    const body = {
+      buy_order: buyOrder,
+      session_id: sessionId,
+      amount: amount,
+      return_url: returnUrl 
+    };
+    return this.http.post(url, body);
+  }
+
 }

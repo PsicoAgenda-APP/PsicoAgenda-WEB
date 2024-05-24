@@ -23,6 +23,7 @@ export class CalendarioPage implements OnInit {
   lista_respuesta: any[] = [];
   validadorHora: number = 1;
   botonPago: boolean = false;
+  monto: number = 0;
 
   constructor(private router: Router, private apiService: ApiService) { }
 
@@ -42,6 +43,8 @@ export class CalendarioPage implements OnInit {
     let json = JSON.parse(jsonTexto);
     for (let x = 0; x < json.length; x++) {
       this.lista_respuesta.push(json[x]);
+      this.monto = this.lista_respuesta[x].ValorSesion;
+      console.log(this.monto);
       console.log(this.lista_respuesta);
     }
   }
@@ -52,7 +55,7 @@ export class CalendarioPage implements OnInit {
     this.fechaFinal = fechaFormat;
   }
 
-  
+
 
   async loadAvailableTimes() {
     this.horas = false;
@@ -118,19 +121,34 @@ export class CalendarioPage implements OnInit {
     const idCita = parseInt(idCitaString!, 10);
     this.idCita = idCita.toString();
     console.log(this.idCita);
-    this.botonPago = true;  
+    this.botonPago = true;
   }
 
   getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  webpay_plus_create() {
-      console.log("Webpay Plus Transaction.create")
-      const buyOrder: string = this.getRandomInt(1000000, 99999999).toString();
-      const sessionId: string = this.getRandomInt(1000000, 99999999).toString(); 
-      console.log(buyOrder)
-      console.log(sessionId)
+  webpay_plus_create(): void {
+    console.log("Webpay Plus Transaction.create")
+    const buyOrder: string = this.getRandomInt(1000000, 99999999).toString();
+    const sessionId: string = this.getRandomInt(1000000, 99999999).toString();
+    console.log(buyOrder)
+    console.log(sessionId)
+    const returnUrl = `${window.location.origin}/commit-pay`;
+    this.apiService.createTransaction(buyOrder, sessionId, this.monto, returnUrl).subscribe(
+      (response) => {
+        console.log('Transaction response:', response);
+        if (response.token && response.url) {
+          // Redirect to Transbank payment URL
+          window.location.href = response.url + '?token_ws=' + response.token;
+        } else {
+          console.error('Error creating transaction');
+        }
+      },
+      (error) => {
+        console.error('Error creating transaction', error);
+      }
+    );
   }
 
 }

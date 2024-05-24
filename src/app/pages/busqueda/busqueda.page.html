@@ -40,9 +40,11 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content>
-  <div class="search-bar-container">
+<ion-content *ngIf="!loading" >
+  <ion-img class="imagen_carga" src="../../../assets/icon/loading (1).gif"></ion-img>
+</ion-content>
+<ion-content *ngIf="loading">
+  <div class="search-bar-container" >
     <ion-searchbar placeholder="Buscar Psicólogo"></ion-searchbar>
     <ion-button>Buscar</ion-button>
   </div>
@@ -79,24 +81,24 @@
       {{ i + 1 }}
     </ion-button>
   </div>
-  <ion-footer>
-    <ion-toolbar>
-      <div class="footer-content">
-        <div class="footer-left">
-          <p>©2024 - PsicoAgenda APP</p>
-          <p>Todos los Derechos Reservados</p>
-        </div>
-        <div class="footer-center">
-          <!-- Aquí puedes agregar el contenido del bloque central -->
-        </div>
-        <div class="footer-right">
-          <p class="logo-link"><ion-icon class="header-logo" name="call-outline"></ion-icon>Teléfono Contacto: 920256865
-          </p>
-          <p class="logo-link"><ion-icon class="header-logo"
-              name="logo-instagram"></ion-icon>www.instagram.com/psicoagenda</p>
-        </div>
-      </div>
-    </ion-toolbar>
-  </ion-footer>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <div class="footer-content">
+      <div class="footer-left">
+        <p>©2024 - PsicoAgenda APP</p>
+        <p>Todos los Derechos Reservados</p>
+      </div>
+      <div class="footer-center">
+        <!-- Aquí puedes agregar el contenido del bloque central -->
+      </div>
+      <div class="footer-right">
+        <p class="logo-link"><ion-icon class="header-logo" name="call-outline"></ion-icon>Teléfono Contacto: 920256865
+        </p>
+        <p class="logo-link"><ion-icon class="header-logo"
+            name="logo-instagram"></ion-icon>www.instagram.com/psicoagenda</p>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-footer>
 <!-- Footer -->
