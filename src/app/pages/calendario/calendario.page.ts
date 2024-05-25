@@ -134,7 +134,7 @@ export class CalendarioPage implements OnInit {
     const sessionId: string = this.getRandomInt(1000000, 99999999).toString();
     console.log(buyOrder)
     console.log(sessionId)
-    const returnUrl = `${window.location.origin}/commit-pay`;
+    const returnUrl = `${window.location.origin}/commitpay`;
     this.apiService.createTransaction(buyOrder, sessionId, this.monto, returnUrl).subscribe(
       (response) => {
         console.log('Transaction response:', response);

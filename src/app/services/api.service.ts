@@ -72,4 +72,9 @@ export class ApiService {
     return this.http.post(url, body);
   }
 
+  commitTransaction(token: string): Observable<any> {
+    const url = `https://psicoagenda-api.azurewebsites.net/api/v1/transbank/transaction/commit/${token}`;
+    return this.http.put(url, { token });
+  }
+
 }

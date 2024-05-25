@@ -58,6 +58,10 @@ const routes: Routes = [
     path: 'historialpsicologo',
     loadChildren: () => import('./pages/historialpsicologo/historialpsicologo.module').then( m => m.HistorialpsicologoPageModule)
   },
+  {
+    path: 'commitpay',
+    loadChildren: () => import('./pages/commitpay/commitpay.module').then( m => m.CommitpayPageModule)
+  },
 
 
 
