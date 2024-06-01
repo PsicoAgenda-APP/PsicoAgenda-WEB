@@ -55,7 +55,7 @@ export class ApiService {
     return this.http.get(this.ruta_citas_psicologo + '?IdPsicologo=' + IdPsicologo).pipe();    //Historial Psicologo
   }
 
-  obtenerHistorialPsicologo(IdPsicologo: string) {
+  obtenerHistorialPsicologo(IdPsicologo: number) {
     return this.http.get(this.ruta_historial_psicologo + '?IdPsicologo=' + IdPsicologo).pipe();    //Historial Psicologo
   }
 

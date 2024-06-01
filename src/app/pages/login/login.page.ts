@@ -67,7 +67,8 @@ export class LoginPage implements OnInit {
               let parametros: NavigationExtras = {
                 state: {
                   idUsuario: this.idUsuario,
-                  idTipoUsuario: this.idTipo
+                  idTipoUsuario: this.idTipo,
+                  login: this.login2
                 },
                 replaceUrl: true
               }
