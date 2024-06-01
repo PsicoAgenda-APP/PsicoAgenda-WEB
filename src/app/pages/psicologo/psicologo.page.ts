@@ -60,4 +60,16 @@ export class PsicologoPage implements OnInit {
     }
     this.router.navigate(['historialpsicologo'], parametros);
   }
+
+  goAtenciones() {
+    this.login = true;
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPsicologo: this.idPsicologo
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['atencionespsicologo'], parametros);
+  }
 }

@@ -74,6 +74,8 @@ export class LoginPage implements OnInit {
               }
               this.router.navigate(['psicologo'], parametros);
             }
+          } else if (this.mdl_contrasena != this.contrasena || this.mdl_correo != this.correo) {
+            this.isAlertOpen2 = true;
           }
         }
       } catch (error) {

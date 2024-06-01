@@ -13,15 +13,24 @@ export class AtencionespsicologoPage implements OnInit {
   isAlertOpen = false;
   alertButtons = ['OK'];
   error_mensaje: any = '';
+  login: boolean = false;
+  idPsicologo: number = 0;
 
   constructor(private router: Router, private apiService: ApiService) {}
 
-  ngOnInit() {
+  ngOnInit() {let parametros = this.router.getCurrentNavigation();
+    if (parametros?.extras.state) {
+      this.idPsicologo = parametros?.extras.state['idPsicologo'];
+      this.login = parametros?.extras.state['login'];
+    }
     this.obtenerAtencionesPsicologo();
   }
 
+
+  
+
   async obtenerAtencionesPsicologo() {
-    const IdPsicologo = '4'; // Reemplaza esto con el IdPsicologo real
+    const IdPsicologo = this.idPsicologo; // Reemplaza esto con el IdPsicologo real
     try {
       const data = this.apiService.obtenerAtencionesPsicologo(IdPsicologo);
       const respuesta = await lastValueFrom(data) as any[];

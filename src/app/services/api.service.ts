@@ -59,7 +59,7 @@ export class ApiService {
     return this.http.get(this.ruta_historial_psicologo + '?IdPsicologo=' + IdPsicologo).pipe();    //Historial Psicologo
   }
 
-  obtenerAtencionesPsicologo(IdPsicologo: string) {
+  obtenerAtencionesPsicologo(IdPsicologo: number) {
     return this.http.get(this.ruta_atenciones_psicologo + '?IdPsicologo=' + IdPsicologo).pipe();    //Atenciones Psicologo
   }
 
