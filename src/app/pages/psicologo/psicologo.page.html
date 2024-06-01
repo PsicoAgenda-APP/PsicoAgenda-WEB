@@ -33,11 +33,13 @@
           <ion-col>Estado</ion-col>
         </ion-row>
         <!-- Usando *ngFor para repetir filas de citas -->
-        <ion-row *ngFor="let cita of citas">
-          <ion-col>{{ cita.fechaHora }}</ion-col>
-          <ion-col>{{ cita.idCita }}</ion-col>
-          <ion-col>{{ cita.datosPaciente }}</ion-col>
-          <ion-col>{{ cita.estado }}</ion-col>
+        <!--<ion-row *ngFor="let cita of citas">-->
+        <ion-row>
+          <ion-col>Aun no hay citas agendadas</ion-col>
+          <!--<ion-col>{{ cita.fechaHora }}</ion-col>-->
+          <!--<ion-col>{{ cita.idCita }}</ion-col>-->
+          <!--<ion-col>{{ cita.datosPaciente }}</ion-col>-->
+          <!--<ion-col>{{ cita.estado }}</ion-col>-->
         </ion-row>
       </ion-grid>
     </ion-card-content>

@@ -20,6 +20,8 @@ export class LoginPage implements OnInit {
   alertButtons = ['OK'];
   error_mensaje: any = '';
   idTipo: number = 0;
+  idUsuario: number = 0;
+  login2: boolean = false;
 
 
   constructor(private router: Router, private apiService: ApiService) { }
@@ -45,19 +47,31 @@ export class LoginPage implements OnInit {
           this.contrasena = this.lista_respuesta[x].Contrasena;
           this.correo = this.lista_respuesta[x].CorreoElectronico;
           this.idTipo = this.lista_respuesta[x].IdTipoUsuario;
+          this.idUsuario = this.lista_respuesta[x].IdUsuario;
           console.log(this.contrasena)
           console.log(this.correo)
+          console.log('ID: ', this.idUsuario)
           if (this.mdl_contrasena == this.contrasena && this.mdl_correo == this.correo) {
+            this.login2 = true;
             if (this.idTipo == 1) {
               let parametros: NavigationExtras = {
+                state: {
+                  idUsuario: this.idUsuario,
+                  idTipoUsuario: this.idTipo,
+                  login: this.login2
+                },
                 replaceUrl: true
               }
-              this.router.navigate(['cliente'],parametros);
+              this.router.navigate(['cliente'], parametros);
             } else if (this.idTipo == 2) {
               let parametros: NavigationExtras = {
+                state: {
+                  idUsuario: this.idUsuario,
+                  idTipoUsuario: this.idTipo
+                },
                 replaceUrl: true
               }
-              this.router.navigate(['psicolgo'],parametros);
+              this.router.navigate(['psicologo'], parametros);
             }
           }
         }
@@ -65,7 +79,7 @@ export class LoginPage implements OnInit {
         this.isAlertOpen2 = true;
       }
     } else {
-      this.isAlertOpen = true; 
+      this.isAlertOpen = true;
     }
   }
 
@@ -78,6 +92,6 @@ export class LoginPage implements OnInit {
       replaceUrl: true
     }
 
-    this.router.navigate(['home'],parametros)
+    this.router.navigate(['home'], parametros)
   }
 }

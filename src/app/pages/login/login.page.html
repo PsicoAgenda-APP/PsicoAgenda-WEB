@@ -1,21 +1,22 @@
 <ion-content>
   <ion-card>
     <button (click)=navigateHome() style="background-color: transparent;">
-      <ion-img src="../../../assets/icon/psicoagendalogo.png"  ></ion-img>
+      <ion-img src="../../../assets/icon/psicoagendalogo.png"></ion-img>
     </button>
     <h1>Iniciar Sesión</h1>
     <ion-item>
       <ion-label position="floating"></ion-label>
-      <ion-input label="Correo" labelPlacement="floating" [(ngModel)]="mdl_correo"></ion-input>
+      <ion-input type="email" label="Correo" labelPlacement="floating" [(ngModel)]="mdl_correo"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating"></ion-label>
-      <ion-input label="Contraseña" labelPlacement="floating" [(ngModel)]="mdl_contrasena"></ion-input>
+      <ion-input type="password" label="Contraseña" labelPlacement="floating" [(ngModel)]="mdl_contrasena"></ion-input>
     </ion-item>
     <ion-text>¿Olvido su Clave?</ion-text>
     <br>
     <ion-text>Cambiar Clave</ion-text>
     <ion-button (click)=login() expand="full">Entrar</ion-button>
+
   </ion-card>
 
   <ion-alert [isOpen]="isAlertOpen" header="Información" message="No puede dejar campos vacios" [buttons]="alertButtons"

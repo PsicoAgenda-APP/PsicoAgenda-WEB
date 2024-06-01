@@ -13,13 +13,20 @@ export class CommitpayPage implements OnInit {
   transactionDetail: any;
   errorMessage: string = '';
   token_ws: string = '';
+  idCita: number = 0;
+  idPaciente: number = 0;
+  login: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private apiService: ApiService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       this.token_ws = params['token_ws'];
-      console.log(this.token_ws)
+      this.idCita = JSON.parse(localStorage.getItem('idCita') || '0');
+      this.idPaciente = JSON.parse(localStorage.getItem('idPaciente') || '0');
+      this.login = JSON.parse(localStorage.getItem('login') || 'false');
+      console.log(this.idCita)
+      console.log(this.idPaciente)
       if (this.token_ws) {
         this.apiService.commitTransaction(this.token_ws).subscribe(
           (response) => {
@@ -34,6 +41,14 @@ export class CommitpayPage implements OnInit {
                 authorization_code: response.authorization_code,
                 buy_order: response.buy_order,
               };
+              this.apiService.confirmarCita(this.idPaciente, this.idCita).subscribe(
+                response => {
+                  console.log('Cita Agendada Correctamente', response);
+                },
+                error => {
+                  console.error('Error al agendar la cita', error);
+                }
+              );          
             } else {
               this.errorMessage = 'ERROR EN LA TRANSACCIÓN, SE RECHAZA LA TRANSACCIÓN.';
             }
@@ -58,10 +73,22 @@ export class CommitpayPage implements OnInit {
 
 
   goHome() {
-    let parametros: NavigationExtras = {
-      replaceUrl: true
+    console.log("Login: ", this.login)
+    if (this.login) {
+      let parametros: NavigationExtras = {
+        state: {
+          login: this.login,
+          idPaciente: this.idPaciente
+        },
+        replaceUrl: true
+      }
+      this.router.navigate(['cliente'], parametros);
+    } else {
+      let parametros: NavigationExtras = {
+        replaceUrl: true
+      }
+      this.router.navigate(['home'], parametros);
     }
-    this.router.navigate(['home'], parametros);
   }
 
   private getPaymentType(code: string): string {

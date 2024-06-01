@@ -9,11 +9,11 @@
       <ion-button (click)="redirectTo('/fichapaciente')">Fichas clinicas</ion-button>
       <ion-button (click)="redirectTo('/home')">Cerrar sesión</ion-button>
     </ion-buttons>
-    <ion-title style="text-decoration: none;">
-      <a routerLink="/home" style="text-decoration: none;">
-        <img src="../../assets/icon/psicoagendalogo.png" style="height: 40px; margin-right: 8px;" alt="Logo"/>
+    <ion-title class="header-title">
+      <a style="color: #000000;" (click)="goHome()" class="logo-link">
+        <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo" />
+        PsicoAgenda
       </a>
-      PsicoAgenda
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -57,7 +57,7 @@
 </ion-content>
    <!-- Footer -->
    <ion-footer>
-    <ion-toolbar class="toolbarfooter">
+    <ion-toolbar>
       <div class="footer-content">
         <div class="footer-left">
           <p>©2024 - PsicoAgenda APP</p>
@@ -67,8 +67,10 @@
           <!-- Aquí puedes agregar el contenido del bloque central -->
         </div>
         <div class="footer-right">
-          <p><a href="phone"><ion-icon name="call-outline"></ion-icon> Telefono Contacto: 920256865</a> </p>
-          <p><a href="www.instagram.com/psicoagenda"><ion-icon name="logo-instagram"></ion-icon> www.instagram.com/psicoagenda</a></p>
+          <p class="logo-link"><ion-icon class="header-logo" name="call-outline"></ion-icon>Teléfono Contacto: 920256865
+          </p>
+          <p class="logo-link"><ion-icon class="header-logo"
+              name="logo-instagram"></ion-icon>www.instagram.com/psicoagenda</p>
         </div>
       </div>
     </ion-toolbar>

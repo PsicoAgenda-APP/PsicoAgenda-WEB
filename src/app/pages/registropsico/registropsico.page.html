@@ -30,11 +30,11 @@
       </ion-item>
       <ion-item [disabled]="!rutValido">
         <ion-label position="floating">Calle</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input type="text" [(ngModel)]="mdl_calle"></ion-input>
       </ion-item>
       <ion-item [disabled]="!rutValido">
         <ion-label position="floating">Numeración</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input type="text" [(ngModel)]="mdl_numeracion"></ion-input>
       </ion-item>
       <ion-item [disabled]="!rutValido">
         <ion-label position="floating">Comuna</ion-label>
@@ -58,25 +58,25 @@
       </ion-item>
       <ion-item [disabled]="!rutValido">
         <ion-label position="floating">Teléfono</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input type="text" [(ngModel)]="mdl_telefono"></ion-input>
       </ion-item>
       <ion-item [disabled]="!rutValido">
         <ion-label position="floating">Fecha de Nacimiento</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input type="text"  [(ngModel)]="mdl_fecha"></ion-input>
       </ion-item>
       <ion-item [disabled]="!rutValido">
         <ion-label position="floating">Correo Electrónico</ion-label>
-        <ion-input type="email"></ion-input>
+        <ion-input type="email" [(ngModel)]="mdl_correo"></ion-input>
       </ion-item>
       <ion-item [disabled]="!rutValido">
         <ion-label position="floating">Contraseña</ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-input type="password" [(ngModel)]="mdl_contrasena"></ion-input>
       </ion-item>
       <ion-item [disabled]="!rutValido">
         <ion-label position="floating">Valor por la sesión</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input type="text" [(ngModel)]="mdl_valor"></ion-input>
       </ion-item>
-      <ion-button class="ion-button-registar" expand="block" type="submit">Registrar</ion-button>
+      <ion-button class="ion-button-registar" expand="block" type="submit" (click)="register()">Registrar</ion-button>
   </div>
   <!-- Footer -->
   <ion-footer>
@@ -105,4 +105,8 @@
 
   <ion-alert [isOpen]="isAlertOpen2" header="Información" message="Prestador No Registrado" [buttons]="alertButtons"
     (didDismiss)="setOpen(false)">
+  </ion-alert>
+
+  <ion-alert [isOpen]="isAlertOpen3" header="Información" message="Registro Completado" [buttons]="alertButtons"
+    (didDismiss)="setOpen(false)" (click)="goHome()">
   </ion-alert>

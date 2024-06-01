@@ -24,6 +24,8 @@ export class CalendarioPage implements OnInit {
   validadorHora: number = 1;
   botonPago: boolean = false;
   monto: number = 0;
+  idPaciente: number = 0;
+  login: boolean = false;
 
   constructor(private router: Router, private apiService: ApiService) { }
 
@@ -35,6 +37,8 @@ export class CalendarioPage implements OnInit {
     if (parametros?.extras.state) {
       this.idPsicologoString = parametros?.extras.state['idPsicologo'];
       this.idPsicologo = parseInt(this.idPsicologoString, 10);
+      this.idPaciente = parametros?.extras.state['idPaciente'];
+      this.login = parametros?.extras.state['login'];
       console.log('El ID del usuario es:', this.idPsicologo)
     }
     let data = this.apiService.datosPsicologo(this.idPsicologo);
@@ -140,6 +144,9 @@ export class CalendarioPage implements OnInit {
         console.log('Transaction response:', response);
         if (response.token && response.url) {
           // Redirect to Transbank payment URL
+          localStorage.setItem('idCita', JSON.stringify(this.idCita));
+          localStorage.setItem('idPaciente', JSON.stringify(this.idPaciente));
+          localStorage.setItem('login', JSON.stringify(this.login));
           window.location.href = response.url + '?token_ws=' + response.token;
         } else {
           console.error('Error creating transaction');

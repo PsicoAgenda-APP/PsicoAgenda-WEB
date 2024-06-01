@@ -5,12 +5,12 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="redirectTo('/home')">Editar datos</ion-button>
-      <ion-button (click)="redirectTo('/atencionespaciente')">Historial de atenciones</ion-button>
+      <ion-button (click)="goHistorial()">Historial de atenciones</ion-button>
       <ion-button (click)="redirectTo('/fichapaciente')">Fichas clinicas</ion-button>
-      <ion-button (click)="redirectTo('/home')">Cerrar sesión</ion-button>
+      <ion-button (click)="logout()">Cerrar sesión</ion-button>
     </ion-buttons>
     <ion-title class="header-title">
-      <a style="color: #000000;" routerLink="/home" class="logo-link">
+      <a style="color: #000000;" (click)="goHome()" class="logo-link">
         <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo" />
         PsicoAgenda
       </a>

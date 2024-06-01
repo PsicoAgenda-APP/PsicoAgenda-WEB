@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -16,6 +16,7 @@ export class RegistropsicoPage implements OnInit {
   rut: string = '';
   isAlertOpen = false;
   isAlertOpen2 = false;
+  isAlertOpen3 = false;
   alertButtons = ['OK'];
   lista_respuesta: any[] = [];
   rutValido = false;
@@ -24,6 +25,16 @@ export class RegistropsicoPage implements OnInit {
   mdl_apellido: string = '';
   mdl_apellido2: string = '';
   nombre_completo: string = '';
+  idComuna: number = 1;
+  idTipo: number = 2;
+  idEspecialidad: number = 1;
+  mdl_numeracion: number = 0;
+  mdl_telefono: string = '';
+  mdl_fecha: string = '';
+  mdl_correo: string = '';
+  mdl_contrasena: string = '';
+  mdl_valor: string = '';
+  mdl_calle: string = '';
 
   constructor(private router: Router, private apiService: ApiService) { // Router ya está inyectado aquí
     /*this.userForm = new FormGroup({
@@ -44,7 +55,7 @@ export class RegistropsicoPage implements OnInit {
     });*/
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async validarPrestador() {
     this.isAlertOpen2 = false;
@@ -73,7 +84,7 @@ export class RegistropsicoPage implements OnInit {
             this.mdl_apellido = this.lista_respuesta[x].apellido_paterno
             this.mdl_apellido2 = this.lista_respuesta[x].apellido_materno
             console.log('Rut válido:', this.mdl_rut);
-          } 
+          }
         }
       } catch (error) {
         console.error('Error al validar el prestador:', error);
@@ -107,4 +118,29 @@ export class RegistropsicoPage implements OnInit {
     this.isAlertOpen = isOpen;
   }
 
+  register() {
+    const transformarFecha = (fecha: string): string => fecha.split('-').reverse().join('-');
+    const fechaTransformada = transformarFecha(this.mdl_fecha);
+    this.apiService.registrarPsicologo(this.mdl_calle, this.mdl_numeracion, this.idComuna, this.mdl_nombre, this.mdl_nombre2,
+      this.mdl_apellido, this.mdl_apellido2, this.mdl_telefono, fechaTransformada, this.mdl_correo, this.mdl_contrasena,
+      this.idTipo, this.mdl_rut, this.mdl_valor, this.idEspecialidad)
+      .subscribe(
+        response => {
+          console.log('Psicolo Registrado Correctamente', response);
+        },
+        error => {
+          console.error('Error al registrarse', error);
+        }
+    )
+    this.isAlertOpen3 = true;
+  }
+
+  goHome() {
+    let parametros: NavigationExtras = {
+      replaceUrl: true
+    }
+    this.router.navigate(['home'], parametros);
+  }
+
 }
+

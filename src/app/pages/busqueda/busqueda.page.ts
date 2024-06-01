@@ -22,6 +22,7 @@ export class BusquedaPage implements OnInit {
   idUsuario: string = '';
   idPsicologo: string = '';
   loading: boolean = false;
+  idPaciente: number = 0;
 
   ngOnInit() {
     setTimeout(() => {
@@ -31,10 +32,8 @@ export class BusquedaPage implements OnInit {
     let parametros = this.router.getCurrentNavigation();
     if (parametros?.extras.state) {
       this.dato = parametros?.extras.state['dato'];
-      var login: boolean = parametros?.extras.state['login'];
-      console.log(login)
-      this.login = login;
-      console.log(this.login)
+      this.login = parametros?.extras.state['login'];
+      this.idPaciente = parametros?.extras.state['idPaciente'];
     }
   }
 
@@ -47,7 +46,9 @@ export class BusquedaPage implements OnInit {
       console.log('El ID del usuario como texto es:', this.idPsicologo);
       let parametros: NavigationExtras = {
         state: {
-          idPsicologo: this.idPsicologo
+          idPsicologo: this.idPsicologo,
+          idPaciente: this.idPaciente,
+          login: this.login
         },
         replaceUrl: true
       }
@@ -90,10 +91,21 @@ export class BusquedaPage implements OnInit {
   }
 
   goHome() {
-    let parametros: NavigationExtras = {
-      replaceUrl: true
+    console.log("Login: ", this.login)
+    if (this.login) {
+      let parametros: NavigationExtras = {
+        state: {
+          login: this.login
+        },
+        replaceUrl: true
+      }
+      this.router.navigate(['cliente'], parametros);
+    } else {
+      let parametros: NavigationExtras = {
+        replaceUrl: true
+      }
+      this.router.navigate(['home'], parametros);
     }
-    this.router.navigate(['home'], parametros);
   }
 
 }
