@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="start">
   <ion-card>
     <button (click)=navigateHome() style="background-color: transparent;">
       <ion-img src="../../../assets/icon/psicoagendalogo.png"></ion-img>
@@ -12,17 +12,67 @@
       <ion-label position="floating"></ion-label>
       <ion-input type="password" label="Contraseña" labelPlacement="floating" [(ngModel)]="mdl_contrasena"></ion-input>
     </ion-item>
-    <ion-text>¿Olvido su Clave?</ion-text>
+    <ion-text (click)="recuperarContrasena()">¿Olvido su Clave?</ion-text>
     <br>
-    <ion-text>Cambiar Clave</ion-text>
+    <br>
+    <ion-text (click)="actualizar()">Cambiar Clave</ion-text>
     <ion-button (click)=login() expand="full">Entrar</ion-button>
-
   </ion-card>
+</ion-content>
 
-  <ion-alert [isOpen]="isAlertOpen" header="Información" message="No puede dejar campos vacios" [buttons]="alertButtons"
-    (didDismiss)="setOpen(false)">
-  </ion-alert>
+<ion-content *ngIf="update">
+  <ion-card>
+    <button (click)=navigateHome() style="background-color: transparent;">
+      <ion-img src="../../../assets/icon/psicoagendalogo.png"></ion-img>
+    </button>
+    <h2>Actualiza tu Contraseña</h2>
+    <ion-item>
+      <ion-label position="floating"></ion-label>
+      <ion-input type="email" label="Correo" labelPlacement="floating" [(ngModel)]="mdl_correo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating"></ion-label>
+      <ion-input type="password" label="Contraseña Temporal" labelPlacement="floating"
+        [(ngModel)]="mdl_contrasena"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating"></ion-label>
+      <ion-input type="password" label="Nueva Contraseña" labelPlacement="floating"
+        [(ngModel)]="mdl_nueva_contrasena"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating"></ion-label>
+      <ion-input type="password" label="Repetir Nueva Contraseña" labelPlacement="floating"
+        [(ngModel)]="mdl_repeticion"></ion-input>
+    </ion-item>
+    <ion-text (click)="volverLogin()">Volver</ion-text>
+    <ion-button (click)="cambiarContrasena()" expand="full">Actualizar Clave</ion-button>
+  </ion-card>
+</ion-content>
 
-  <ion-alert [isOpen]="isAlertOpen2" header="Información" message="Credenciales Invalidas" [buttons]="alertButtons"
-    (didDismiss)="setOpen(false)">
-  </ion-alert>
+<ion-content *ngIf="recover">
+  <ion-card>
+    <button (click)=navigateHome() style="background-color: transparent;">
+      <ion-img src="../../../assets/icon/psicoagendalogo.png"></ion-img>
+    </button>
+    <h2>Indica tu correo para recuperar la contraseña</h2>
+    <ion-item>
+      <ion-label position="floating"></ion-label>
+      <ion-input type="email" label="Correo" labelPlacement="floating" [(ngModel)]="mdl_correo"></ion-input>
+    </ion-item>
+    <ion-text (click)="volverLogin()">Volver</ion-text>
+    <ion-button (click)="sendEmail()" expand="full">Recuperar</ion-button>
+  </ion-card>
+</ion-content>
+
+<ion-alert [isOpen]="isAlertOpen" header="Información" message="No puede dejar campos vacios" [buttons]="alertButtons"
+  (didDismiss)="setOpen(false)">
+</ion-alert>
+
+<ion-alert [isOpen]="isAlertOpen2" header="Información" message="Credenciales Invalidas" [buttons]="alertButtons"
+  (didDismiss)="setOpen(false)">
+</ion-alert>
+
+<ion-alert [isOpen]="isAlertOpen3" header="Información" message="Contraseña Actualizada" [buttons]="alertButtons"
+  (didDismiss)="setOpen(false)" (click)="navigateHome()">
+</ion-alert>

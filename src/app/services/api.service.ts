@@ -20,9 +20,28 @@ export class ApiService {
   rutaId = 'https://psicoagenda-api.azurewebsites.net/usuarios/obtener_id/';
   rutaCita = 'https://psicoagenda-api.azurewebsites.net/paciente/agendarCita/'
   rutaRegistroPsicologo = 'https://psicoagenda-api.azurewebsites.net/usuarios/registro_psicologo/'
+  rutaRecuperacion = 'https://psicoagenda-api.azurewebsites.net/usuarios/cambiar_contrasena/'
+  rutaToken = 'https://psicoagenda-api.azurewebsites.net/usuarios/guadarToken/';
+
 
   constructor(private http: HttpClient) { }
 
+  sendEmail(to: string, subject: string, text: string, html: string): Observable<any> {
+    const url = 'https://psicoagenda-api.azurewebsites.net/api/v1/email/send'
+    const body = {
+      to: to,
+      subject: subject,
+      text: text,
+      html: html
+  }
+    return this.http.post(url, body);
+  }
+
+  recuperacionClave (correo: string, contrasena: string) {
+    return this.http.get(this.rutaRecuperacion + '?CorreoElectronico=' + correo + '&NuevaContrasena=' + contrasena).pipe();
+  }
+
+  
   obtenerUsuario(correo: string, contrasena: string) {
     return this.http.get(this.ruta + '?CorreoElectronico=' + correo + '&Contrasena=' + contrasena).pipe();
   }
@@ -122,6 +141,10 @@ export class ApiService {
       IdEspecialidad: IdEspecialidad
     };
     return this.http.post(this.rutaRegistroPsicologo, body);
+  }
+
+  guardarToken (token: string, correo: string) {
+    return this.http.get(this.rutaToken + '?Token=' + token + '&CorreoElectronico=' + correo).pipe();
   }
 
 }
