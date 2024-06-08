@@ -9,27 +9,33 @@ import { lastValueFrom } from 'rxjs';
   styleUrls: ['./fichapsicologo.page.scss'],
 })
 export class FichapsicologoPage implements OnInit {
-  citaspsicologo: any[] = [];
+  fichasPaciente: any[] = [];
   isAlertOpen = false;
   alertButtons = ['OK'];
   error_mensaje: any = '';
+  idPaciente: number = 0;
 
   constructor(private router: Router, private apiService: ApiService) {}
 
   ngOnInit() {
-    this.obtenerCitasPsicologo();
+    let parametros = this.router.getCurrentNavigation();
+    if (parametros?.extras.state) {
+      const idPaciente = parametros?.extras.state['idPaciente'];
+      this.idPaciente = parseInt(idPaciente, 10);
+      console.log(this.idPaciente)
+    }
+    this.obtenerFichasPaciente();
   }
 
-  async obtenerCitasPsicologo() {
-    const IdPsicologo = '4'; // Reemplaza esto con el IdPsicologo real
+  async obtenerFichasPaciente() {
     try {
-      const data = this.apiService.obtenerCitaPsicologo(IdPsicologo);
+      const data = this.apiService.obtenerDetallesCitas(this.idPaciente);
       const respuesta = await lastValueFrom(data) as any[];
-      this.citaspsicologo = respuesta;
+      this.fichasPaciente = respuesta;
     } catch (error) {
       this.isAlertOpen = true;
-      this.error_mensaje = 'Error al obtener el historial de citas';
-      console.error('Error al obtener el historial de citas', error);
+      this.error_mensaje = 'Error al obtener las fichas del paciente';
+      console.error('Error al obtener las fichas del paciente', error);
     }
   }
 

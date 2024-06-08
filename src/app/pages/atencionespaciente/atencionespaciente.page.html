@@ -43,6 +43,7 @@
           <ion-col><strong>Hora</strong></ion-col>
           <ion-col><strong>Datos Psicologo</strong></ion-col>
           <ion-col><strong>Estado</strong></ion-col>
+          <ion-col><strong>Informe</strong></ion-col>
         </ion-row>
         <!-- ngFor para iterar sobre el array del historial de citas -->
         <ion-row *ngFor="let cita of historialCitas">
@@ -50,6 +51,10 @@
           <ion-col>{{ cita.hora }}</ion-col>
           <ion-col>{{ cita.nombre_psicologo }}</ion-col>
           <ion-col>{{ cita.estado_cita }}</ion-col>
+          <ion-col>
+            <ion-img class="img-informe" src="../../../assets/icon/informe.png">
+            </ion-img>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>

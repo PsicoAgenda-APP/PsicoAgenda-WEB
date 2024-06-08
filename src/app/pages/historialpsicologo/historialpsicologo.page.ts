@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { lastValueFrom } from 'rxjs';
 
@@ -15,6 +15,7 @@ export class HistorialpsicologoPage implements OnInit {
   error_mensaje: any = '';
   login: boolean = false;
   idPsicologo: number = 0;
+  idPaciente: string = '';
 
 
   constructor(private router: Router, private apiService: ApiService) {}
@@ -47,4 +48,19 @@ export class HistorialpsicologoPage implements OnInit {
   redirectTo(route: string) {
     this.router.navigate([route]);
   }
+
+  verFicha(index:number) {
+    const elemento2 = document.getElementById('id_paciente_' + index);
+    const idPacienteString = elemento2 ? elemento2.textContent : null;
+    const idPaciente = parseInt(idPacienteString!, 10);
+    this.idPaciente = idPaciente.toString();
+    let parametros: NavigationExtras = {
+      state: {
+        idPaciente: this.idPaciente
+      }
+    };
+    console.log("idPaciente: " + this.idPaciente)
+    this.router.navigate(['fichapsicologo'], parametros);
+  }
+
 }
