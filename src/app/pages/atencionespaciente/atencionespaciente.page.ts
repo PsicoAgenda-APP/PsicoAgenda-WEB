@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import jsPDF from 'jspdf';
+
 
 @Component({
   selector: 'app-atencionespaciente',
@@ -81,4 +83,28 @@ export class AtencionesPacientePage implements OnInit {
     }
   }
 
+  downloadPDF() {
+    const doc = new jsPDF();
+
+    // Obtener solo la primera cita
+    const cita = this.historialCitas[0];
+
+    if (cita) {
+      // Definir el contenido del PDF
+      let y = 10; // Coordenada Y inicial
+      doc.text(`Fecha: ${cita.fecha}`, 10, y);
+      y += 10;
+      doc.text(`Nombre Paciente: ${cita.nombre_paciente}`, 10, y);
+      y += 10;
+      doc.text(`Nombre Psicólogo: ${cita.nombre_psicologo}`, 10, y);
+      y += 10;
+      doc.text(`Diagnóstico: ${cita.Diagnostico}`, 10, y);
+      // Descargar el PDF
+      doc.save('cita.pdf');
+    } else {
+      console.error('No hay citas disponibles');
+    }
+  }
 }
+
+

@@ -29,16 +29,12 @@
           <ion-col>Fecha</ion-col>
           <ion-col>Hora</ion-col>
           <ion-col>Paciente</ion-col>
-          <ion-col>Diagnóstico</ion-col>
-          <ion-col>Tratamiento</ion-col>
           <ion-col>Acciones</ion-col>
         </ion-row>
         <ion-row *ngFor="let cita of historialCitas; let i = index">
           <ion-col>{{ cita.FechaCita }}</ion-col>
           <ion-col>{{ cita.HoraCita }}</ion-col>
           <ion-col>{{ cita.Nombre_Paciente }}</ion-col>
-          <ion-col>{{ cita.Diagnostico }}</ion-col>
-          <ion-col>{{ cita.Tratamiento }}</ion-col>
           <p hidden id="id_paciente_{{i}}">{{ cita.IdPaciente }}</p>
           <ion-col>
             <ion-button (click)="verFicha(i)">Ver Ficha</ion-button>

@@ -52,7 +52,7 @@
           <ion-col>{{ cita.nombre_psicologo }}</ion-col>
           <ion-col>{{ cita.estado_cita }}</ion-col>
           <ion-col>
-            <ion-img class="img-informe" src="../../../assets/icon/informe.png">
+            <ion-img (click)="downloadPDF()" class="img-informe" src="../../../assets/icon/informe.png">
             </ion-img>
           </ion-col>
         </ion-row>
