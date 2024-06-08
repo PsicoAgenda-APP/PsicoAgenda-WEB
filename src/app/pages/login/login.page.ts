@@ -216,7 +216,7 @@ export class LoginPage implements OnInit {
           console.log(this.correo)
           console.log(this.token)
           console.log('ID: ', this.idUsuario)
-          if (this.token == this.token && this.mdl_nueva_contrasena == this.mdl_repeticion) {
+          if (this.mdl_contrasena == this.token && this.mdl_nueva_contrasena == this.mdl_repeticion) {
             this.apiService.recuperacionClave(this.mdl_correo, this.mdl_nueva_contrasena).subscribe(
               response => {
                 console.log('Contraseña Actualizada', response);
@@ -226,7 +226,7 @@ export class LoginPage implements OnInit {
               }
             );
             this.isAlertOpen3 = true;
-          } else if (this.token == this.token || this.mdl_nueva_contrasena == this.mdl_repeticion) {
+          } else if (this.token != this.token || this.mdl_nueva_contrasena != this.mdl_repeticion) {
             this.isAlertOpen2 = true;
           }
         }
