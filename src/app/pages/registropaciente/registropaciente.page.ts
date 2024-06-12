@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-registropaciente',
@@ -8,37 +8,70 @@ import { Router } from '@angular/router';
   styleUrls: ['./registropaciente.page.scss'],
 })
 export class RegistropacientePage implements OnInit {
-  userForm: FormGroup;
   showOptions: boolean = false;  // Añade esta propiedad para manejar el despliegue de opciones
+  mdl_rut: string = '';
+  mdl_calle: string = '';
+  mdl_numero: number = 0;
+  idComuna: number = 1; 
+  mdl_primerNombre: string = '';
+  mdl_segundoNombre: string = '';
+  mdl_apellidoPaterno: string = '';
+  mdl_apellidoMaterno: string = '';
+  mdl_telefono: string = '';
+  mdl_fechaNacimiento: string = '';
+  mdl_correo: string = '';
+  mdl_contrasena: string = '';
 
-  constructor(private router: Router) { // Router ya está inyectado aquí
-    this.userForm = new FormGroup({
-      Calle: new FormControl('', Validators.required),
-      Numero: new FormControl('', Validators.required),
-      IdComuna: new FormControl('', Validators.required),
-      PrimerNombre: new FormControl('', Validators.required),
-      SegundoNombre: new FormControl(''),
-      ApellidoPaterno: new FormControl('', Validators.required),
-      ApellidoMaterno: new FormControl('', Validators.required),
-      Telefono: new FormControl('', Validators.required),
-      FechaNacimiento: new FormControl('', Validators.required),
-      CorreoElectronico: new FormControl('', [Validators.required, Validators.email]),
-      Contrasena: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      Rut: new FormControl('', Validators.required),
-    });
+  // Propiedades para las alertas
+  isAlertOpen: boolean = false;
+  isAlertOpen2: boolean = false;
+  isAlertOpen3: boolean = false;
+  alertButtons: string[] = ['OK'];
+
+
+
+  constructor(private router: Router, private apiService: ApiService) { // Router ya está inyectado aquí
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  onSubmit() {
-    if (this.userForm.valid) {
-      console.log('Formulario válido:', this.userForm.value);
-      // Aquí puedes manejar la lógica para enviar datos o navegar
-      // this.router.navigate(['/alguna-ruta']); // Navegar a otra ruta al enviar el formulario
-    } else {
-      console.log('Formulario no válido');
+  register() {
+    const transformarFecha = (fecha: string): string => fecha.split('-').reverse().join('-');
+    const fechaTransformada = transformarFecha(this.mdl_fechaNacimiento);
+
+    this.apiService.registrarPaciente(
+      this.mdl_calle,
+      this.mdl_numero,
+      this.idComuna,
+      this.mdl_primerNombre,
+      this.mdl_segundoNombre,
+      this.mdl_apellidoPaterno,
+      this.mdl_apellidoMaterno,
+      this.mdl_telefono,
+      fechaTransformada,
+      this.mdl_correo,
+      this.mdl_contrasena,
+      2, // Asumiendo que IdTipoUsuario para pacientes es 2, ajusta si es necesario
+      this.mdl_rut
+    ).subscribe(
+      response => {
+        console.log('Paciente registrado correctamente', response);
+        this.isAlertOpen3 = true;
+      },
+      error => {
+        console.error('Error al registrar paciente', error);
+      }
+    );
+  }
+
+  goHome() {
+    let parametros: NavigationExtras = {
+      replaceUrl: true
     }
+    this.router.navigate(['home'], parametros);
   }
+
 
   // Métodos adicionales para el manejo de opciones y redirección
   toggleOptions() {

@@ -82,7 +82,19 @@ export class LoginPage implements OnInit {
                 replaceUrl: true
               }
               this.router.navigate(['psicologo'], parametros);
+            } else if (this.idTipo == 3) {
+              let parametros: NavigationExtras = {
+                state: {
+                  idUsuario: this.idUsuario,
+                  idTipoUsuario: this.idTipo,
+                  login: this.login2
+                },
+                replaceUrl: true
+              }
+              this.router.navigate(['admin'], parametros);
             }
+            
+            
           } else if (this.mdl_contrasena != this.contrasena || this.mdl_correo != this.correo) {
             this.isAlertOpen2 = true;
           }

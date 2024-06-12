@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar class="toolbarheader">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="goUsuarios()">Editar Usuarios</ion-button>
+      <ion-button (click)="goCitas()">Modificar Citas</ion-button>
+      <ion-button (click)="logout()">Cerrar Sesión</ion-button>
+    </ion-buttons>
+    <ion-title class="header-title">
+      <a style="color: #000000;" routerLink="/home" class="logo-link">
+        <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo" />
+        PsicoAgenda
+      </a>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text>
+    <strong>Mantenedor de Citas</strong>
+  </ion-text>
+  <ion-text><legend>Criterio de búsqueda</legend></ion-text>
+  
+  <div>
+    <div class="form-check"><input class="form-check-input" type="radio" name="identificacion" id="gridRadios1"
+        value="rut" checked=""><label class="form-check-label" for="gridRadios1">Rut</label>
+    </div>
+    <div class="form-check"><input class="form-check-input" type="radio" name="identificacion" id="gridRadios3"
+        value="email"><label class="form-check-label" for="gridRadios3">Numero de Cita</label></div>
+  </div>
+  <div><input class="form-control" name="criterioBusqueda" type="text" placeholder="Buscar">
+  </div>
+  <button class="btn btn-primary"><span><strong>Buscar</strong></span></button>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="footer-content">
+      <div class="footer-left">
+        <p>©2024 - PsicoAgenda APP</p>
+        <p>Todos los Derechos Reservados</p>
+      </div>
+      <div class="footer-center">
+        <!-- Aquí puedes agregar el contenido del bloque central -->
+      </div>
+      <div class="footer-right">
+        <p class="logo-link"><ion-icon class="header-logo" name="call-outline"></ion-icon>Teléfono Contacto: 920256865
+        </p>
+        <p class="logo-link"><ion-icon class="header-logo"
+            name="logo-instagram"></ion-icon>www.instagram.com/psicoagenda</p>
+      </div>
+    </div>
+  </ion-toolbar>
+
+</ion-footer>

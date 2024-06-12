@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title class="header-title">
-      <a routerLink="/home" class="logo-link">
+      <a (click)="goHome()" class="logo-link">
         <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo"/>
         PsicoAgenda
       </a>
@@ -21,58 +21,63 @@
   </ion-toolbar>
 </ion-header>
 
-
-<ion-content>
+<ion-content style="--background: url(../../../assets/icon/psicologia.png) no-repeat center center / cover;">
   <div class="form-container">
     <ion-title class="titulo-formulario">Únete como paciente</ion-title>
-    <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
-      <ion-item>
-        <ion-label position="floating">Calle</ion-label>
-        <ion-input type="text" formControlName="Calle"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Numeración</ion-label>
-        <ion-input type="text" formControlName="Numero"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Comuna</ion-label>
-        <ion-input type="text" formControlName="IdComuna"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Primer Nombre</ion-label>
-        <ion-input type="text" formControlName="PrimerNombre"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Primer Apellido</ion-label>
-        <ion-input type="text" formControlName="ApellidoPaterno"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Segundo Apellido</ion-label>
-        <ion-input type="text" formControlName="ApellidoMaterno"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Teléfono</ion-label>
-        <ion-input type="text" formControlName="Telefono"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Fecha de Nacimiento </ion-label>
-        <ion-input type="text" formControlName="FechaNacimiento"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Correo Electrónico</ion-label>
-        <ion-input type="email" formControlName="CorreoElectronico"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input type="password" formControlName="Contrasena"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Rut</ion-label>
-        <ion-input type="text" formControlName="Rut"></ion-input>
-      </ion-item>
-      <ion-button class= "ion-button-registar" expand="block" type="submit" [disabled]="!userForm.valid">Registrar</ion-button>
-    </form>
-  </div>
+  <form (ngSubmit)="register()">
+    <ion-item>
+      <ion-label position="floating">Rut</ion-label>
+      <ion-input type="text" [(ngModel)]="mdl_rut" name="rut"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Calle</ion-label>
+      <ion-input type="text" [(ngModel)]="mdl_calle" name="calle"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Número</ion-label>
+      <ion-input type="text" [(ngModel)]="mdl_numero" name="numero"></ion-input>
+    </ion-item>
+    <ion-item >
+      <ion-label position="floating">Comuna</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Primer Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="mdl_primerNombre" name="primerNombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Segundo Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="mdl_segundoNombre" name="segundoNombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Apellido Paterno</ion-label>
+      <ion-input type="text" [(ngModel)]="mdl_apellidoPaterno" name="apellidoPaterno"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Apellido Materno</ion-label>
+      <ion-input type="text" [(ngModel)]="mdl_apellidoMaterno" name="apellidoMaterno"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Teléfono</ion-label>
+      <ion-input type="text" [(ngModel)]="mdl_telefono" name="telefono"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Fecha de Nacimiento</ion-label>
+      <ion-input type="text" [(ngModel)]="mdl_fechaNacimiento" name="fechaNacimiento"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input type="email" [(ngModel)]="mdl_correo" name="correo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" [(ngModel)]="mdl_contrasena" name="contrasena"></ion-input>
+    </ion-item>
+    <ion-button expand="block" type="submit">Registrar</ion-button>
+  </form>
+</div>
+</ion-content>
+
    <!-- Footer -->
 <ion-footer>
   <ion-toolbar class="toolbarfooter">
@@ -91,4 +96,3 @@
     </div>
   </ion-toolbar>
 </ion-footer>
-</ion-content>

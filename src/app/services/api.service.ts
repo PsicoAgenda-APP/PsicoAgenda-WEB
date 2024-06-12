@@ -22,6 +22,8 @@ export class ApiService {
   rutaRegistroPsicologo = 'https://psicoagenda-api.azurewebsites.net/usuarios/registro_psicologo/'
   rutaRecuperacion = 'https://psicoagenda-api.azurewebsites.net/usuarios/cambiar_contrasena/'
   rutaToken = 'https://psicoagenda-api.azurewebsites.net/usuarios/guadarToken/';
+  rutaInsertarPaciente = 'https://psicoagenda-api.azurewebsites.net/usuarios/insertar_paciente/';
+
 
 
   constructor(private http: HttpClient) { }
@@ -145,6 +147,39 @@ export class ApiService {
 
   guardarToken (token: string, correo: string) {
     return this.http.get(this.rutaToken + '?Token=' + token + '&CorreoElectronico=' + correo).pipe();
+  }
+
+  registrarPaciente(
+    Calle: string,
+    Numero: number,
+    IdComuna: number,
+    PrimerNombre: string,
+    SegundoNombre: string,
+    ApellidoPaterno: string,
+    ApellidoMaterno: string,
+    Telefono: string,
+    FechaNacimiento: string,
+    CorreoElectronico: string,
+    Contrasena: string,
+    IdTipoUsuario: number,
+    Rut: string
+  ) {
+    const body = {
+      Calle: Calle,
+      Numero: Numero,
+      IdComuna: IdComuna,
+      PrimerNombre: PrimerNombre,
+      SegundoNombre: SegundoNombre,
+      ApellidoPaterno: ApellidoPaterno,
+      ApellidoMaterno: ApellidoMaterno,
+      Telefono: Telefono,
+      FechaNacimiento: FechaNacimiento,
+      CorreoElectronico: CorreoElectronico,
+      Contrasena: Contrasena,
+      IdTipoUsuario: IdTipoUsuario,
+      Rut: Rut
+    };
+    return this.http.post(this.rutaInsertarPaciente, body);
   }
 
 }

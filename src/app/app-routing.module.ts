@@ -62,6 +62,14 @@ const routes: Routes = [
     path: 'commitpay',
     loadChildren: () => import('./pages/commitpay/commitpay.module').then( m => m.CommitpayPageModule)
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule)
+  },
+  {
+    path: 'mantendorcitas',
+    loadChildren: () => import('./pages/mantendorcitas/mantendorcitas.module').then( m => m.MantendorcitasPageModule)
+  },
 
 
 
