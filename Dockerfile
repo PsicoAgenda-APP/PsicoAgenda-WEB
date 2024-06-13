@@ -13,5 +13,5 @@ COPY ./www /usr/src/app
 # Exponer el puerto 8080
 EXPOSE 8080
 
-# Comando para servir la aplicación
-CMD ["http-server", "/usr/src/app", "-p", "8080"]
+# Comando para servir la aplicación con proxy para manejar rutas
+CMD ["http-server", "/usr/src/app", "-p", "8080", "--proxy", "http://localhost:8080?"]
