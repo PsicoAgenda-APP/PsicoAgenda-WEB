@@ -16,6 +16,7 @@ export class ClientePage implements OnInit {
   idUsuario: number = 0;
   lista_respuesta: any[] = [];
   idPaciente: number = 0;
+  correo: string = '';
 
   redirectTo(route: string) {
     this.router.navigate([route]);
@@ -28,7 +29,7 @@ export class ClientePage implements OnInit {
       this.idPaciente = parametros?.extras.state['idPaciente'];
       this.idUsuario = parametros?.extras.state['idUsuario'];
       this.login = parametros?.extras.state['login'];
-      
+      this.correo = parametros?.extras.state['correo'];
     }
     let data = this.apiService.getId(this.idTipo, this.idUsuario);
     let respuesta = await lastValueFrom(data);
@@ -46,7 +47,8 @@ export class ClientePage implements OnInit {
       let parametros: NavigationExtras = {
         state: {
           login: this.login,
-          idPaciente: this.idPaciente
+          idPaciente: this.idPaciente,
+          correo: this.correo
         },
         replaceUrl: true
       }

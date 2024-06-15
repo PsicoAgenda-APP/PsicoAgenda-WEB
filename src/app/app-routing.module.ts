@@ -70,6 +70,10 @@ const routes: Routes = [
     path: 'mantendorcitas',
     loadChildren: () => import('./pages/mantendorcitas/mantendorcitas.module').then( m => m.MantendorcitasPageModule)
   },
+  {
+    path: 'mantenedorusuarios',
+    loadChildren: () => import('./pages/mantenedorusuarios/mantenedorusuarios.module').then( m => m.MantenedorusuariosPageModule)
+  },
 
 
 

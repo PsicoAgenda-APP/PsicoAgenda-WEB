@@ -167,7 +167,7 @@ ion-card-header {
 }
 
 table {
-  margin-top: 5%;
+  margin-top: 1%;
   width: 100%;
   /* Ancho de la tabla */
   border-collapse: collapse;
@@ -178,6 +178,12 @@ table {
   max-width: 650px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.botones {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1%;
 }
 
 /* Estilizando los encabezados de la tabla */

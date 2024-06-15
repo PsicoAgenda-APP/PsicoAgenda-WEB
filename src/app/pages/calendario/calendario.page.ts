@@ -26,6 +26,10 @@ export class CalendarioPage implements OnInit {
   monto: number = 0;
   idPaciente: number = 0;
   login: boolean = false;
+  correo: string = '';
+  nombrePsicologo: string = '';
+  fechaCita: string = '';
+  horaCita: string = '';
 
   constructor(private router: Router, private apiService: ApiService) { }
 
@@ -39,6 +43,7 @@ export class CalendarioPage implements OnInit {
       this.idPsicologo = parseInt(this.idPsicologoString, 10);
       this.idPaciente = parametros?.extras.state['idPaciente'];
       this.login = parametros?.extras.state['login'];
+      this.correo = parametros?.extras.state['correo'];
       console.log('El ID del usuario es:', this.idPsicologo)
     }
     let data = this.apiService.datosPsicologo(this.idPsicologo);
@@ -48,6 +53,7 @@ export class CalendarioPage implements OnInit {
     for (let x = 0; x < json.length; x++) {
       this.lista_respuesta.push(json[x]);
       this.monto = this.lista_respuesta[x].ValorSesion;
+      this.nombrePsicologo = this.lista_respuesta[x].Nombre;
       console.log(this.monto);
       console.log(this.lista_respuesta);
     }
@@ -57,6 +63,7 @@ export class CalendarioPage implements OnInit {
     const date = new Date(dateString);
     const fechaFormat = `${('0' + date.getDate()).slice(-2)}-${('0' + (date.getMonth() + 1)).slice(-2)}-${date.getFullYear()}`;
     this.fechaFinal = fechaFormat;
+    this.fechaCita = this.fechaFinal;
   }
 
 
@@ -119,7 +126,8 @@ export class CalendarioPage implements OnInit {
     this.router.navigate(['home'], parametros);
   }
 
-  confirmarCita(index: number) {
+  confirmarCita(index: number, horaCita: any) {
+    this.horaCita = horaCita;
     const elemento = document.getElementById('id_cita_' + index);
     const idCitaString = elemento ? elemento.textContent : null;
     const idCita = parseInt(idCitaString!, 10);
@@ -147,6 +155,10 @@ export class CalendarioPage implements OnInit {
           localStorage.setItem('idCita', JSON.stringify(this.idCita));
           localStorage.setItem('idPaciente', JSON.stringify(this.idPaciente));
           localStorage.setItem('login', JSON.stringify(this.login));
+          localStorage.setItem('correo', JSON.stringify(this.correo));
+          localStorage.setItem('nombrePsicologo', JSON.stringify(this.nombrePsicologo));
+          localStorage.setItem('fechaCita', JSON.stringify(this.fechaCita));
+          localStorage.setItem('horaCita', JSON.stringify(this.horaCita));
           window.location.href = response.url + '?token_ws=' + response.token;
         } else {
           console.error('Error creating transaction');

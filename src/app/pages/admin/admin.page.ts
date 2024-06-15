@@ -21,7 +21,7 @@ export class AdminPage implements OnInit {
   }
 
   goUsuarios() {
-    this.router.navigate(['editorusuarios']);
+    this.router.navigate(['mantenedorusuarios']);
   }
 
   logout() {

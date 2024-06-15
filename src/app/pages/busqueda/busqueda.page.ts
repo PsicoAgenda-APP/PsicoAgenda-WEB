@@ -23,6 +23,7 @@ export class BusquedaPage implements OnInit {
   idPsicologo: string = '';
   loading: boolean = false;
   idPaciente: number = 0;
+  correo: string = ''
 
   ngOnInit() {
     setTimeout(() => {
@@ -34,6 +35,7 @@ export class BusquedaPage implements OnInit {
       this.dato = parametros?.extras.state['dato'];
       this.login = parametros?.extras.state['login'];
       this.idPaciente = parametros?.extras.state['idPaciente'];
+      this.correo = parametros?.extras.state['correo'];
     }
   }
 
@@ -48,7 +50,8 @@ export class BusquedaPage implements OnInit {
         state: {
           idPsicologo: this.idPsicologo,
           idPaciente: this.idPaciente,
-          login: this.login
+          login: this.login,
+          correo: this.correo
         },
         replaceUrl: true
       }

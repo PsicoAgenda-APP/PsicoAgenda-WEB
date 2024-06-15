@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-commitpay',
@@ -16,6 +18,10 @@ export class CommitpayPage implements OnInit {
   idCita: number = 0;
   idPaciente: number = 0;
   login: boolean = false;
+  correo: string = '';
+  nombrePsicologo: string = '';
+  fechaCita: string = '';
+  horaCita: string = '';
 
   constructor(private router: Router, private route: ActivatedRoute, private apiService: ApiService) { }
 
@@ -25,8 +31,16 @@ export class CommitpayPage implements OnInit {
       this.idCita = JSON.parse(localStorage.getItem('idCita') || '0');
       this.idPaciente = JSON.parse(localStorage.getItem('idPaciente') || '0');
       this.login = JSON.parse(localStorage.getItem('login') || 'false');
+      this.correo = JSON.parse(localStorage.getItem('correo') || '');
+      this.nombrePsicologo = JSON.parse(localStorage.getItem('nombrePsicologo') || '');
+      this.fechaCita = JSON.parse(localStorage.getItem('fechaCita') || '');
+      this.horaCita = JSON.parse(localStorage.getItem('horaCita') || '');
       console.log(this.idCita)
       console.log(this.idPaciente)
+      console.log(this.correo)
+      console.log(this.nombrePsicologo)
+      console.log(this.fechaCita)
+      console.log(this.horaCita)
       if (this.token_ws) {
         this.apiService.commitTransaction(this.token_ws).subscribe(
           (response) => {
@@ -41,14 +55,15 @@ export class CommitpayPage implements OnInit {
                 authorization_code: response.authorization_code,
                 buy_order: response.buy_order,
               };
-              this.apiService.confirmarCita(this.idPaciente, this.idCita).subscribe(
+              this.apiService.confirmarCita(this.idPaciente, 1, this.idCita).subscribe(
                 response => {
                   console.log('Cita Agendada Correctamente', response);
                 },
                 error => {
                   console.error('Error al agendar la cita', error);
                 }
-              );          
+              );
+              this.sendEmail();
             } else {
               this.errorMessage = 'ERROR EN LA TRANSACCIÓN, SE RECHAZA LA TRANSACCIÓN.';
             }
@@ -61,6 +76,59 @@ export class CommitpayPage implements OnInit {
         this.errorMessage = 'ERROR EN LA TRANSACCIÓN, SE CANCELO EL PAGO.';
       }
     });
+  }
+
+  sendEmail() {
+    const subject = 'Hora Agendada en PsicoAgenda';
+
+    const text = 'Hola!,\n\nAgendaste una hora a traves de PsicoAgenda APP, revisa los detalles.' +
+      '\n\nPsicologo: ' + this.nombrePsicologo +
+      '\n\nFecha: ' + this.fechaCita +
+      '\n\nHora: ' + this.horaCita +
+      '\n\nTe Saluda,\nEquipo de PsicoAgenda APP.';
+
+    const html = `
+              <p>Hola!,</p>
+              <p>Agendaste una hora a traves de PsicoAgenda APP, revisa los detalles.</p>
+              <p><strong>Psicologo: ${this.nombrePsicologo}</strong></p>
+              <p><strong>Fecha: ${this.fechaCita}</strong></p>
+              <p><strong>Hora: ${this.horaCita}</strong></p>
+              <p>Te Saluda,</p>
+              <p>Equipo de PsicoAgenda APP.</p>
+          `;
+
+    this.apiService.sendEmail(this.correo, subject, text, html).subscribe(
+      response => {
+        console.log('Email Enviado Correctamente', response);
+      },
+      error => {
+        console.error('Error al enviar correo', error);
+      }
+    );
+
+  }
+
+  downloadPDF() {
+    const element = document.getElementById('tbl-transaction-detail');
+
+    if (element) {
+      const scale = 2; // Aumenta este valor para mejorar la calidad
+      html2canvas(element, { scale }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('landscape', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+
+        // Calcular nuevas dimensiones de la imagen para que se ajuste a la página A4 en landscape
+        const imgWidth = pdfWidth - 20; // margen de 10mm en cada lado
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight); // agregar la imagen con márgenes
+        pdf.save('Comprobante.pdf');
+      });
+    } else {
+      console.error('El elemento con id "tbl-transaction-detail" no se encontró.');
+    }
   }
 
   toggleOptions() {
@@ -96,7 +164,7 @@ export class CommitpayPage implements OnInit {
       case 'VD':
         return 'Tarjeta de Débito';
       // Agrega otros casos según sea necesario
-      default:  
+      default:
         return 'Desconocido';
     }
   }

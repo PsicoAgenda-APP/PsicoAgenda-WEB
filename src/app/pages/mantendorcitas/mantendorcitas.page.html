@@ -18,23 +18,67 @@
 </ion-header>
 
 <ion-content>
-  <ion-text>
-    <strong>Mantenedor de Citas</strong>
-  </ion-text>
-  <ion-text><legend>Criterio de búsqueda</legend></ion-text>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Mantenedor de Citas</ion-card-title>
+      <ion-card-subtitle>Criterio de búsqueda</ion-card-subtitle>
+    </ion-card-header>
   
-  <div>
-    <div class="form-check"><input class="form-check-input" type="radio" name="identificacion" id="gridRadios1"
-        value="rut" checked=""><label class="form-check-label" for="gridRadios1">Rut</label>
-    </div>
-    <div class="form-check"><input class="form-check-input" type="radio" name="identificacion" id="gridRadios3"
-        value="email"><label class="form-check-label" for="gridRadios3">Numero de Cita</label></div>
-  </div>
-  <div><input class="form-control" name="criterioBusqueda" type="text" placeholder="Buscar">
-  </div>
-  <button class="btn btn-primary"><span><strong>Buscar</strong></span></button>
+    <ion-card-content>
+      <input (click)="actualizarCriterioRut()" class="form-check-input" type="radio" name="identificacion" id="gridRadios1" value="rut" checked=""><label
+        class="form-check-label" for="gridRadios1">Rut</label>
+      <br>
+      <input (click)="actualizarCriterioId()" class="form-check-input" type="radio" name="identificacion" id="gridRadios3" value="id"><label
+        class="form-check-label" for="gridRadios3">Numero de Cita</label>
+      <ion-searchbar placeholder="Buscar" [(ngModel)]="mdl_dato"></ion-searchbar>
+      <ion-button class="boton" (click)="busquedaCita()" >Buscar</ion-button>
+    </ion-card-content>
+    <ion-card-content *ngIf="tablaBusqueda">
+      <ion-grid>
+        <ion-row>
+          <ion-col>Fecha</ion-col>
+          <ion-col>Hora</ion-col>
+          <ion-col>Paciente</ion-col>
+          <ion-col>Psicologo</ion-col>
+          <ion-col>Estado</ion-col>
+          <ion-col>Acciones</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let cita of lista_respuesta">
+          <ion-col>{{ cita.FechaCita }}</ion-col>
+          <ion-col>{{ cita.HoraCita }}</ion-col>
+          <ion-col>{{ cita.NombrePaciente }}</ion-col>
+          <ion-col>{{ cita.NombrePsicologo }}</ion-col>
+          <ion-col *ngIf="!cita.isEditing">{{ cita.DescripcionEstado }}</ion-col>
+          <ion-col *ngIf="cita.isEditing">
+            <ion-select [(ngModel)]="mdl_estado" interface="popover" placeholder="Estado Cita">
+              <ion-select-option value="Asignado">Asignado</ion-select-option>
+              <ion-select-option value="Concluido">Concluido</ion-select-option>
+              <ion-select-option value="Pendiente">Pendiente</ion-select-option>
+            </ion-select>
+          </ion-col>
+          <ion-col>
+            <ion-button class="boton" *ngIf="!cita.isEditing" (click)="actualizarEstado(cita)">Actualizar Estado</ion-button>
+            <table *ngIf="cita.isEditing">
+              <td>
+                <ion-button (click)="updateCita(cita.IdCita)" class="tabla" style="width: 25px;">✓</ion-button>
+              </td>
+              <td>
+                <ion-button (click)="cancelar(cita)" class="tabla" style="width: 25px; --background: #960000;">X</ion-button> 
+              </td> 
+            </table>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
+  
+
+  
+  
+
+
 
 <ion-footer>
   <ion-toolbar>
@@ -56,3 +100,15 @@
   </ion-toolbar>
 
 </ion-footer>
+
+<ion-alert [isOpen]="isAlertOpen" header="Información" message="Cita Actualizada" [buttons]="alertButtons"
+  (didDismiss)="setOpen(false)" (click)="recarga()">
+</ion-alert>
+
+<ion-alert [isOpen]="isAlertOpen2" header="Información" message="Error al actualizar Cita" [buttons]="alertButtons"
+  (didDismiss)="setOpen2(false)" (click)="recarga()">
+</ion-alert>
+
+<ion-alert [isOpen]="isAlertOpen3" header="Información" message="Debe escribir un dato para la busqueda" [buttons]="alertButtons"
+  (didDismiss)="setOpen3(false)" (click)="recarga()">
+</ion-alert>

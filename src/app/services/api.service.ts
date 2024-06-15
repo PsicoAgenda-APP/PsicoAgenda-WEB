@@ -23,6 +23,11 @@ export class ApiService {
   rutaRecuperacion = 'https://psicoagenda-api.azurewebsites.net/usuarios/cambiar_contrasena/'
   rutaToken = 'https://psicoagenda-api.azurewebsites.net/usuarios/guadarToken/';
   rutaInsertarPaciente = 'https://psicoagenda-api.azurewebsites.net/usuarios/insertar_paciente/';
+  rutaMantenedorCita = 'https://psicoagenda-api.azurewebsites.net/admin/buscarCita/'
+  rutaBuscarUsuario = 'https://psicoagenda-api.azurewebsites.net/admin/buscarUsuario/'
+  rutaBuscarComuna = 'https://psicoagenda-api.azurewebsites.net/usuarios/comuna/'
+  rutaBuscarEspecialidad = 'https://psicoagenda-api.azurewebsites.net/psicologos/especialidad/'
+  rutaEspecialidades = 'https://psicoagenda-api.azurewebsites.net/psicologos/allEspecialidades/'
 
 
 
@@ -35,15 +40,99 @@ export class ApiService {
       subject: subject,
       text: text,
       html: html
-  }
+    }
     return this.http.post(url, body);
   }
 
-  recuperacionClave (correo: string, contrasena: string) {
+  adminCita(criterio: number, dato: string) {
+    return this.http.get(this.rutaMantenedorCita + '?Criterio=' + criterio + '&Dato=' + dato).pipe();
+  }
+
+  buscarUsuario(criterio: number, dato: string) {
+    return this.http.get(this.rutaBuscarUsuario + '?Criterio=' + criterio + '&Dato=' + dato).pipe();
+  }
+
+  buscarComuna(nombreComuna: string) {
+    return this.http.get(this.rutaBuscarComuna + '?NombreComuna=' + nombreComuna).pipe();
+  }
+
+  buscarEspecilidad(nombreEspecialidad: string) {
+    return this.http.get(this.rutaBuscarEspecialidad + '?NombreEspecialidad=' + nombreEspecialidad).pipe();
+  }
+
+  especilidades() {
+    return this.http.get(this.rutaEspecialidades)
+  }
+
+  updatePaciente(
+    IdPersona: number,
+    IdDireccion: number,
+    Calle: string,
+    Numero: number,
+    IdComuna: number,
+    Telefono: string,
+    PrimerNombre: string,
+    SegundoNombre: string,
+    ApellidoPaterno: string,
+    ApellidoMaterno: string
+  ) {
+    const url = `https://psicoagenda-api.azurewebsites.net/usuarios/patch_paciente/`;
+    const body = {
+      IdPersona: IdPersona,
+      IdDireccion: IdDireccion,
+      Calle: Calle,
+      Numero: Numero,
+      IdComuna: IdComuna,
+      Telefono: Telefono,
+      PrimerNombre: PrimerNombre,
+      SegundoNombre: SegundoNombre,
+      ApellidoPaterno: ApellidoPaterno,
+      ApellidoMaterno: ApellidoMaterno
+    };
+    return this.http.post(url, body);
+  }
+
+  updatePsicologo(
+    IdUsuario: number,
+    IdPersona: number,
+    IdDireccion: number,
+    Calle: string,
+    Numero: number,
+    IdComuna: number,
+    ValorSesion: number,
+    Telefono: string,
+    Descripcion: string,
+    IdEspecialidad: number,
+    PrimerNombre: string,
+    SegundoNombre: string,
+    ApellidoPaterno: string,
+    ApellidoMaterno: string
+  ) {
+    const url = `https://psicoagenda-api.azurewebsites.net/psicologos/patch_psicologo/`;
+    const body = {
+      IdUsuario: IdUsuario,
+      IdPersona: IdPersona,
+      IdDireccion: IdDireccion,
+      Calle: Calle,
+      Numero: Numero,
+      IdComuna: IdComuna,
+      ValorSesion: ValorSesion,
+      Telefono: Telefono,
+      Descripcion: Descripcion,
+      IdEspecialidad: IdEspecialidad,
+      PrimerNombre: PrimerNombre,
+      SegundoNombre: SegundoNombre,
+      ApellidoPaterno: ApellidoPaterno,
+      ApellidoMaterno: ApellidoMaterno
+    };
+    return this.http.post(url, body);
+  }
+
+  recuperacionClave(correo: string, contrasena: string) {
     return this.http.get(this.rutaRecuperacion + '?CorreoElectronico=' + correo + '&NuevaContrasena=' + contrasena).pipe();
   }
 
-  
+
   obtenerUsuario(correo: string, contrasena: string) {
     return this.http.get(this.ruta + '?CorreoElectronico=' + correo + '&Contrasena=' + contrasena).pipe();
   }
@@ -104,8 +193,8 @@ export class ApiService {
     return this.http.get(this.rutaId + '?IdTipoUsuario=' + IdTipoUsuario + '&IdUsuario=' + IdUsuario).pipe();    //Atenciones Psicologo
   }
 
-  confirmarCita(IdPaciente: number, IdCita: number) {
-    return this.http.get(this.rutaCita + '?IdPaciente=' + IdPaciente + '&IdCita=' + IdCita).pipe();
+  confirmarCita(IdPaciente: number, IdEstadoCita: number, IdCita: number) {
+    return this.http.get(this.rutaCita + '?IdPaciente=' + IdPaciente + '&IdEstadoCita=' + IdEstadoCita + '&IdCita=' + IdCita).pipe();
   }
 
   registrarPsicologo(
@@ -145,7 +234,7 @@ export class ApiService {
     return this.http.post(this.rutaRegistroPsicologo, body);
   }
 
-  guardarToken (token: string, correo: string) {
+  guardarToken(token: string, correo: string) {
     return this.http.get(this.rutaToken + '?Token=' + token + '&CorreoElectronico=' + correo).pipe();
   }
 
@@ -181,5 +270,7 @@ export class ApiService {
     };
     return this.http.post(this.rutaInsertarPaciente, body);
   }
+
+
 
 }

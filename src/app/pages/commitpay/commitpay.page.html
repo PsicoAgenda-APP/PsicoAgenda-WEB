@@ -35,7 +35,7 @@
           <td>{{ transactionDetail.state }}</td>
         </tr>
         <tr>
-          <td><strong>Fecha:</strong></td>
+          <td><strong>Fecha Pago:</strong></td>
           <td>{{ transactionDetail.transaction_date }}</td>
         </tr>
         <tr>
@@ -58,9 +58,25 @@
           <td><strong>N° Orden:</strong></td>
           <td>{{ transactionDetail.buy_order }}</td>
         </tr>
+        <tr>
+          <td><strong>Psicologo:</strong></td>
+          <td>{{ nombrePsicologo }}</td>
+        </tr>
+        <tr>
+          <td><strong>Fecha Cita:</strong></td>
+          <td>{{ fechaCita }}</td>
+        </tr>
+        <tr>
+          <td><strong>Hora Cita:</strong></td>
+          <td>{{ horaCita }}</td>
+        </tr>
       </tbody>
     </table>
   </div>
+  <table class="botones">
+    <ion-button *ngIf="transactionDetail" class="boton" (click)="goHome()">Volver</ion-button>
+    <ion-button *ngIf="transactionDetail" class="boton" (click)="downloadPDF()">Descargar Comprobante</ion-button>
+  </table>
   <ng-template #errorTemplate>
     <div>
       <h2>{{ errorMessage }}</h2>
