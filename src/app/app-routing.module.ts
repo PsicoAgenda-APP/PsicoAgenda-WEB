@@ -46,7 +46,8 @@ const routes: Routes = [
   {
     path: 'registropaciente',
     loadChildren: () => import('./pages/registropaciente/registropaciente.module').then( m => m.RegistropacientePageModule)
-  },  {
+  },
+  {
     path: 'calendario',
     loadChildren: () => import('./pages/calendario/calendario.module').then( m => m.CalendarioPageModule)
   },
@@ -74,6 +75,14 @@ const routes: Routes = [
     path: 'mantenedorusuarios',
     loadChildren: () => import('./pages/mantenedorusuarios/mantenedorusuarios.module').then( m => m.MantenedorusuariosPageModule)
   },
+  {
+    path: 'editarpaciente',
+    loadChildren: () => import('./pages/editarpaciente/editarpaciente.module').then( m => m.EditarPacientePageModule)
+  },  {
+    path: 'soportepaciente',
+    loadChildren: () => import('./pages/soportepaciente/soportepaciente.module').then( m => m.SoportepacientePageModule)
+  },
+
 
 
 

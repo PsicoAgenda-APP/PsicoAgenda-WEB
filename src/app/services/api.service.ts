@@ -28,8 +28,9 @@ export class ApiService {
   rutaBuscarComuna = 'https://psicoagenda-api.azurewebsites.net/usuarios/comuna/'
   rutaBuscarEspecialidad = 'https://psicoagenda-api.azurewebsites.net/psicologos/especialidad/'
   rutaEspecialidades = 'https://psicoagenda-api.azurewebsites.net/psicologos/allEspecialidades/'
-
-
+  rutaBuscarPsicologos = 'https://psicoagenda-api.azurewebsites.net/psicologos/buscar_psicologos/'
+  rutaComunas = 'https://psicoagenda-api.azurewebsites.net/usuarios/todasLasComunas/'
+  rutaAsignadas = 'https://psicoagenda-api.azurewebsites.net/usuarios/citas_asignadas/'
 
   constructor(private http: HttpClient) { }
 
@@ -48,6 +49,10 @@ export class ApiService {
     return this.http.get(this.rutaMantenedorCita + '?Criterio=' + criterio + '&Dato=' + dato).pipe();
   }
 
+  buscarPsicologos(criterio: number, dato: string, dato2: string) {
+    return this.http.get(this.rutaBuscarPsicologos + '?Criterio=' + criterio + '&Dato=' + dato + '&Dato2=' + dato2).pipe();
+  }
+
   buscarUsuario(criterio: number, dato: string) {
     return this.http.get(this.rutaBuscarUsuario + '?Criterio=' + criterio + '&Dato=' + dato).pipe();
   }
@@ -60,8 +65,16 @@ export class ApiService {
     return this.http.get(this.rutaBuscarEspecialidad + '?NombreEspecialidad=' + nombreEspecialidad).pipe();
   }
 
+  citasAsignadas(IdPaciente: number) {
+    return this.http.get(this.rutaAsignadas + '?IdPaciente=' + IdPaciente).pipe();  //Historial citas
+  }
+
   especilidades() {
     return this.http.get(this.rutaEspecialidades)
+  }
+  
+  obtenerComunas(): Observable<any> {
+    return this.http.get(this.rutaComunas);
   }
 
   updatePaciente(

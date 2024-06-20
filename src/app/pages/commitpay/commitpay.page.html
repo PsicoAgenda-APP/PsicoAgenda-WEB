@@ -4,10 +4,9 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="redirectTo('/home')">Editar datos</ion-button>
-      <ion-button (click)="redirectTo('/atencionespaciente')">Historial de atenciones</ion-button>
-      <ion-button (click)="redirectTo('/fichapaciente')">Fichas clinicas</ion-button>
-      <ion-button (click)="redirectTo('/home')">Cerrar sesión</ion-button>
+      <ion-button (click)="goEditar()">Editar datos</ion-button>
+      <ion-button (click)="goHistorial()">Historial de atenciones</ion-button>  
+      <ion-button (click)="logout()">Cerrar sesión</ion-button>
     </ion-buttons>
     <ion-title class="header-title">
       <a style="color: #000000;" (click)="goHome()" class="logo-link">
@@ -78,8 +77,9 @@
     <ion-button *ngIf="transactionDetail" class="boton" (click)="downloadPDF()">Descargar Comprobante</ion-button>
   </table>
   <ng-template #errorTemplate>
-    <div>
+    <div class="center-content">
       <h2>{{ errorMessage }}</h2>
+      <ion-button *ngIf="error"  class="boton" (click)="goHome()">Volver</ion-button>
     </div>
   </ng-template>
 </ion-content>

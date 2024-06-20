@@ -4,9 +4,8 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="redirectTo('/home')">Editar datos</ion-button>
-      <ion-button (click)="goHistorial()">Historial de atenciones</ion-button>
-      <ion-button (click)="redirectTo('/fichapaciente')">Fichas clinicas</ion-button>
+      <ion-button (click)="goEditar()">Editar datos</ion-button>
+      <ion-button (click)="goHistorial()">Historial de atenciones</ion-button>  
       <ion-button (click)="logout()">Cerrar sesión</ion-button>
     </ion-buttons>
     <ion-title class="header-title">
@@ -22,7 +21,7 @@
 
 <ion-content>
   <!-- Sección para agendar cita con Gerardo Gutierrez -->
-  <ion-card class="ioncard" style="margin-top: 2.4rem;">
+  <ion-card class="ioncard" style="margin-top: 2.3rem;">
     <ion-card-header>
       <ion-card-title>Agendar cita un Psicologo</ion-card-title>
     </ion-card-header>
@@ -36,25 +35,25 @@
 
   <ion-card class="ioncard" style="margin-top: 1.5rem;">
     <ion-card-header>
-      <ion-card-title>Realizar una consulta</ion-card-title>
+      <ion-card-title>Soporte</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-card-content>
-        Aqui puedes realizar tus consultas urgentes a los psicologos
+        Realiza consultas, cancela o reagenda tus horas
       </ion-card-content>
-      <ion-button class="button-agenda">Consulta</ion-button>
+      <ion-button (click)="goSoporte()" class="button-agenda">Ir a Soporte</ion-button>
     </ion-card-content>
   </ion-card>
 
   <ion-card class="ioncard" style="margin-top: 1.5rem;">
     <ion-card-header>
-      <ion-card-title>Solicita un presupuesto</ion-card-title>
+      <ion-card-title>Historial</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-card-content>
-        Aqui puedes realizar tus consultas urgentes a los psicologos
+        Aqui puedes revisar tu historial de atenciones
       </ion-card-content>
-      <ion-button class="button-agenda">Solicita</ion-button>
+      <ion-button (click)="goHistorial()" class="button-agenda">Ir a tu Historial</ion-button>
     </ion-card-content>
   </ion-card>
 

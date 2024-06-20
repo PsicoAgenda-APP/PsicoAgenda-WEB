@@ -14,6 +14,7 @@ export class ClientePage implements OnInit {
   login: boolean = false;
   idTipo: number = 0;
   idUsuario: number = 0;
+  idPersona: number = 0;
   lista_respuesta: any[] = [];
   idPaciente: number = 0;
   correo: string = '';
@@ -24,75 +25,122 @@ export class ClientePage implements OnInit {
 
   async ngOnInit() {
     let parametros = this.router.getCurrentNavigation();
-    if (parametros?.extras.state) {
-      this.idTipo = parametros?.extras.state['idTipoUsuario'];
-      this.idPaciente = parametros?.extras.state['idPaciente'];
-      this.idUsuario = parametros?.extras.state['idUsuario'];
-      this.login = parametros?.extras.state['login'];
-      this.correo = parametros?.extras.state['correo'];
-    }
-    let data = this.apiService.getId(this.idTipo, this.idUsuario);
-    let respuesta = await lastValueFrom(data);
-    let jsonTexto = JSON.stringify(respuesta);
-    let json = JSON.parse(jsonTexto);
-    for (let x = 0; x < json.length; x++) {
-      this.lista_respuesta.push(json[x]);
-      this.idPaciente = this.lista_respuesta[x].IdPaciente;
-      console.log(this.idPaciente);
+      if (parametros?.extras.state) {
+        this.idTipo = parametros?.extras.state['idTipoUsuario'];
+        this.idPaciente = parametros?.extras.state['idPaciente'];
+        this.idUsuario = parametros?.extras.state['idUsuario'];
+        this.login = parametros?.extras.state['login'];
+        this.correo = parametros?.extras.state['correo'];
+        this.idPersona = parametros?.extras.state['idPersona'];
+      }
+    if (!this.login) {
+      this.router.navigate(['home']);
+    } else {
+      let data = this.apiService.getId(this.idTipo, this.idUsuario);
+      let respuesta = await lastValueFrom(data);
+      let jsonTexto = JSON.stringify(respuesta);
+      let json = JSON.parse(jsonTexto);
+      for (let x = 0; x < json.length; x++) {
+        this.lista_respuesta.push(json[x]);
+        this.idPaciente = this.lista_respuesta[x].IdPaciente;
+        console.log(this.idPaciente);
       }
     }
+  }
 
-    buscar() {
-      this.login = true;
+  buscar() {
+    this.login = true;
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPaciente: this.idPaciente,
+        correo: this.correo,
+        idUsuario: this.idUsuario,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['busqueda'], parametros);
+
+  }
+
+  goHistorial() {
+    console.log('Login: ', this.login)
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPaciente: this.idPaciente,
+        correo: this.correo,
+        idUsuario: this.idUsuario,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['atencionespaciente'], parametros);
+  }
+
+  goHome() {
+    if (this.login) {
       let parametros: NavigationExtras = {
         state: {
           login: this.login,
           idPaciente: this.idPaciente,
-          correo: this.correo
+          correo: this.correo,
+          idUsuario: this.idUsuario,
+          idTipo: this.idTipo,
+          idPersona: this.idPersona
         },
         replaceUrl: true
       }
-      this.router.navigate(['busqueda'], parametros);
-
-    }
-
-    goHistorial() {
-      console.log('Login: ', this.login)
+      this.router.navigate(['cliente'], parametros);
+    } else {
       let parametros: NavigationExtras = {
-        state: {
-          idPaciente: this.idPaciente,
-          login: this.login
-        },
-        replaceUrl: true
-      }
-      this.router.navigate(['atencionespaciente'], parametros);
-    }
-
-    goHome() {
-      if (this.login) {
-        let parametros: NavigationExtras = {
-          state: {
-            login: this.login
-          },
-          replaceUrl: true
-        }
-        this.router.navigate(['cliente'], parametros);
-      } else {
-        let parametros: NavigationExtras = {
-          replaceUrl: true
-        }
-        this.router.navigate(['home'], parametros);
-      }
-    }
-
-    logout() {
-      this.login = false;
-      let parametros: NavigationExtras = {
-        state: {
-          login: this.login
-        },
         replaceUrl: true
       }
       this.router.navigate(['home'], parametros);
     }
   }
+
+  goEditar () {
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPaciente: this.idPaciente,
+        correo: this.correo,
+        idUsuario: this.idUsuario,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['editarpaciente'], parametros);
+  }
+
+  goSoporte () {
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPaciente: this.idPaciente,
+        correo: this.correo,
+        idUsuario: this.idUsuario,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['soportepaciente'], parametros);
+  }
+
+  logout() {
+    this.login = false;
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['home'], parametros);
+  }
+}

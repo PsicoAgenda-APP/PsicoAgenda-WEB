@@ -63,6 +63,7 @@ export class RegistropacientePage implements OnInit {
       ).subscribe(
         response => {
           console.log('Paciente registrado correctamente', response);
+          this.sendEmail();
           this.isAlertOpen3 = true;
         },
         error => {
@@ -94,6 +95,31 @@ export class RegistropacientePage implements OnInit {
 
   setOpen(isOpen: boolean) {
     this.isAlertOpen = isOpen;
+  }
+
+  sendEmail() {
+    const subject = 'Bienvenido a PsicoAgenda APP';
+
+    const text = 'Hola ' + this.mdl_primerNombre + ',' + '\n\nTe registrate correctamente en PsicoAgenda APP.' +
+      '\n\nTu usuario es: ' + this.mdl_correo +
+      '\n\nTe Saluda,\nEquipo de PsicoAgenda APP.';
+
+    const html = `
+              <p>Hola ${this.mdl_primerNombre},</p>
+              <p>Te registrate correctamente en PsicoAgenda APP.</p>
+              <p><strong>Psicologo: ${this.mdl_correo}</strong></p>
+              <p>Te Saluda,</p>
+              <p>Equipo de PsicoAgenda APP.</p>
+          `;
+
+    this.apiService.sendEmail(this.mdl_correo, subject, text, html).subscribe(
+      response => {
+        console.log('Email Enviado Correctamente', response);
+      },
+      error => {
+        console.error('Error al enviar correo', error);
+      }
+    );
   }
 
 }

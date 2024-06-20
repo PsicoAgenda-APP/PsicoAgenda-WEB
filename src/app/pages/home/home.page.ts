@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +14,7 @@ export class HomePage {
   dato: string = '';
   mdl_dato: string = '';
   login: boolean = false;
+  lista_especialidades: any = [];
 
   // Testimonials data
   testimonials = [
@@ -35,7 +38,12 @@ export class HomePage {
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private apiService: ApiService) {}
+  
+
+  ngOnInit() {
+    this.especialidades();
+  }
   
   toggleOptions() {
     this.showOptions = !this.showOptions;
@@ -56,5 +64,15 @@ export class HomePage {
     }
     this.router.navigate(['busqueda'], parametros);
 
+  }
+
+  async especialidades() {
+    let data = this.apiService.especilidades();
+    let respuesta = await lastValueFrom (data);
+    let jsonTexto = JSON.stringify(respuesta);
+    let json = JSON.parse(jsonTexto);
+    for (let x = 0; x < json.length; x++) {
+      this.lista_especialidades.push(json[x]);
+    }
   }
 } 

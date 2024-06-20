@@ -13,15 +13,36 @@ export class AdminPage implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    let parametros = this.router.getCurrentNavigation();
+    if (parametros?.extras.state) {
+      this.login = parametros?.extras.state['login'];
+    }
+    if (!this.login) {
+      this.router.navigate(['home']);
+    } else {
+      console.log("Usuario Autenticado")
+    }
   }
 
 
   goCitas() {
-    this.router.navigate(['mantendorcitas']);
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['mantendorcitas'], parametros);
   }
 
   goUsuarios() {
-    this.router.navigate(['mantenedorusuarios']);
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['mantenedorusuarios'], parametros);
   }
 
   logout() {
@@ -35,5 +56,22 @@ export class AdminPage implements OnInit {
     this.router.navigate(['home'], parametros);
   }
 
+  goHome() {
+    console.log("Login: ", this.login)
+    if (this.login) {
+      let parametros: NavigationExtras = {
+        state: {
+          login: this.login
+        },
+        replaceUrl: true
+      }
+      this.router.navigate(['admin'], parametros);
+    } else {
+      let parametros: NavigationExtras = {
+        replaceUrl: true
+      }
+      this.router.navigate(['home'], parametros);
+    }
+  }
 
 }

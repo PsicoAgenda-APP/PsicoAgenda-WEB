@@ -19,17 +19,29 @@ export class AtencionesPacientePage implements OnInit {
   error_mensaje: any = '';
   idPaciente: number = 0;
   login: boolean = false;
+  idTipo: number = 0;
+  idPersona: number = 0;
+  idUsuario: string = '';
+  correo: string = '';
 
   constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit() {
     let parametros = this.router.getCurrentNavigation();
     if (parametros?.extras.state) {
+      this.idTipo = parametros?.extras.state['idTipoUsuario'];
       this.idPaciente = parametros?.extras.state['idPaciente'];
+      this.idUsuario = parametros?.extras.state['idUsuario'];
       this.login = parametros?.extras.state['login'];
+      this.correo = parametros?.extras.state['correo'];
+      this.idPersona = parametros?.extras.state['idPersona'];
     }
-    this.obtenerDetallesCitas();
-    this.obtenerProximaCita();
+    if (!this.login) {
+      this.router.navigate(['home']);
+    } else {
+      this.obtenerDetallesCitas();
+      this.obtenerProximaCita();
+    }
   }
 
   async obtenerDetallesCitas() {
@@ -66,12 +78,31 @@ export class AtencionesPacientePage implements OnInit {
     this.router.navigate([route]);
   }
 
+  goEditar () {
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPaciente: this.idPaciente,
+        correo: this.correo,
+        idUsuario: this.idUsuario,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['editarpaciente'], parametros);
+  }
+
   goHome() {
     if (this.login) {
       let parametros: NavigationExtras = {
         state: {
           login: this.login,
-          idPaciente: this.idPaciente
+          idPaciente: this.idPaciente,
+          correo: this.correo,
+          idUsuario: this.idUsuario,
+          idTipo: this.idTipo,
+          idPersona: this.idPersona
         },
         replaceUrl: true
       }
@@ -82,6 +113,33 @@ export class AtencionesPacientePage implements OnInit {
       }
       this.router.navigate(['home'], parametros);
     }
+  }
+
+  goHistorial() {
+    console.log('Login: ', this.login)
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPaciente: this.idPaciente,
+        correo: this.correo,
+        idUsuario: this.idUsuario,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['atencionespaciente'], parametros);
+  }
+
+  logout() {
+    this.login = false;
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['home'], parametros);
   }
 
   async downloadPDF(cita: any) {

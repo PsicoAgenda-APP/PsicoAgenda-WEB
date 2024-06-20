@@ -51,16 +51,37 @@ export class MantenedorusuariosPage implements OnInit {
   constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit() {
-    console.log('Criterio: ' + this.criterio)
-    this.especialidades();
+    let parametros = this.router.getCurrentNavigation();
+    if (parametros?.extras.state) {
+      this.login = parametros?.extras.state['login'];
+    }
+    if (!this.login) {
+      this.router.navigate(['home']);
+    } else {
+      console.log("Usuario Autenticado")
+      console.log('Criterio: ' + this.criterio)
+      this.especialidades();
+    }
   }
 
   goCitas() {
-    this.router.navigate(['mantendorcitas']);
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['mantendorcitas'], parametros);
   }
 
   goUsuarios() {
-    this.router.navigate(['mantenedorusuarios']);
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['mantenedorusuarios'], parametros);
   }
 
   logout() {
@@ -194,70 +215,87 @@ export class MantenedorusuariosPage implements OnInit {
   async actualizarDatos() {
     this.isAlertOpen = false;
     this.isAlertOpen = false;
-    if (this.idComuna != 0 && this.idEspecialidad != 0) {
-      if (this.idTipo == 1) {
-        console.log('Datos para updatePaciente:', {
-          idPersona: this.idPersona,
-          idDireccion: this.idDireccion,
-          mdl_calle: this.mdl_calle,
-          mdl_numeracion: this.mdl_numeracion,
-          idComuna: this.idComuna,
-          mdl_telefono: this.mdl_telefono,
-          mdl_nombre: this.mdl_nombre,
-          mdl_nombre2: this.mdl_nombre2,
-          mdl_apellido: this.mdl_apellido,
-          mdl_apellido2: this.mdl_apellido2
-        });
-        this.apiService.updatePaciente(this.idPersona, this.idDireccion,
-          this.mdl_calle, this.mdl_numeracion, this.idComuna, this.mdl_telefono, this.mdl_nombre, this.mdl_nombre2,
-          this.mdl_apellido, this.mdl_apellido2
-        ).subscribe(
-          response => {
-            console.log('Datos actualizados', response);
-            this.isAlertOpen = true;
-          },
-          error => {
-            console.error('Error al actualizar datos', error);
-            this.isAlertOpen2 = true;
-          }
-        );
-      } else if (this.idTipo == 2) {
-        console.log('Datos para updatePsicologo:', {
-          idUsuario: this.idUsuario,
-          idPersona: this.idPersona,
-          idDireccion: this.idDireccion,
-          mdl_calle: this.mdl_calle,
-          mdl_numeracion: this.mdl_numeracion,
-          idComuna: this.idComuna,
-          mdl_valor: this.mdl_valor,
-          mdl_telefono: this.mdl_telefono,
-          mdl_descripcion: this.mdl_descripcion,
-          idEspecialidad: this.idEspecialidad,
-          mdl_nombre: this.mdl_nombre,
-          mdl_nombre2: this.mdl_nombre2,
-          mdl_apellido: this.mdl_apellido,
-          mdl_apellido2: this.mdl_apellido2
-        });
-        this.apiService.updatePsicologo(this.idUsuario, this.idPersona, this.idDireccion,
-          this.mdl_calle, this.mdl_numeracion, this.idComuna, this.mdl_valor, this.mdl_telefono,
-          this.mdl_descripcion, this.idEspecialidad, this.mdl_nombre, this.mdl_nombre2,
-          this.mdl_apellido, this.mdl_apellido2
-        ).subscribe(
-          response => {
-            console.log('Datos actualizados', response);
-            this.isAlertOpen = true;
-          },
-          error => {
-            console.error('Error al actualizar datos', error);
-            this.isAlertOpen2 = true;
-          }
-        );
-      }
+    if (this.idTipo == 1 || this.idTipo == 3) {
+      console.log('Datos para updatePaciente:', {
+        idPersona: this.idPersona,
+        idDireccion: this.idDireccion,
+        mdl_calle: this.mdl_calle,
+        mdl_numeracion: this.mdl_numeracion,
+        idComuna: this.idComuna,
+        mdl_telefono: this.mdl_telefono,
+        mdl_nombre: this.mdl_nombre,
+        mdl_nombre2: this.mdl_nombre2,
+        mdl_apellido: this.mdl_apellido,
+        mdl_apellido2: this.mdl_apellido2
+      });
+      this.apiService.updatePaciente(this.idPersona, this.idDireccion,
+        this.mdl_calle, this.mdl_numeracion, this.idComuna, this.mdl_telefono, this.mdl_nombre, this.mdl_nombre2,
+        this.mdl_apellido, this.mdl_apellido2
+      ).subscribe(
+        response => {
+          console.log('Datos actualizados', response);
+          this.isAlertOpen = true;
+        },
+        error => {
+          console.error('Error al actualizar datos', error);
+          this.isAlertOpen2 = true;
+        }
+      );
+    } else if (this.idTipo == 2) {
+      console.log('Datos para updatePsicologo:', {
+        idUsuario: this.idUsuario,
+        idPersona: this.idPersona,
+        idDireccion: this.idDireccion,
+        mdl_calle: this.mdl_calle,
+        mdl_numeracion: this.mdl_numeracion,
+        idComuna: this.idComuna,
+        mdl_valor: this.mdl_valor,
+        mdl_telefono: this.mdl_telefono,
+        mdl_descripcion: this.mdl_descripcion,
+        idEspecialidad: this.idEspecialidad,
+        mdl_nombre: this.mdl_nombre,
+        mdl_nombre2: this.mdl_nombre2,
+        mdl_apellido: this.mdl_apellido,
+        mdl_apellido2: this.mdl_apellido2
+      });
+      this.apiService.updatePsicologo(this.idUsuario, this.idPersona, this.idDireccion,
+        this.mdl_calle, this.mdl_numeracion, this.idComuna, this.mdl_valor, this.mdl_telefono,
+        this.mdl_descripcion, this.idEspecialidad, this.mdl_nombre, this.mdl_nombre2,
+        this.mdl_apellido, this.mdl_apellido2
+      ).subscribe(
+        response => {
+          console.log('Datos actualizados', response);
+          this.isAlertOpen = true;
+        },
+        error => {
+          console.error('Error al actualizar datos', error);
+          this.isAlertOpen2 = true;
+        }
+      );
     }
+
   }
 
   updateEspecialidad() {
     console.log('Especialidad: ', this.mdl_estado);
+  }
+
+  goHome() {
+    console.log("Login: ", this.login)
+    if (this.login) {
+      let parametros: NavigationExtras = {
+        state: {
+          login: this.login
+        },
+        replaceUrl: true
+      }
+      this.router.navigate(['admin'], parametros);
+    } else {
+      let parametros: NavigationExtras = {
+        replaceUrl: true
+      }
+      this.router.navigate(['home'], parametros);
+    }
   }
 
 }

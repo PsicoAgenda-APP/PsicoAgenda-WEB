@@ -9,7 +9,7 @@
       <ion-button (click)="logout()">Cerrar Sesión</ion-button>
     </ion-buttons>
     <ion-title class="header-title">
-      <a style="color: #000000;" routerLink="/home" class="logo-link">
+      <a style="color: #000000;" (click)="goHome()" class="logo-link">
         <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo" />
         PsicoAgenda
       </a>
@@ -134,11 +134,11 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-button expand="block" (click)="parametros()" style="--background: #004696;" class="boton">Enviar datos</ion-button>
-              <ion-button expand="block" (click)="actualizarDatos()" class="boton">Actualizar</ion-button>
+              <ion-button *ngIf="botonConfirmar" expand="block" (click)="parametros()" style="--background: #004696;" class="boton">Confirmar Datos</ion-button>
+              <ion-button *ngIf="botonGuardar" expand="block" (click)="actualizarDatos()" class="boton">Guardar Datos</ion-button>
             </ion-col>
             <ion-col>
-              <ion-button expand="block" (click)="cancelar()" class="boton" style="--background: #960000;" >Cancelar</ion-button>
+              <ion-button (click)="cancelar()" expand="block" style="--background: #960000;" class="boton">Cancelar</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>        
@@ -146,12 +146,6 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
-
-
-
-
-
-
 
 <ion-footer>
   <ion-toolbar>

@@ -30,13 +30,13 @@ export class CalendarioPage implements OnInit {
   nombrePsicologo: string = '';
   fechaCita: string = '';
   horaCita: string = '';
+  idTipo: number = 0;
+  idUsuario: number = 0;
+  idPersona: number = 0;
 
   constructor(private router: Router, private apiService: ApiService) { }
 
   async ngOnInit() {
-    const currentDate = new Date();
-    const offset = currentDate.getTimezoneOffset() * 60000; // Obtén el desplazamiento en milisegundos
-    this.selectedDate = new Date(currentDate.getTime() - offset).toISOString().slice(0, -1);
     let parametros = this.router.getCurrentNavigation();
     if (parametros?.extras.state) {
       this.idPsicologoString = parametros?.extras.state['idPsicologo'];
@@ -44,18 +44,26 @@ export class CalendarioPage implements OnInit {
       this.idPaciente = parametros?.extras.state['idPaciente'];
       this.login = parametros?.extras.state['login'];
       this.correo = parametros?.extras.state['correo'];
+      this.idPersona = parametros?.extras.state['idPersona'];
       console.log('El ID del usuario es:', this.idPsicologo)
     }
-    let data = this.apiService.datosPsicologo(this.idPsicologo);
-    let respuesta = await lastValueFrom(data);
-    let jsonTexto = JSON.stringify(respuesta);
-    let json = JSON.parse(jsonTexto);
-    for (let x = 0; x < json.length; x++) {
-      this.lista_respuesta.push(json[x]);
-      this.monto = this.lista_respuesta[x].ValorSesion;
-      this.nombrePsicologo = this.lista_respuesta[x].Nombre;
-      console.log(this.monto);
-      console.log(this.lista_respuesta);
+    if (!this.login) {
+      this.router.navigate(['home']);
+    } else {
+      const currentDate = new Date();
+      const offset = currentDate.getTimezoneOffset() * 60000; // Obtén el desplazamiento en milisegundos
+      this.selectedDate = new Date(currentDate.getTime() - offset).toISOString().slice(0, -1);
+      let data = this.apiService.datosPsicologo(this.idPsicologo);
+      let respuesta = await lastValueFrom(data);
+      let jsonTexto = JSON.stringify(respuesta);
+      let json = JSON.parse(jsonTexto);
+      for (let x = 0; x < json.length; x++) {
+        this.lista_respuesta.push(json[x]);
+        this.monto = this.lista_respuesta[x].ValorSesion;
+        this.nombrePsicologo = this.lista_respuesta[x].Nombre;
+        console.log(this.monto);
+        console.log(this.lista_respuesta);
+      }
     }
   }
 
@@ -118,12 +126,41 @@ export class CalendarioPage implements OnInit {
     this.router.navigate([route]);
   }
 
-
   goHome() {
+    if (this.login) {
+      let parametros: NavigationExtras = {
+        state: {
+          login: this.login,
+          idPaciente: this.idPaciente,
+          correo: this.correo,
+          idUsuario: this.idUsuario,
+          idTipo: this.idTipo,
+          idPersona: this.idPersona
+        },
+        replaceUrl: true
+      }
+      this.router.navigate(['cliente'], parametros);
+    } else {
+      let parametros: NavigationExtras = {
+        replaceUrl: true
+      }
+      this.router.navigate(['home'], parametros);
+    }
+  }
+
+  goEditar () {
     let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPaciente: this.idPaciente,
+        correo: this.correo,
+        idUsuario: this.idUsuario,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
       replaceUrl: true
     }
-    this.router.navigate(['home'], parametros);
+    this.router.navigate(['editarpaciente'], parametros);
   }
 
   confirmarCita(index: number, horaCita: any) {
@@ -159,6 +196,7 @@ export class CalendarioPage implements OnInit {
           localStorage.setItem('nombrePsicologo', JSON.stringify(this.nombrePsicologo));
           localStorage.setItem('fechaCita', JSON.stringify(this.fechaCita));
           localStorage.setItem('horaCita', JSON.stringify(this.horaCita));
+          localStorage.setItem('idPersona', JSON.stringify(this.idPersona));
           window.location.href = response.url + '?token_ws=' + response.token;
         } else {
           console.error('Error creating transaction');
@@ -169,5 +207,33 @@ export class CalendarioPage implements OnInit {
       }
     );
   }
+
+  goHistorial() {
+    console.log('Login: ', this.login)
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPaciente: this.idPaciente,
+        correo: this.correo,
+        idUsuario: this.idUsuario,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['atencionespaciente'], parametros);
+  }
+
+  logout() {
+    this.login = false;
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['home'], parametros);
+  }
+
 
 }

@@ -27,10 +27,9 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="redirectTo('/home')">Editar datos</ion-button>
-      <ion-button (click)="redirectTo('/atencionespaciente')">Historial de atenciones</ion-button>
-      <ion-button (click)="redirectTo('/fichapaciente')">Fichas clinicas</ion-button>
-      <ion-button (click)="redirectTo('/home')">Cerrar sesión</ion-button>
+      <ion-button (click)="goEditar()">Editar datos</ion-button>
+      <ion-button (click)="goHistorial()">Historial de atenciones</ion-button>  
+      <ion-button (click)="logout()">Cerrar sesión</ion-button>
     </ion-buttons>
     <ion-title class="header-title" (click)="goHome()">
       <a style="color: #000000;" class="logo-link">
@@ -44,9 +43,13 @@
   <ion-img class="imagen_carga" src="../../../assets/icon/loading (1).gif"></ion-img>
 </ion-content>
 <ion-content *ngIf="loading">
-  <div class="search-bar-container" >
-    <ion-searchbar placeholder="Buscar Psicólogo"></ion-searchbar>
-    <ion-button>Buscar</ion-button>
+  <div class="search-bar-container">
+    <ion-searchbar [(ngModel)]="mdl_dato" placeholder="Buscar Psicólogo"></ion-searchbar>
+    <ion-select [(ngModel)]="mdl_dato2" interface="popover" placeholder="Especialidad">
+      <ion-select-option>Especialidad</ion-select-option>
+      <ion-select-option *ngFor="let especialiadades of lista_especialidades">{{ especialiadades.NombreEspecialidad }}</ion-select-option>
+    </ion-select>
+    <ion-button style="height: 42px" class="botonagenda" (click)="buscarPsicologo()" >Buscar</ion-button>
   </div>
   <div class="card-container">
     <ion-card class="custom-card" *ngFor="let x of paginatedItems; let i = index">
