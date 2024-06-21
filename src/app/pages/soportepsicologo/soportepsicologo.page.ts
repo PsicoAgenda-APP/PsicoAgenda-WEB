@@ -36,6 +36,7 @@ export class SoportepsicologoPage implements OnInit {
   isAlertOpen = false;
   isAlertOpen2 = false;
   isAlertOpen3 = false;
+  isAlertOpen4 = false; // Nueva alerta
   alertButtons = ['OK'];
   mdl_asunto: string = '';
   mdl_mensaje: string = '';
@@ -81,6 +82,11 @@ export class SoportepsicologoPage implements OnInit {
     this.isAlertOpen = isOpen;
   }
 
+  setOpen4(isOpen: boolean) {
+    this.isAlertOpen4 = isOpen;
+  }
+  
+
   formatDate(dateString: string) {
     const date = new Date(dateString);
     const fechaFormat = `${('0' + date.getDate()).slice(-2)}-${('0' + (date.getMonth() + 1)).slice(-2)}-${date.getFullYear()}`;
@@ -111,6 +117,7 @@ export class SoportepsicologoPage implements OnInit {
       }
     }
   }
+
 
   scheduleAppointment(time: string) {
     console.log('Cita agendada para', this.selectedDate, 'a las', time);
@@ -233,9 +240,11 @@ export class SoportepsicologoPage implements OnInit {
       this.formReagendar = false;
       this.formCancelar = false;
       this.formConsulta = false;
+      this.formFinalizar = false;
       this.botonReagendar = false;
       this.botonCancelar = false;
       this.botonConsulta = false;
+      this.botonFinalizar = false;
     } else if (this.mdl_opcion == 'Reagendar Hora') {
       this.mdl_detalle = '';
       this.formReagendar = true;
@@ -246,6 +255,10 @@ export class SoportepsicologoPage implements OnInit {
       this.botonCancelar = false;
       this.botonConsulta = false;
       this.botonFinalizar = false;
+      if (this.lista_citas.length === 0) {
+        this.setOpen4(true);
+        this.cancelar();
+      }
     } else if (this.mdl_opcion == 'Cancelar Hora') {
       this.mdl_detalle = '';
       this.formReagendar = false;
@@ -256,6 +269,10 @@ export class SoportepsicologoPage implements OnInit {
       this.botonCancelar = false;
       this.botonConsulta = false;
       this.botonFinalizar = false;
+      if (this.lista_citas.length === 0) {
+        this.setOpen4(true);
+        this.cancelar();
+      }
     } else if (this.mdl_opcion == 'Realizar Consulta') {
       this.mdl_detalle = '';
       this.formReagendar = false;
@@ -266,8 +283,7 @@ export class SoportepsicologoPage implements OnInit {
       this.botonCancelar = false;
       this.botonConsulta = false;
       this.botonFinalizar = false;
-    } 
-    else if (this.mdl_opcion == 'Finalizar Consulta') {
+    } else if (this.mdl_opcion == 'Finalizar Consulta') {
       this.mdl_detalle = '';
       this.formReagendar = false;
       this.formCancelar = false;
@@ -277,8 +293,13 @@ export class SoportepsicologoPage implements OnInit {
       this.botonCancelar = false;
       this.botonConsulta = false;
       this.botonFinalizar = false;
+      if (this.lista_citas.length === 0) {
+        this.setOpen4(true);
+        this.cancelar();
+      }
     }
   }
+  
 
   botonTrue() {
     this.boton = true;
@@ -399,6 +420,7 @@ export class SoportepsicologoPage implements OnInit {
     this.formReagendar = false;
     this.formCancelar = false;
     this.formConsulta = false;
+    this.formFinalizar = false;
     this.botonReagendar = false;
     this.botonCancelar = false;
     this.botonConsulta = false;

@@ -34,6 +34,7 @@ export class SoportepacientePage implements OnInit {
   isAlertOpen = false;
   isAlertOpen2 = false;
   isAlertOpen3 = false;
+  isAlertOpen4 = false; // Nueva alerta FCO
   alertButtons = ['OK'];
   mdl_asunto: string = '';
   mdl_mensaje: string = '';
@@ -76,6 +77,10 @@ export class SoportepacientePage implements OnInit {
 
   setOpen(isOpen: boolean) {
     this.isAlertOpen = isOpen;
+  }
+
+  setOpen4(isOpen: boolean) {
+    this.isAlertOpen4 = isOpen;
   }
 
   formatDate(dateString: string) {
@@ -205,6 +210,10 @@ export class SoportepacientePage implements OnInit {
       this.botonReagendar = false;
       this.botonCancelar = false;
       this.botonConsulta = false;
+      if (this.lista_citas.length === 0) {
+        this.setOpen4(true);
+        this.cancelar();
+      }
     } else if (this.mdl_opcion == 'Cancelar Hora') {
       this.mdl_detalle = '';
       this.formReagendar = false;
@@ -213,6 +222,10 @@ export class SoportepacientePage implements OnInit {
       this.botonReagendar = false;
       this.botonCancelar = false;
       this.botonConsulta = false;
+      if (this.lista_citas.length === 0) {
+        this.setOpen4(true);
+        this.cancelar();
+      }
     } else if (this.mdl_opcion == 'Realizar Consulta') {
       this.mdl_detalle = '';
       this.formReagendar = false;
@@ -221,7 +234,8 @@ export class SoportepacientePage implements OnInit {
       this.botonReagendar = false;
       this.botonCancelar = false;
       this.botonConsulta = false;
-    }
+    } 
+    
   }
 
   botonTrue() {
