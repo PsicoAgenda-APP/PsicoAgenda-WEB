@@ -31,7 +31,9 @@ export class ApiService {
   rutaBuscarPsicologos = 'https://psicoagenda-api.azurewebsites.net/psicologos/buscar_psicologos/'
   rutaComunas = 'https://psicoagenda-api.azurewebsites.net/usuarios/todasLasComunas/'
   rutaAsignadas = 'https://psicoagenda-api.azurewebsites.net/usuarios/citas_asignadas/'
-
+  rutaPersona = 'https://psicoagenda-api.azurewebsites.net/usuarios/datosPaciente/'
+  rutaFinalizarCita = 'https://psicoagenda-api.azurewebsites.net/paciente/finalizarCita/'
+  
   constructor(private http: HttpClient) { }
 
   sendEmail(to: string, subject: string, text: string, html: string): Observable<any> {
@@ -145,7 +147,6 @@ export class ApiService {
     return this.http.get(this.rutaRecuperacion + '?CorreoElectronico=' + correo + '&NuevaContrasena=' + contrasena).pipe();
   }
 
-
   obtenerUsuario(correo: string, contrasena: string) {
     return this.http.get(this.ruta + '?CorreoElectronico=' + correo + '&Contrasena=' + contrasena).pipe();
   }
@@ -168,6 +169,10 @@ export class ApiService {
 
   obtenerDetallesCitas(IdPaciente: number) {
     return this.http.get(this.ruta_detalles_citas + '?IdPaciente=' + IdPaciente).pipe();  //Historial citas
+  }
+
+  datosPersona(IdPersona: number) {
+    return this.http.get(this.rutaPersona + '?IdPersona=' + IdPersona).pipe();  //Historial citas
   }
 
   obtenerProximaCita(IdPaciente: number) {
@@ -208,6 +213,10 @@ export class ApiService {
 
   confirmarCita(IdPaciente: number, IdEstadoCita: number, IdCita: number) {
     return this.http.get(this.rutaCita + '?IdPaciente=' + IdPaciente + '&IdEstadoCita=' + IdEstadoCita + '&IdCita=' + IdCita).pipe();
+  }
+
+  finalizarCita(Tratamiento: string, Diagnostico: string, IdCita: number) {
+    return this.http.get(this.rutaFinalizarCita + '?Tratamiento=' + Tratamiento + '&Diagnostico=' + Diagnostico + '&IdCita=' + IdCita).pipe();
   }
 
   registrarPsicologo(

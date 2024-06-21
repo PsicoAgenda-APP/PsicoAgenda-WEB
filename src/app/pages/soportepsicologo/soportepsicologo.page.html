@@ -5,7 +5,8 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="goEditar()">Editar datos</ion-button>
-      <ion-button (click)="goHistorial()">Historial de atenciones</ion-button>
+      <ion-button (click)="goHistorial()">Mi Historial</ion-button>
+      <ion-button (click)="goAtenciones()">Mis Atenciones</ion-button>
       <ion-button (click)="logout()">Cerrar sesión</ion-button>
     </ion-buttons>
     <ion-title class="header-title">
@@ -16,6 +17,7 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content [fullscreen]="true">
   <ion-card>
@@ -30,13 +32,14 @@
             <ion-select-option>Reagendar Hora</ion-select-option>
             <ion-select-option>Cancelar Hora</ion-select-option>
             <ion-select-option>Realizar Consulta</ion-select-option>
+            <ion-select-option>Finalizar Consulta</ion-select-option>
           </ion-select>
         </ion-col>
         <ion-col *ngIf="formCancelar">
           <ion-select label="Cita" [(ngModel)]="mdl_detalle" label-placement="floating" fill="outline"
             interface="popover" (ionChange)="botonTrue(); botones()">
-            <ion-select-option [value]="cita" *ngFor="let cita of lista_citas">Psicologo: {{cita.nombre_psicologo}} /
-              Dia: {{cita.fecha}} / Hora: {{cita.hora}}</ion-select-option>
+            <ion-select-option [value]="cita" *ngFor="let cita of lista_citas">Paciente: {{cita.Nombre_Paciente}} /
+              Dia: {{cita.FechaCita}} / Hora: {{cita.HoraCita}}</ion-select-option>
           </ion-select>
         </ion-col>
         <ion-col>
@@ -46,9 +49,8 @@
         <ion-col *ngIf="formReagendar">
           <ion-select [(ngModel)]="mdl_detalle" (ionChange)="botonTrue(); botones()" label="Cita"
             label-placement="floating" fill="outline" interface="popover">
-            <ion-select-option [value]="cita" *ngFor="let cita of lista_citas">Psicologo: {{cita.nombre_psicologo}} /
-              Dia:
-              {{cita.fecha}} / Hora: {{cita.hora}}</ion-select-option>
+            <ion-select-option [value]="cita" *ngFor="let cita of lista_citas">Paciente: {{cita.Nombre_Paciente}} /
+              Dia: {{cita.FechaCita}} / Hora: {{cita.HoraCita}}</ion-select-option>
           </ion-select>
         </ion-col>
         <ion-col *ngIf="botonReagendar">
@@ -76,6 +78,24 @@
         <ion-col>
           <ion-button expand="block" class="boton" (click)="enviarConsulta()" *ngIf="formConsulta">Enviar
             Consulta</ion-button>
+        </ion-col>
+        <ion-col *ngIf="formFinalizar">
+          <ion-select label="Cita" [(ngModel)]="mdl_detalle" label-placement="floating" fill="outline"
+            interface="popover" (ionChange)="botonTrue(); botones()">
+            <ion-select-option [value]="cita" *ngFor="let cita of lista_citas">Paciente: {{cita.Nombre_Paciente}} /
+              Dia: {{cita.FechaCita}} / Hora: {{cita.HoraCita}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col *ngIf="botonFinalizar">
+          <ion-textarea [(ngModel)]="mdl_asunto" [autoGrow]="true" label="Diagnostico" label-placement="floating" fill="outline"
+            type="text"></ion-textarea>
+        </ion-col>
+        <ion-col *ngIf="botonFinalizar">
+          <ion-textarea [(ngModel)]="mdl_mensaje" [autoGrow]="true" label="Tratamiento" labelPlacement="floating"
+            fill="outline" type="text"></ion-textarea>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" class="boton" *ngIf="botonFinalizar" (click)="finalizarCita()">Finalizar Cita</ion-button>
         </ion-col>
       </ion-grid>
     </ion-card-content>

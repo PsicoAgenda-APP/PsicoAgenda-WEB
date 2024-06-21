@@ -17,6 +17,7 @@ export class CalendarioPage implements OnInit {
   showOptions: boolean = false;
   titulo: boolean = false;
   horas: boolean = false;
+  fechaAnterior: boolean = false;
   idPsicologoString: string = '';
   idPsicologo: number = 0;
   idCita: string = '';
@@ -74,41 +75,54 @@ export class CalendarioPage implements OnInit {
     this.fechaCita = this.fechaFinal;
   }
 
+  getCurrentDate(): string {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript son de 0 a 11
+    const year = today.getFullYear();
 
+    return `${day}-${month}-${year}`;
+  }
 
   async loadAvailableTimes() {
     this.horas = false;
+    this.fechaAnterior = false;
     this.availableTimes = [];
     this.titulo = false;
     console.log('Fecha seleccionada:', this.selectedDate);
     this.formatDate(this.selectedDate);
     console.log('Id Psicologo:', this.idPsicologo);
     console.log('Fecha formateada:', this.fechaFinal);
-
-    if (this.selectedDate) {
-      this.botonPago = false;
-      let data = this.apiService.obtenerHoras(this.idPsicologo, this.fechaFinal);
-      let respuesta = await lastValueFrom(data);
-      console.log('Respuesta completa de la API:', respuesta);
-
-      // Asegurarse de que la respuesta es un array
-      if (Array.isArray(respuesta)) {
-        if (respuesta.length === 0) {
-          this.horas = true;
-          console.log('No hay horas disponibles.');
-        } else {
-          this.titulo = true;  // Asumimos que hay datos válidos
-          respuesta.forEach(hora => {
-            this.availableTimes.push(hora);
-            console.log('Hora disponible:', hora);
-          });
-          // Verificar si hay al menos un elemento para tomar el IdCita
-          if (this.availableTimes.length > 0) {
-            this.validadorHora = this.availableTimes[0].IdCita;
+    const todayDate: string = this.getCurrentDate();
+    console.log('Hoy: ' + todayDate)
+    if (todayDate > this.fechaFinal) {  
+      this.fechaAnterior = true;
+    } else {
+      if (this.selectedDate) {
+        this.botonPago = false;
+        let data = this.apiService.obtenerHoras(this.idPsicologo, this.fechaFinal);
+        let respuesta = await lastValueFrom(data);
+        console.log('Respuesta completa de la API:', respuesta);
+  
+        // Asegurarse de que la respuesta es un array
+        if (Array.isArray(respuesta)) {
+          if (respuesta.length === 0) {
+            this.horas = true;
+            console.log('No hay horas disponibles.');
+          } else {
+            this.titulo = true;  // Asumimos que hay datos válidos
+            respuesta.forEach(hora => {
+              this.availableTimes.push(hora);
+              console.log('Hora disponible:', hora);
+            });
+            // Verificar si hay al menos un elemento para tomar el IdCita
+            if (this.availableTimes.length > 0) {
+              this.validadorHora = this.availableTimes[0].IdCita;
+            }
           }
+        } else {
+          console.log('Respuesta no es un arreglo. Revisar el formato de los datos recibidos de la API.');
         }
-      } else {
-        console.log('Respuesta no es un arreglo. Revisar el formato de los datos recibidos de la API.');
       }
     }
   }

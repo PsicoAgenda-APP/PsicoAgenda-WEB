@@ -16,16 +16,29 @@ export class HistorialpsicologoPage implements OnInit {
   login: boolean = false;
   idPsicologo: number = 0;
   idPaciente: string = '';
-
+  idPersona: number = 0;
+  correo: string = '';
+  idTipo: number = 0;
+  idUsuario: number = 0;
 
   constructor(private router: Router, private apiService: ApiService) {}
 
-  ngOnInit() {let parametros = this.router.getCurrentNavigation();
+  ngOnInit() {
+    let parametros = this.router.getCurrentNavigation();
     if (parametros?.extras.state) {
       this.idPsicologo = parametros?.extras.state['idPsicologo'];
+      this.idTipo = parametros?.extras.state['idTipoUsuario'];
+      this.idUsuario = parametros?.extras.state['idUsuario'];
       this.login = parametros?.extras.state['login'];
+      this.correo = parametros?.extras.state['correo'];
+      this.idPersona = parametros?.extras.state['idPersona'];
+      console.log('Id Usuario:' + this.idUsuario)
     }
-    this.obtenerHistorialPsicologo();
+    if (!this.login) {
+      this.router.navigate(['home']);
+    } else {
+      this.obtenerHistorialPsicologo();
+    }
   }
 
   async obtenerHistorialPsicologo() {
@@ -56,11 +69,98 @@ export class HistorialpsicologoPage implements OnInit {
     this.idPaciente = idPaciente.toString();
     let parametros: NavigationExtras = {
       state: {
-        idPaciente: this.idPaciente
+        idPaciente: this.idPaciente,
+        login: this.login,
+        idPsicologo: this.idPsicologo,
+        idUsuario: this.idUsuario,
+        correo: this.correo,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
       }
     };
     console.log("idPaciente: " + this.idPaciente)
     this.router.navigate(['fichapsicologo'], parametros);
+  }
+
+  goHistorial() {
+    this.login = true;
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPsicologo: this.idPsicologo,
+        idUsuario: this.idUsuario,
+        correo: this.correo,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['historialpsicologo'], parametros);
+  }
+
+  goAtenciones() {
+    this.login = true;
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPsicologo: this.idPsicologo,
+        idUsuario: this.idUsuario,
+        correo: this.correo,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['atencionespsicologo'], parametros);
+  }
+
+  logout() {
+    this.login = false;
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['home'], parametros);
+  }
+
+  goEditar() {
+    console.log('Login: ', this.login)
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPsicologo: this.idPsicologo,
+        idUsuario: this.idUsuario,
+        correo: this.correo,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    };
+    this.router.navigate(['editarpsicologo'], parametros);
+  }
+
+  goHome() {
+    if (this.login) {
+      let parametros: NavigationExtras = {
+        state: {
+          login: this.login,
+          idPsicologo: this.idPsicologo,
+          idUsuario: this.idUsuario,
+          correo: this.correo,
+          idTipo: this.idTipo,
+          idPersona: this.idPersona
+        },
+        replaceUrl: true
+      }
+      this.router.navigate(['psicologo'], parametros);
+    } else {
+      let parametros: NavigationExtras = {
+        replaceUrl: true
+      }
+      this.router.navigate(['home'], parametros);
+    }
   }
 
 }

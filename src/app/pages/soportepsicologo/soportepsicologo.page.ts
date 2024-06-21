@@ -4,11 +4,11 @@ import { lastValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
-  selector: 'app-soportepaciente',
-  templateUrl: './soportepaciente.page.html',
-  styleUrls: ['./soportepaciente.page.scss'],
+  selector: 'app-soportepsicologo',
+  templateUrl: './soportepsicologo.page.html',
+  styleUrls: ['./soportepsicologo.page.scss'],
 })
-export class SoportepacientePage implements OnInit {
+export class SoportepsicologoPage implements OnInit {
 
   login: boolean = false;
   idTipo: number = 0;
@@ -23,6 +23,8 @@ export class SoportepacientePage implements OnInit {
   botonCancelar: boolean = false;
   formConsulta: boolean = false;
   botonConsulta: boolean = false;
+  formFinalizar: boolean = false;
+  botonFinalizar: boolean = false;
   lista_respuesta: any = [];
   lista_citas: any = [];
   lista_datos: any = [];
@@ -60,6 +62,7 @@ export class SoportepacientePage implements OnInit {
       this.login = parametros?.extras.state['login'];
       this.correo = parametros?.extras.state['correo'];
       this.idPersona = parametros?.extras.state['idPersona'];
+      this.idPsicologo = parametros?.extras.state['idPsicologo'];
     }
     if (!this.login) {
       this.router.navigate(['home']);
@@ -97,13 +100,13 @@ export class SoportepacientePage implements OnInit {
   async citasAsignadas() {
     const todayDate: string = this.getCurrentDate();
     console.log('Hoy: ' + todayDate)
-    let data = this.apiService.citasAsignadas(this.idPaciente);
+    let data = this.apiService.obtenerAtencionesPsicologo(this.idPsicologo);
     let respuesta = await lastValueFrom(data);
     let jsonTexto = JSON.stringify(respuesta);
     let json = JSON.parse(jsonTexto);
     for (let x = 0; x < json.length; x++) {
       this.lista_respuesta.push(json[x]);
-      if (this.lista_respuesta[x].fecha >= todayDate) {
+      if (this.lista_respuesta[x].FechaCita >= todayDate) {
         this.lista_citas.push(this.lista_respuesta[x]);
       }
     }
@@ -127,53 +130,35 @@ export class SoportepacientePage implements OnInit {
   }
 
   goHistorial() {
-    console.log('Login: ', this.login)
+    this.login = true;
     let parametros: NavigationExtras = {
       state: {
         login: this.login,
-        idPaciente: this.idPaciente,
-        correo: this.correo,
+        idPsicologo: this.idPsicologo,
         idUsuario: this.idUsuario,
-        idTipo: this.idTipo
+        correo: this.correo,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
       },
       replaceUrl: true
     }
-    this.router.navigate(['atencionespaciente'], parametros);
+    this.router.navigate(['historialpsicologo'], parametros);
   }
 
-  goHome() {
-    if (this.login) {
-      let parametros: NavigationExtras = {
-        state: {
-          login: this.login,
-          idPaciente: this.idPaciente,
-          correo: this.correo,
-          idUsuario: this.idUsuario,
-          idTipo: this.idTipo
-        },
-        replaceUrl: true
-      }
-      this.router.navigate(['cliente'], parametros);
-    } else {
-      let parametros: NavigationExtras = {
-        replaceUrl: true
-      }
-      this.router.navigate(['home'], parametros);
-    }
-  }
-
-  goEditar() {
+  goAtenciones() {
+    this.login = true;
     let parametros: NavigationExtras = {
       state: {
         login: this.login,
-        idPaciente: this.idPaciente,
-        correo: this.correo,
+        idPsicologo: this.idPsicologo,
         idUsuario: this.idUsuario,
-        idTipo: this.idTipo
+        correo: this.correo,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
       },
       replaceUrl: true
     }
-    this.router.navigate(['editarpaciente'], parametros);
+    this.router.navigate(['atencionespsicologo'], parametros);
   }
 
   logout() {
@@ -186,6 +171,60 @@ export class SoportepacientePage implements OnInit {
     }
     this.router.navigate(['home'], parametros);
   }
+
+  goEditar() {
+    console.log('Login: ', this.login)
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPsicologo: this.idPsicologo,
+        idUsuario: this.idUsuario,
+        correo: this.correo,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    };
+    this.router.navigate(['editarpsicologo'], parametros);
+  }
+
+  goHome() {
+    if (this.login) {
+      let parametros: NavigationExtras = {
+        state: {
+          login: this.login,
+          idPsicologo: this.idPsicologo,
+          idUsuario: this.idUsuario,
+          correo: this.correo,
+          idTipo: this.idTipo,
+          idPersona: this.idPersona
+        },
+        replaceUrl: true
+      }
+      this.router.navigate(['psicologo'], parametros);
+    } else {
+      let parametros: NavigationExtras = {
+        replaceUrl: true
+      }
+      this.router.navigate(['home'], parametros);
+    }
+  }
+
+  goSoporte () {
+    let parametros: NavigationExtras = {
+      state: {
+        login: this.login,
+        idPsicologo: this.idPsicologo,
+        idUsuario: this.idUsuario,
+        correo: this.correo,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      },
+      replaceUrl: true
+    }
+    this.router.navigate(['soportepsicologo'], parametros);
+  }
+
 
   cambiarOpcion() {
     console.log("Opcion: " + this.mdl_opcion);
@@ -202,25 +241,42 @@ export class SoportepacientePage implements OnInit {
       this.formReagendar = true;
       this.formCancelar = false;
       this.formConsulta = false;
+      this.formFinalizar = false;
       this.botonReagendar = false;
       this.botonCancelar = false;
       this.botonConsulta = false;
+      this.botonFinalizar = false;
     } else if (this.mdl_opcion == 'Cancelar Hora') {
       this.mdl_detalle = '';
       this.formReagendar = false;
       this.formCancelar = true;
       this.formConsulta = false;
+      this.formFinalizar = false;
       this.botonReagendar = false;
       this.botonCancelar = false;
       this.botonConsulta = false;
+      this.botonFinalizar = false;
     } else if (this.mdl_opcion == 'Realizar Consulta') {
       this.mdl_detalle = '';
       this.formReagendar = false;
       this.formCancelar = false;
       this.formConsulta = true;
+      this.formFinalizar = false;
       this.botonReagendar = false;
       this.botonCancelar = false;
       this.botonConsulta = false;
+      this.botonFinalizar = false;
+    } 
+    else if (this.mdl_opcion == 'Finalizar Consulta') {
+      this.mdl_detalle = '';
+      this.formReagendar = false;
+      this.formCancelar = false;
+      this.formConsulta = false;
+      this.formFinalizar = true;
+      this.botonReagendar = false;
+      this.botonCancelar = false;
+      this.botonConsulta = false;
+      this.botonFinalizar = false;
     }
   }
 
@@ -234,14 +290,22 @@ export class SoportepacientePage implements OnInit {
       this.botonReagendar = true;
       this.botonCancelar = false;
       this.botonConsulta = false;
+      this.botonFinalizar = false;
     } else if (this.mdl_opcion == 'Cancelar Hora' && this.boton == true) {
       this.botonReagendar = false;
       this.botonCancelar = true;
       this.botonConsulta = false;
+      this.botonFinalizar = false;
     } else if (this.mdl_opcion == 'Realizar Consulta' && this.boton) {
       this.botonReagendar = false;
       this.botonCancelar = false;
       this.botonConsulta = true;
+      this.botonFinalizar = false;
+    } else if (this.mdl_opcion == 'Finalizar Consulta' && this.boton) {
+      this.botonReagendar = false;
+      this.botonCancelar = false;
+      this.botonConsulta = false;
+      this.botonFinalizar = true;
     }
   }
 
@@ -358,14 +422,6 @@ export class SoportepacientePage implements OnInit {
     console.log('Fecha formateada:', this.fechaFinal);
     const todayDate: string = this.getCurrentDate();
     console.log('Hoy: ' + todayDate)
-    let data = this.apiService.buscarPsicologos(1,this.mdl_detalle.nombre_psicologo,'');
-    let respuesta = await lastValueFrom(data);
-    let jsonTexto = JSON.stringify(respuesta);
-    let json = JSON.parse(jsonTexto);
-    for (let x = 0; x < json.length; x++) {
-      this.lista_psicologos.push(json[x]);
-      this.idPsicologo = this.lista_psicologos[x].IdPsicologo;
-    }
     if (todayDate > this.fechaFinal) {  
       this.fechaAnterior = true;
     } else {
@@ -402,7 +458,7 @@ export class SoportepacientePage implements OnInit {
   }
 
   reagendarCitaFinal() {
-    this.apiService.confirmarCita(this.idPaciente, 3, this.mdl_detalle.IdCita).subscribe(
+    this.apiService.confirmarCita(this.mdl_detalle.IdPaciente, 3, this.mdl_detalle.IdCita).subscribe(
       response => {
         console.log('Cita Actualizada Correctamente', response);
       },
@@ -410,7 +466,7 @@ export class SoportepacientePage implements OnInit {
         console.error('Error al agendar la cita', error);
       }
     );
-    this.apiService.confirmarCita(this.idPaciente, 1, this.mdl_hora.IdCita).subscribe(
+    this.apiService.confirmarCita(this.mdl_detalle.IdPaciente, 1, this.mdl_hora.IdCita).subscribe(
       response => {
         console.log('Cita Agendada Correctamente', response);
         this.isAlertOpen3 = true;
@@ -425,4 +481,31 @@ export class SoportepacientePage implements OnInit {
     }, 2500);
   }
 
+  finalizarCita() {
+    this.apiService.finalizarCita(this.mdl_mensaje, this.mdl_asunto, this.mdl_detalle.IdCita).subscribe(
+      response => {
+        console.log('Cita Actualizada Correctamente', response);
+      },
+      error => {
+        console.error('Error al agendar la cita', error);
+      }
+    );
+    this.apiService.confirmarCita(this.mdl_detalle.IdPaciente, 2, this.mdl_detalle.IdCita).subscribe(
+      response => {
+        console.log('Cita Actualizada Correctamente', response);
+        this.isAlertOpen3 = true;
+      },
+      error => {
+        console.error('Error al agendar la cita', error);
+        this.isAlertOpen2 = true;
+      }
+    );
+    setTimeout(() => {
+      this.cancelar();
+    }, 2500);
+  }
+
+
 }
+
+

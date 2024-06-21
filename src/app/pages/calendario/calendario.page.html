@@ -38,6 +38,7 @@
   <ion-list class="calendario-lista">
     <p *ngIf="titulo">Horas Disponibles</p>
     <p *ngIf="horas">No hay horas disponibles este día</p>
+    <p *ngIf="fechaAnterior">Lo sentimos, pero no puedes seleccionar una fecha anterior a hoy. Por favor, elige una fecha futura.</p>
     <ion-button (click)="confirmarCita(j, c.HoraCita)" *ngFor="let c of availableTimes; let j = index">
       <ion-label>{{ c.HoraCita }}</ion-label>
       <p hidden id="id_cita_{{j}}">{{ c.IdCita }}</p>

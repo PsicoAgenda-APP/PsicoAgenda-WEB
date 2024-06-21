@@ -1,60 +1,37 @@
-  .imagen {
-    max-width: 80%;
-    height: auto;
-    width: 100%;
-    margin-left: 200px;
+:root {
+    --ion-color-primary: #4a90e2; /* Cambia esto al color primario de tu marca */
+    --ion-background-color: #f5f5f5; /* Fondo general de la aplicación */
   }
   
-  .options-list {
-    flex-direction: column;
-    width: 100%;
-    margin-top: 5px;
+  ion-header {
+    --background: #fff; /* Fondo del header */
   }
   
-  ion-title {
-    text-decoration: none;
-    color: inherit;
+  ion-toolbar {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --background: #32E0C4;
   }
   
-  /* Estilos específicos para la tabla de citas */
-  ion-card {
-    margin: 20px; /* Espacio alrededor de la tarjeta */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra ligera para la tarjeta */
-    width: 75%; /* La tarjeta ocupa el 75% del ancho de la pantalla */
-    margin-left: auto; /* Centrado horizontalmente */
-    margin-right: auto; /* Centrado horizontalmente */
-  }
   
-  ion-grid {
-    --ion-grid-padding: 0;
-    width: 100%;
-  }
   
-  ion-row {
-    border-bottom: 1px solid #ccc;
-  }
-  
-  ion-col {
+  /* Estilos para el banner principal */
+  .main-banner {
+    --background: url(../../../assets/icon/fondo_final_login.png) no-repeat center center / cover; /* Color de fondo del banner */
+    color: #000000; /* Color del texto en el banner */
     text-align: center;
-    padding: 8px;
-    border-right: 1px solid #ccc;
   }
   
-  ion-col:last-child {
-    border-right: none;
+  .main-banner h1 {
+    font-size: 2rem;       
   }
   
-  ion-card-header {
-    background-color: #009688;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
+  .main-banner p {
+    margin-bottom: 2rem;
+    font-size: 1rem;
   }
   
-  ion-card-title {
-    font-size: 1.2rem;
-  }
-  
+  /* Estilos para el footer */
   ion-footer {
     ion-toolbar {
       display: flex;
@@ -102,4 +79,37 @@
     color: #009688; /* Asegúrate de que el color sea el definido para el texto */
     width: 24px; /* Ajusta el tamaño del icono si es necesario */
     height: 24px; /* Ajusta el tamaño del icono si es necesario */
+  }
+  
+  
+  .titulo {
+    padding-left: 5%;
+  }
+  
+  .imagen_usr {
+    max-width: 50px;
+    padding-left: 2%;
+    padding-top: 2%;
+  }
+  
+  ion-card {
+    max-width: 100%;
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+  
+  /*.centrado {
+    margin-left: auto;
+    margin-right: auto;
+  }*/
+  
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .boton {
+    --background: #009688;
+    text-transform: capitalize;
   }

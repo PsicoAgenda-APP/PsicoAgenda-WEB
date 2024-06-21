@@ -78,10 +78,19 @@ const routes: Routes = [
   {
     path: 'editarpaciente',
     loadChildren: () => import('./pages/editarpaciente/editarpaciente.module').then( m => m.EditarPacientePageModule)
-  },  {
+  },
+  {
     path: 'soportepaciente',
     loadChildren: () => import('./pages/soportepaciente/soportepaciente.module').then( m => m.SoportepacientePageModule)
   },
+  {
+    path: 'editarpsicologo',
+    loadChildren: () => import('./pages/editarpsicologo/editarpsicologo.module').then( m => m.EditarPsicologoPageModule)
+  },  {
+    path: 'soportepsicologo',
+    loadChildren: () => import('./pages/soportepsicologo/soportepsicologo.module').then( m => m.SoportepsicologoPageModule)
+  },
+
 
 
 
