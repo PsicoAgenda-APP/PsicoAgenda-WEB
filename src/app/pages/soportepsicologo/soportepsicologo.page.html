@@ -59,7 +59,17 @@
               (ionChange)="loadAvailableTimes()"></ion-datetime>
           </ion-item>
         </ion-col>
-        <ion-col *ngIf="botonReagendar">
+        <ion-col>
+          <ion-item *ngIf="horas">
+            <ion-text style="margin-left: auto; margin-right: auto;">No hay citas disponibles para el
+              día seleccionado</ion-text>
+          </ion-item>
+          <ion-item *ngIf="fechaAnterior">
+            <ion-text style="margin-left: auto; margin-right: auto;" >Seleccione un día
+              posterior</ion-text>
+          </ion-item>
+        </ion-col>
+        <ion-col *ngIf="listaReagendar">
           <ion-select [(ngModel)]="mdl_hora" (ionChange)="ultimoBoton()" label="Hora" label-placement="floating" fill="outline">
             <ion-select-option [value]="c" *ngFor="let c of availableTimes;">{{ c.HoraCita }}</ion-select-option>
           </ion-select>
@@ -135,6 +145,10 @@
 
 <ion-alert [isOpen]="isAlertOpen4" header="Información" message="No hay registros" [buttons]="alertButtons"
   (didDismiss)="setOpen4(false)">
+</ion-alert>
+
+<ion-alert [isOpen]="isAlertOpen5" header="Información" message="No puede dejar campos vacios" [buttons]="alertButtons"
+  (didDismiss)="setOpen5(false)">
 </ion-alert>
 
 

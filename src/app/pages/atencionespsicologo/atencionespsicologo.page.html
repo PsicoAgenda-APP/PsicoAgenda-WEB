@@ -32,14 +32,17 @@
           <ion-row>
             <ion-col>Fecha</ion-col>
             <ion-col>Hora</ion-col>
-            <ion-col>ID Cita</ion-col>
             <ion-col>Paciente</ion-col>
+            <ion-col>Ficha</ion-col>
           </ion-row>
-          <ion-row *ngFor="let cita of atencionesCitas">
+          <ion-row *ngFor="let cita of atencionesCitas; let i = index">
             <ion-col>{{ cita.FechaCita }}</ion-col>
             <ion-col>{{ cita.HoraCita }}</ion-col>
-            <ion-col>{{ cita.IdCita }}</ion-col>
             <ion-col>{{ cita.Nombre_Paciente }}</ion-col>
+            <p hidden id="id_paciente_{{i}}">{{ cita.IdPaciente }}</p>
+            <ion-col>
+              <ion-button (click)="verFicha(i)">Ver Ficha</ion-button>
+            </ion-col>
           </ion-row>
         </ion-grid>
       </ion-card-content>

@@ -36,7 +36,8 @@ export class SoportepsicologoPage implements OnInit {
   isAlertOpen = false;
   isAlertOpen2 = false;
   isAlertOpen3 = false;
-  isAlertOpen4 = false; // Nueva alerta
+  isAlertOpen4 = false;
+  isAlertOpen5 = false;
   alertButtons = ['OK'];
   mdl_asunto: string = '';
   mdl_mensaje: string = '';
@@ -51,10 +52,11 @@ export class SoportepsicologoPage implements OnInit {
   idPsicologo: number = 0;
   horas: boolean = false;
   botonFinal: boolean = false;
+  listaReagendar: boolean = false;
 
   constructor(private router: Router, private apiService: ApiService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     let parametros = this.router.getCurrentNavigation();
     if (parametros?.extras.state) {
       this.idTipo = parametros?.extras.state['idTipoUsuario'];
@@ -64,12 +66,25 @@ export class SoportepsicologoPage implements OnInit {
       this.correo = parametros?.extras.state['correo'];
       this.idPersona = parametros?.extras.state['idPersona'];
       this.idPsicologo = parametros?.extras.state['idPsicologo'];
+      console.log('ID Persona: ' + this.idPersona)
     }
     if (!this.login) {
       this.router.navigate(['home']);
     } else {
+      let data = this.apiService.datosPersona(this.idPersona);
+      let respuesta = await lastValueFrom(data);
+      let jsonTexto = JSON.stringify(respuesta);
+      let json = JSON.parse(jsonTexto);
+      for (let x = 0; x < json.length; x++) {
+        this.lista_datos.push(json[x]);
+        this.nombre = this.lista_datos[x].PrimerNombre + ' ' + this.lista_datos[x].SegundoNombre 
+        + ' ' + this.lista_datos[x].ApellidoPaterno + ' ' + this.lista_datos[x].ApellidoMaterno;
+        this.rut = this.lista_datos[x].Rut;
+        //this.correo = this.lista_respuesta[x].CorreoElectronico;
+      }
       this.citasAsignadas();
-      this.datosPersona();
+      console.log(this.nombre)
+      console.log(this.rut)
       const currentDate = new Date();
       const offset = currentDate.getTimezoneOffset() * 60000; // Obtén el desplazamiento en milisegundos
       this.selectedDate = new Date(currentDate.getTime() - offset).toISOString().slice(0, -1);
@@ -85,7 +100,10 @@ export class SoportepsicologoPage implements OnInit {
   setOpen4(isOpen: boolean) {
     this.isAlertOpen4 = isOpen;
   }
-  
+
+  setOpen5(isOpen: boolean) {
+    this.isAlertOpen5 = isOpen;
+  }
 
   formatDate(dateString: string) {
     const date = new Date(dateString);
@@ -131,8 +149,7 @@ export class SoportepsicologoPage implements OnInit {
     let json = JSON.parse(jsonTexto);
     for (let x = 0; x < json.length; x++) {
       this.lista_datos.push(json[x]);
-      this.nombre = this.lista_datos[x].PrimerNombre + ' ' + this.lista_datos[x].ApellidoPaterno
-      this.rut = this.lista_datos[x].Rut
+      //this.correo = this.lista_respuesta[x].CorreoElectronico;
     }
   }
 
@@ -217,7 +234,7 @@ export class SoportepsicologoPage implements OnInit {
     }
   }
 
-  goSoporte () {
+  goSoporte() {
     let parametros: NavigationExtras = {
       state: {
         login: this.login,
@@ -245,6 +262,10 @@ export class SoportepsicologoPage implements OnInit {
       this.botonCancelar = false;
       this.botonConsulta = false;
       this.botonFinalizar = false;
+      this.listaReagendar = false;
+      this.horas = false;
+      this.fechaAnterior = false;
+      this.botonFinal = false;
     } else if (this.mdl_opcion == 'Reagendar Hora') {
       this.mdl_detalle = '';
       this.formReagendar = true;
@@ -255,6 +276,10 @@ export class SoportepsicologoPage implements OnInit {
       this.botonCancelar = false;
       this.botonConsulta = false;
       this.botonFinalizar = false;
+      this.listaReagendar = false;
+      this.horas = false;
+      this.fechaAnterior = false;
+      this.botonFinal = false;
       if (this.lista_citas.length === 0) {
         this.setOpen4(true);
         this.cancelar();
@@ -269,6 +294,10 @@ export class SoportepsicologoPage implements OnInit {
       this.botonCancelar = false;
       this.botonConsulta = false;
       this.botonFinalizar = false;
+      this.listaReagendar = false;
+      this.horas = false;
+      this.fechaAnterior = false;
+      this.botonFinal = false;
       if (this.lista_citas.length === 0) {
         this.setOpen4(true);
         this.cancelar();
@@ -283,6 +312,10 @@ export class SoportepsicologoPage implements OnInit {
       this.botonCancelar = false;
       this.botonConsulta = false;
       this.botonFinalizar = false;
+      this.listaReagendar = false;
+      this.horas = false;
+      this.fechaAnterior = false;
+      this.botonFinal = false;
     } else if (this.mdl_opcion == 'Finalizar Consulta') {
       this.mdl_detalle = '';
       this.formReagendar = false;
@@ -293,13 +326,17 @@ export class SoportepsicologoPage implements OnInit {
       this.botonCancelar = false;
       this.botonConsulta = false;
       this.botonFinalizar = false;
+      this.listaReagendar = false;
+      this.horas = false;
+      this.fechaAnterior = false;
+      this.botonFinal = false;
       if (this.lista_citas.length === 0) {
         this.setOpen4(true);
         this.cancelar();
       }
     }
   }
-  
+
 
   botonTrue() {
     this.boton = true;
@@ -312,21 +349,25 @@ export class SoportepsicologoPage implements OnInit {
       this.botonCancelar = false;
       this.botonConsulta = false;
       this.botonFinalizar = false;
+      this.listaReagendar = true;
     } else if (this.mdl_opcion == 'Cancelar Hora' && this.boton == true) {
       this.botonReagendar = false;
       this.botonCancelar = true;
       this.botonConsulta = false;
       this.botonFinalizar = false;
+      this.listaReagendar = false;
     } else if (this.mdl_opcion == 'Realizar Consulta' && this.boton) {
       this.botonReagendar = false;
       this.botonCancelar = false;
       this.botonConsulta = true;
       this.botonFinalizar = false;
+      this.listaReagendar = false;
     } else if (this.mdl_opcion == 'Finalizar Consulta' && this.boton) {
       this.botonReagendar = false;
       this.botonCancelar = false;
       this.botonConsulta = false;
       this.botonFinalizar = true;
+      this.listaReagendar = false;
     }
   }
 
@@ -336,22 +377,22 @@ export class SoportepsicologoPage implements OnInit {
     this.isAlertOpen3 = false;
     const subject = 'SOPORTE: Cancelación de Cita Numero ' + this.mdl_detalle.IdCita;
 
-    const text = 'Estimados,\n\nSe informa que el usuario ' + this.mdl_detalle.nombre_paciente + ' a solicitado cancelar la siguiente cita:' +
+    const text = 'Estimados,\n\nSe informa que el usuario ' + this.nombre + ' a solicitado cancelar la siguiente cita:' +
       '\n\nNumero de Cita: ' + this.mdl_detalle.IdCita +
-      '\n\nPsicologo: ' + this.mdl_detalle.nombre_psicologo +
-      '\n\nPaciente: ' + this.mdl_detalle.nombre_paciente +
-      '\n\nFecha: ' + this.mdl_detalle.fecha +
-      '\n\nHora: ' + this.mdl_detalle.hora +
+      '\n\nPsicologo: ' + this.nombre +
+      '\n\nPaciente: ' + this.mdl_detalle.Nombre_Paciente +
+      '\n\nFecha: ' + this.mdl_detalle.FechaCita +
+      '\n\nHora: ' + this.mdl_detalle.HoraCita +
       '\n\nSaludos Cordiales,\nArea de TI.';
 
     const html = `
               <p>Estimados,</p>
-              <p>Se informa que el usuario ${this.mdl_detalle.nombre_paciente} a solicitado cancelar la siguiente cita:</p>
+              <p>Se informa que el usuario ${this.nombre} a solicitado cancelar la siguiente cita:</p>
               <p><strong>Numero Cita: ${this.mdl_detalle.IdCita}</strong></p>
-              <p><strong>Psicologo: ${this.mdl_detalle.nombre_psicologo}</strong></p>
-              <p><strong>Paciente: ${this.mdl_detalle.nombre_paciente}</strong></p>
-              <p><strong>Fecha: ${this.mdl_detalle.fecha}</strong></p>
-              <p><strong>Hora: ${this.mdl_detalle.hora}</strong></p>
+              <p><strong>Psicologo: ${this.nombre}</strong></p>
+              <p><strong>Paciente: ${this.mdl_detalle.Nombre_Paciente}</strong></p>
+              <p><strong>Fecha: ${this.mdl_detalle.FechaCita}</strong></p>
+              <p><strong>Hora: ${this.mdl_detalle.HoraCita}</strong></p>
               <p>Saludos Cordiales,</p>
               <p>Area de TI.</p>
           `;
@@ -374,19 +415,20 @@ export class SoportepsicologoPage implements OnInit {
   }
 
   enviarConsulta() {
-    this.isAlertOpen = false;
-    this.isAlertOpen2 = false;
-    this.isAlertOpen3 = false;
+    if (this.mdl_asunto != '' && this.mdl_mensaje != '') {
+      this.isAlertOpen = false;
+      this.isAlertOpen2 = false;
+      this.isAlertOpen3 = false;
 
-    const subject = 'CONSULTA: ' + this.mdl_asunto;
-    const text = 'Estimados,\n\nEl usuario ' + this.nombre + ' ha enviado la siguiente consulta:' +
-      '\n\n' + this.mdl_mensaje +
-      '\n\nDatos del usuario:' +
-      '\nCorreo: ' + this.correo +
-      '\nRut: ' + this.rut +
-      '\n\nSaludos Cordiales,\nArea de TI.';
+      const subject = 'CONSULTA: ' + this.mdl_asunto;
+      const text = 'Estimados,\n\nEl usuario ' + this.nombre + ' ha enviado la siguiente consulta:' +
+        '\n\n' + this.mdl_mensaje +
+        '\n\nDatos del usuario:' +
+        '\nCorreo: ' + this.correo +
+        '\nRut: ' + this.rut +
+        '\n\nSaludos Cordiales,\nArea de TI.';
 
-    const html = `
+      const html = `
               <p>Estimados,</p>
               <p>El usuario ${this.nombre} ha enviado la siguiente consulta:</p>
               <p><strong>${this.mdl_mensaje}</strong></p>
@@ -399,21 +441,23 @@ export class SoportepsicologoPage implements OnInit {
               <p>Area de TI.</p>
           `;
 
-    this.apiService.sendEmail(this.correoCorp, subject, text, html).subscribe(
-      response => {
-        console.log('Email Enviado Correctamente', response);
-        this.isAlertOpen = true;
+      this.apiService.sendEmail(this.correoCorp, subject, text, html).subscribe(
+        response => {
+          console.log('Email Enviado Correctamente', response);
+          this.isAlertOpen = true;
 
-      },
-      error => {
-        console.error('Error al enviar correo', error);
-        this.isAlertOpen2 = true;
-
-      }
-    );
-    setTimeout(() => {
-      this.cancelar();
-    }, 2500);
+        },
+        error => {
+          console.error('Error al enviar correo', error);
+          this.isAlertOpen2 = true;
+        }
+      );
+      setTimeout(() => {
+        this.cancelar();
+      }, 2500);
+    } else {
+      this.isAlertOpen5 = true;
+    }
   }
 
   cancelar() {
@@ -437,6 +481,7 @@ export class SoportepsicologoPage implements OnInit {
   async loadAvailableTimes() {
     this.horas = false;
     this.fechaAnterior = false;
+    this.botonFinal = false;
     this.availableTimes = [];
     console.log('Fecha seleccionada:', this.selectedDate);
     this.formatDate(this.selectedDate);
@@ -444,21 +489,26 @@ export class SoportepsicologoPage implements OnInit {
     console.log('Fecha formateada:', this.fechaFinal);
     const todayDate: string = this.getCurrentDate();
     console.log('Hoy: ' + todayDate)
-    if (todayDate > this.fechaFinal) {  
+    if (todayDate > this.fechaFinal) {
       this.fechaAnterior = true;
+      this.botonFinal = false;
+      this.listaReagendar = false;
     } else {
       if (this.selectedDate) {
         console.log(this.mdl_detalle.IdPsicologo)
         let data = this.apiService.obtenerHoras(this.idPsicologo, this.fechaFinal);
         let respuesta = await lastValueFrom(data);
         console.log('Respuesta completa de la API:', respuesta);
-  
+
         // Asegurarse de que la respuesta es un array
         if (Array.isArray(respuesta)) {
           if (respuesta.length === 0) {
             this.horas = true;
+            this.listaReagendar = false;
+            this.botonFinal = false;
             console.log('No hay horas disponibles.');
           } else {
+            this.listaReagendar = true;
             respuesta.forEach(hora => {
               this.availableTimes.push(hora);
               console.log('Hora disponible:', hora);
@@ -504,30 +554,32 @@ export class SoportepsicologoPage implements OnInit {
   }
 
   finalizarCita() {
-    this.apiService.finalizarCita(this.mdl_mensaje, this.mdl_asunto, this.mdl_detalle.IdCita).subscribe(
-      response => {
-        console.log('Cita Actualizada Correctamente', response);
-      },
-      error => {
-        console.error('Error al agendar la cita', error);
-      }
-    );
-    this.apiService.confirmarCita(this.mdl_detalle.IdPaciente, 2, this.mdl_detalle.IdCita).subscribe(
-      response => {
-        console.log('Cita Actualizada Correctamente', response);
-        this.isAlertOpen3 = true;
-      },
-      error => {
-        console.error('Error al agendar la cita', error);
-        this.isAlertOpen2 = true;
-      }
-    );
-    setTimeout(() => {
-      this.cancelar();
-    }, 2500);
+    if (this.mdl_asunto != '' && this.mdl_mensaje != '') {
+      this.apiService.finalizarCita(this.mdl_mensaje, this.mdl_asunto, this.mdl_detalle.IdCita).subscribe(
+        response => {
+          console.log('Cita Actualizada Correctamente', response);
+        },
+        error => {
+          console.error('Error al agendar la cita', error);
+        }
+      );
+      this.apiService.confirmarCita(this.mdl_detalle.IdPaciente, 2, this.mdl_detalle.IdCita).subscribe(
+        response => {
+          console.log('Cita Actualizada Correctamente', response);
+          this.isAlertOpen = true;
+        },
+        error => {
+          console.error('Error al agendar la cita', error);
+          this.isAlertOpen2 = true;
+        }
+      );
+      setTimeout(() => {
+        this.cancelar();
+      }, 2500);
+    } else {
+      this.isAlertOpen5 = true;
+    }
   }
-
-
 }
 
 

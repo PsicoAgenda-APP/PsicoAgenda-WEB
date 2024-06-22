@@ -41,7 +41,8 @@ export class CommitpayPage implements OnInit {
         this.fechaCita = JSON.parse(localStorage.getItem('fechaCita') || '');
         this.horaCita = JSON.parse(localStorage.getItem('horaCita') || '');
         this.idPersona = JSON.parse(localStorage.getItem('idPersona') || '0');
-        
+        this.idUsuario = JSON.parse(localStorage.getItem('idUsuario') || '0');
+        console.log("ID USUARIO: " + this.idUsuario)
         console.log(this.idCita);
         console.log(this.idPaciente);
         console.log(this.correo);

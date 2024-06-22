@@ -57,13 +57,26 @@
               (ionChange)="loadAvailableTimes()"></ion-datetime>
           </ion-item>
         </ion-col>
-        <ion-col *ngIf="botonReagendar">
-          <ion-select [(ngModel)]="mdl_hora" (ionChange)="ultimoBoton()" label="Hora" label-placement="floating" fill="outline">
+        <ion-col>
+          <ion-item *ngIf="horas">
+            <ion-text style="margin-left: auto; margin-right: auto;">No hay citas disponibles para el
+              día seleccionado</ion-text>
+          </ion-item>
+          <ion-item *ngIf="fechaAnterior">
+            <ion-text style="margin-left: auto; margin-right: auto;" >Seleccione un día
+              posterior</ion-text>
+          </ion-item>
+        </ion-col>
+        <ion-col *ngIf="listaReagendar">
+          <ion-select [(ngModel)]="mdl_hora" (ionChange)="ultimoBoton()" label="Hora" label-placement="floating"
+            fill="outline">
             <ion-select-option [value]="c" *ngFor="let c of availableTimes;">{{ c.HoraCita }}</ion-select-option>
+            <ion-alert header="Información" message="Su solicitud ha sido enviada"></ion-alert>
           </ion-select>
         </ion-col>
         <ion-col>
-          <ion-button expand="block" class="boton" *ngIf="botonFinal" (click)="reagendarCitaFinal()">Reagendar Cita</ion-button>
+          <ion-button expand="block" class="boton" *ngIf="botonFinal" (click)="reagendarCitaFinal()">Reagendar
+            Cita</ion-button>
         </ion-col>
         <ion-col *ngIf="formConsulta">
           <ion-input [(ngModel)]="mdl_asunto" label="Asunto" label-placement="floating" fill="outline"
@@ -103,7 +116,6 @@
   (didDismiss)="setOpen(false)">
 </ion-alert>
 
-
 <ion-alert [isOpen]="isAlertOpen2" header="Información"
   message="Error al procesar solicitud, intentar nuevamente mas tarde" [buttons]="alertButtons"
   (didDismiss)="setOpen(false)">
@@ -115,4 +127,8 @@
 
 <ion-alert [isOpen]="isAlertOpen4" header="Información" message="No hay registros" [buttons]="alertButtons"
   (didDismiss)="setOpen4(false)">
+</ion-alert>
+
+<ion-alert [isOpen]="isAlertOpen5" header="Información" message="No puede dejar campos vacios" [buttons]="alertButtons"
+  (didDismiss)="setOpen5(false)">
 </ion-alert>

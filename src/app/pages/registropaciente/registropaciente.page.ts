@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-registropaciente',
@@ -12,7 +13,7 @@ export class RegistropacientePage implements OnInit {
   mdl_rut: string = '';
   mdl_calle: string = '';
   mdl_numero: number = 0;
-  idComuna: number = 1;
+  idComuna: number = 0;
   mdl_primerNombre: string = '';
   mdl_segundoNombre: string = '';
   mdl_apellidoPaterno: string = '';
@@ -23,25 +24,39 @@ export class RegistropacientePage implements OnInit {
   mdl_contrasena: string = '';
   idTipoUsuario: number = 1;
   mdl_comuna: string = '';
+  lista_comunas: any[] = [];
   // Propiedades para las alertas
   isAlertOpen: boolean = false;
   isAlertOpen2: boolean = false;
   isAlertOpen3: boolean = false;
   alertButtons: string[] = ['OK'];
+
   
 
 
 
-  constructor(private router: Router, private apiService: ApiService) { // Router ya está inyectado aquí
+  constructor(private router: Router, private apiService: ApiService) {// Router ya está inyectado aquí
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.cargarComunas();
+  }
+
+  async cargarComunas() {
+    try {
+      const data = this.apiService.obtenerComunas();
+      this.lista_comunas = await lastValueFrom(data) as any[];
+      console.log('Lista de comunas cargadas:', this.lista_comunas); // Verificar que la lista de comunas se cargue correctamente
+    } catch (error) {
+      console.error('Error al cargar las comunas', error);
+    }
+  
   }
 
   register() {
     this.isAlertOpen = false;
     this.isAlertOpen3 = false;
-    if (this.mdl_calle != '' && this.mdl_numero != 0 && this.mdl_rut != '' && this.mdl_comuna != '' 
+    if (this.mdl_calle != '' && this.mdl_numero != 0 && this.mdl_rut != '' && this.idComuna != 0 
       && this.mdl_primerNombre != '' && this.mdl_segundoNombre != '' && this.mdl_apellidoPaterno != '' 
       && this.mdl_apellidoMaterno != '' && this.mdl_telefono != '' && this.mdl_fechaNacimiento != '' && this.mdl_contrasena != '') {
       const transformarFecha = (fecha: string): string => fecha.split('-').reverse().join('-');
@@ -90,7 +105,10 @@ export class RegistropacientePage implements OnInit {
   }
 
   redirectTo(route: string) {
-    this.router.navigate([route]);
+    let parametros: NavigationExtras = {
+      replaceUrl: true
+    }
+    this.router.navigate([route], parametros);
   }
 
   setOpen(isOpen: boolean) {

@@ -19,13 +19,14 @@ export class RegistropsicoPage implements OnInit {
   isAlertOpen3 = false;
   alertButtons = ['OK'];
   lista_respuesta: any[] = [];
+  lista_comunas: any[] = [];
   rutValido = false;
   mdl_nombre: string = '';
   mdl_nombre2: string = '';
   mdl_apellido: string = '';
   mdl_apellido2: string = '';
   nombre_completo: string = '';
-  idComuna: number = 1;
+  idComuna: number = 0;
   idTipo: number = 2;
   idEspecialidad: number = 1;
   mdl_numeracion: number = 0;
@@ -55,7 +56,21 @@ export class RegistropsicoPage implements OnInit {
     });*/
   }
 
-  ngOnInit() { }
+  async ngOnInit() {
+    await this.cargarComunas();
+  }
+
+
+  async cargarComunas() {
+    try {
+      const data = this.apiService.obtenerComunas();
+      this.lista_comunas = await lastValueFrom(data) as any[];
+      console.log('Lista de comunas cargadas:', this.lista_comunas); // Verificar que la lista de comunas se cargue correctamente
+    } catch (error) {
+      console.error('Error al cargar las comunas', error);
+    }
+  
+  }
 
   async validarPrestador() {
     this.isAlertOpen2 = false;
@@ -111,29 +126,54 @@ export class RegistropsicoPage implements OnInit {
   }
 
   redirectTo(route: string) {
-    this.router.navigate([route]);
+    let parametros: NavigationExtras = {
+      replaceUrl: true
+    }
+    this.router.navigate([route], parametros);
   }
-
   setOpen(isOpen: boolean) {
     this.isAlertOpen = isOpen;
   }
 
   register() {
-    const transformarFecha = (fecha: string): string => fecha.split('-').reverse().join('-');
-    const fechaTransformada = transformarFecha(this.mdl_fecha);
-    this.apiService.registrarPsicologo(this.mdl_calle, this.mdl_numeracion, this.idComuna, this.mdl_nombre, this.mdl_nombre2,
-      this.mdl_apellido, this.mdl_apellido2, this.mdl_telefono, fechaTransformada, this.mdl_correo, this.mdl_contrasena,
-      this.idTipo, this.mdl_rut, this.mdl_valor, this.idEspecialidad)
-      .subscribe(
+    this.isAlertOpen = false;
+    this.isAlertOpen3 = false;
+    if (
+      this.mdl_calle !== '' && this.mdl_numeracion !== 0 && this.mdl_rut !== '' && this.idComuna !== 0 &&
+      this.mdl_nombre !== '' && this.mdl_nombre2 !== '' && this.mdl_apellido !== '' &&
+      this.mdl_apellido2 !== '' && this.mdl_telefono !== '' && this.mdl_fecha !== '' && this.mdl_contrasena !== ''
+    ) {
+      const transformarFecha = (fecha: string): string => fecha.split('-').reverse().join('-');
+      const fechaTransformada = transformarFecha(this.mdl_fecha);
+      this.apiService.registrarPsicologo(
+        this.mdl_calle,
+        this.mdl_numeracion,
+        this.idComuna,
+        this.mdl_nombre,
+        this.mdl_nombre2,
+        this.mdl_apellido,
+        this.mdl_apellido2,
+        this.mdl_telefono,
+        fechaTransformada,
+        this.mdl_correo,
+        this.mdl_contrasena,
+        this.idTipo,
+        this.mdl_rut,
+        this.mdl_valor,
+        this.idEspecialidad
+      ).subscribe(
         response => {
           console.log('Psicolo Registrado Correctamente', response);
           this.sendEmail();
+          this.isAlertOpen3 = true;
         },
         error => {
           console.error('Error al registrarse', error);
         }
-    )
-    this.isAlertOpen3 = true;
+      );
+    } else {
+      this.isAlertOpen = true;
+    }
   }
 
   goHome() {

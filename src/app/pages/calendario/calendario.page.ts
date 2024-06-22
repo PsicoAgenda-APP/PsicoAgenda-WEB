@@ -46,7 +46,8 @@ export class CalendarioPage implements OnInit {
       this.login = parametros?.extras.state['login'];
       this.correo = parametros?.extras.state['correo'];
       this.idPersona = parametros?.extras.state['idPersona'];
-      console.log('El ID del usuario es:', this.idPsicologo)
+      this.idUsuario = parametros?.extras.state['idUsuario'];
+      console.log('El ID del usuario es:', this.idUsuario)
     }
     if (!this.login) {
       this.router.navigate(['home']);
@@ -211,6 +212,7 @@ export class CalendarioPage implements OnInit {
           localStorage.setItem('fechaCita', JSON.stringify(this.fechaCita));
           localStorage.setItem('horaCita', JSON.stringify(this.horaCita));
           localStorage.setItem('idPersona', JSON.stringify(this.idPersona));
+          localStorage.setItem('idUsuario', JSON.stringify(this.idUsuario));
           window.location.href = response.url + '?token_ws=' + response.token;
         } else {
           console.error('Error creating transaction');

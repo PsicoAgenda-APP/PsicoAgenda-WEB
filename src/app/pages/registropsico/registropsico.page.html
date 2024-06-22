@@ -5,11 +5,11 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button routerLink="/login">Entrar</ion-button>
-      <ion-button>Registrarse</ion-button>
+      <ion-button (click)="redirectTo('/registropaciente')">Registrarse</ion-button>
       <ion-button (click)="toggleOptions()">Profesionales</ion-button>
     </ion-buttons>
     <ion-title class="header-title">
-      <a style="color: #000000;" routerLink="/home" class="logo-link">
+      <a style="color: #000000;" (click)="goHome()" class="logo-link">
         <img src="../../assets/icon/psicoagendalogo.png" alt="Logo" class="header-logo" />
         PsicoAgenda
       </a>
@@ -36,9 +36,11 @@
         <ion-label position="floating">Numeración</ion-label>
         <ion-input type="text" [(ngModel)]="mdl_numeracion"></ion-input>
       </ion-item>
-      <ion-item [disabled]="!rutValido">
+      <ion-item [disabled]="!rutValido"  >
         <ion-label position="floating">Comuna</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-select class="expand" [(ngModel)]="idComuna">
+          <ion-select-option *ngFor="let comuna of lista_comunas" [value]="comuna.IdComuna">{{ comuna.NombreComuna }}</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item [disabled]="!rutValido">
         <ion-label position="floating">Primer Nombre</ion-label>
@@ -80,7 +82,7 @@
   </div>
   <!-- Footer -->
   <ion-footer>
-    <ion-toolbar class="toolbarfooter">
+    <ion-toolbar>
       <div class="footer-content">
         <div class="footer-left">
           <p>©2024 - PsicoAgenda APP</p>
@@ -99,7 +101,7 @@
     </ion-toolbar>
   </ion-footer>
 
-  <ion-alert [isOpen]="isAlertOpen" header="Información" message="Indique un Rut Porfavor" [buttons]="alertButtons"
+  <ion-alert [isOpen]="isAlertOpen" header="Información" message="No pueden haber campos vacios" [buttons]="alertButtons"
     (didDismiss)="setOpen(false)">
   </ion-alert>
 

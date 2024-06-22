@@ -20,7 +20,7 @@ export class AtencionespsicologoPage implements OnInit {
   idTipo: number = 0;
   idUsuario: number = 0;
   idPersona: number = 0;
-  idPaciente: number = 0;
+  idPaciente: string = '';
   correo: string = '';
 
   constructor(private router: Router, private apiService: ApiService) {}
@@ -44,6 +44,26 @@ export class AtencionespsicologoPage implements OnInit {
     } else {
       this.obtenerAtencionesPsicologo();
     }
+  }
+
+  verFicha(index:number) {
+    const elemento2 = document.getElementById('id_paciente_' + index);
+    const idPacienteString = elemento2 ? elemento2.textContent : null;
+    const idPaciente = parseInt(idPacienteString!, 10);
+    this.idPaciente = idPaciente.toString();
+    let parametros: NavigationExtras = {
+      state: {
+        idPaciente: this.idPaciente,
+        login: this.login,
+        idPsicologo: this.idPsicologo,
+        idUsuario: this.idUsuario,
+        correo: this.correo,
+        idTipo: this.idTipo,
+        idPersona: this.idPersona
+      }
+    };
+    console.log("idPaciente: " + this.idPaciente)
+    this.router.navigate(['fichapsicologo'], parametros);
   }
 
   async obtenerAtencionesPsicologo() {

@@ -50,7 +50,10 @@ export class HomePage {
   }
 
   redirectTo(route: string) {
-    this.router.navigate([route]);
+    let parametros: NavigationExtras = {
+      replaceUrl: true
+    }
+    this.router.navigate([route], parametros);
   }
 
   buscar() {

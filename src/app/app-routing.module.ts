@@ -32,10 +32,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/atencionespaciente/atencionespaciente.module').then( m => m.AtencionesPacientePageModule)
   },
   {
-    path: 'fichapaciente',
-    loadChildren: () => import('./pages/fichapaciente/fichapaciente.module').then( m => m.FichapacientePageModule)
-  },
-  {
     path: 'busqueda',
     loadChildren: () => import('./pages/busqueda/busqueda.module').then( m => m.BusquedaPageModule)
   },
