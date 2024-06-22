@@ -403,8 +403,14 @@ export class SoportepacientePage implements OnInit {
     this.formatDate(this.selectedDate);
     console.log('Id Psicologo:', this.idPsicologo);
     console.log('Fecha formateada:', this.fechaFinal);
+
     const todayDate: string = this.getCurrentDate();
-    console.log('Hoy: ' + todayDate)
+    console.log('Hoy: ' + todayDate);
+
+    // Convertir las cadenas de fecha a objetos Date
+    const todayDateObj = this.parseDate(todayDate);
+    const fechaFinalObj = this.parseDate(this.fechaFinal);
+
     let data = this.apiService.buscarPsicologos(1, this.mdl_detalle.nombre_psicologo, '');
     let respuesta = await lastValueFrom(data);
     let jsonTexto = JSON.stringify(respuesta);
@@ -413,7 +419,8 @@ export class SoportepacientePage implements OnInit {
       this.lista_psicologos.push(json[x]);
       this.idPsicologo = this.lista_psicologos[x].IdPsicologo;
     }
-    if (todayDate > this.fechaFinal) {
+
+    if (fechaFinalObj < todayDateObj) {
       this.fechaAnterior = true;
       this.botonFinal = false;
       this.listaReagendar = false;
@@ -448,6 +455,13 @@ export class SoportepacientePage implements OnInit {
       }
     }
   }
+
+  // Método para convertir una cadena de fecha en formato 'DD-MM-YYYY' a un objeto Date
+  parseDate(dateString: string): Date {
+    const [day, month, year] = dateString.split('-').map(part => parseInt(part, 10));
+    return new Date(year, month - 1, day);
+  }
+
 
   ultimoBoton() {
     this.botonFinal = true;

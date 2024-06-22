@@ -94,9 +94,15 @@ export class CalendarioPage implements OnInit {
     this.formatDate(this.selectedDate);
     console.log('Id Psicologo:', this.idPsicologo);
     console.log('Fecha formateada:', this.fechaFinal);
+
     const todayDate: string = this.getCurrentDate();
-    console.log('Hoy: ' + todayDate)
-    if (todayDate > this.fechaFinal) {  
+    console.log('Hoy: ' + todayDate);
+
+    // Convertir las cadenas de fecha a objetos Date
+    const todayDateObj = this.parseDate(todayDate);
+    const fechaFinalObj = this.parseDate(this.fechaFinal);
+
+    if (fechaFinalObj < todayDateObj) {  
       this.fechaAnterior = true;
     } else {
       if (this.selectedDate) {
@@ -126,7 +132,14 @@ export class CalendarioPage implements OnInit {
         }
       }
     }
-  }
+}
+
+// Método para convertir una cadena de fecha en formato 'DD-MM-YYYY' a un objeto Date
+parseDate(dateString: string): Date {
+    const [day, month, year] = dateString.split('-').map(part => parseInt(part, 10));
+    return new Date(year, month - 1, day);
+}
+
 
   scheduleAppointment(time: string) {
     console.log('Cita agendada para', this.selectedDate, 'a las', time);

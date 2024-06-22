@@ -77,8 +77,8 @@ export class SoportepsicologoPage implements OnInit {
       let json = JSON.parse(jsonTexto);
       for (let x = 0; x < json.length; x++) {
         this.lista_datos.push(json[x]);
-        this.nombre = this.lista_datos[x].PrimerNombre + ' ' + this.lista_datos[x].SegundoNombre 
-        + ' ' + this.lista_datos[x].ApellidoPaterno + ' ' + this.lista_datos[x].ApellidoMaterno;
+        this.nombre = this.lista_datos[x].PrimerNombre + ' ' + this.lista_datos[x].SegundoNombre
+          + ' ' + this.lista_datos[x].ApellidoPaterno + ' ' + this.lista_datos[x].ApellidoMaterno;
         this.rut = this.lista_datos[x].Rut;
         //this.correo = this.lista_respuesta[x].CorreoElectronico;
       }
@@ -468,6 +468,7 @@ export class SoportepsicologoPage implements OnInit {
     this.botonReagendar = false;
     this.botonCancelar = false;
     this.botonConsulta = false;
+    this.listaReagendar = false;
     this.mdl_detalle = '';
     this.mdl_asunto = '';
     this.mdl_mensaje = '';
@@ -487,9 +488,15 @@ export class SoportepsicologoPage implements OnInit {
     this.formatDate(this.selectedDate);
     console.log('Id Psicologo:', this.idPsicologo);
     console.log('Fecha formateada:', this.fechaFinal);
+
     const todayDate: string = this.getCurrentDate();
-    console.log('Hoy: ' + todayDate)
-    if (todayDate > this.fechaFinal) {
+    console.log('Hoy: ' + todayDate);
+
+    // Convertir las cadenas de fecha a objetos Date
+    const todayDateObj = this.parseDate(todayDate);
+    const fechaFinalObj = this.parseDate(this.fechaFinal);
+
+    if (fechaFinalObj < todayDateObj) {
       this.fechaAnterior = true;
       this.botonFinal = false;
       this.listaReagendar = false;
@@ -524,6 +531,13 @@ export class SoportepsicologoPage implements OnInit {
       }
     }
   }
+
+  // Método para convertir una cadena de fecha en formato 'DD-MM-YYYY' a un objeto Date
+  parseDate(dateString: string): Date {
+    const [day, month, year] = dateString.split('-').map(part => parseInt(part, 10));
+    return new Date(year, month - 1, day);
+  }
+
 
   ultimoBoton() {
     this.botonFinal = true;
