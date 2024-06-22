@@ -10,6 +10,8 @@ import { lastValueFrom } from 'rxjs';
 })
 export class HistorialpsicologoPage implements OnInit {
   historialCitas: any[] = [];
+  showHistorialCitasEmptyMessage: boolean = false;
+  loading: boolean = false;
   isAlertOpen = false;
   alertButtons = ['OK'];
   error_mensaje: any = '';
@@ -24,6 +26,9 @@ export class HistorialpsicologoPage implements OnInit {
   constructor(private router: Router, private apiService: ApiService) {}
 
   ngOnInit() {
+    setTimeout(() => {
+      this.loading = true;
+    }, 1500);
     let parametros = this.router.getCurrentNavigation();
     if (parametros?.extras.state) {
       this.idPsicologo = parametros?.extras.state['idPsicologo'];
@@ -39,6 +44,8 @@ export class HistorialpsicologoPage implements OnInit {
     } else {
       this.obtenerHistorialPsicologo();
     }
+
+
   }
 
   async obtenerHistorialPsicologo() {
@@ -47,7 +54,9 @@ export class HistorialpsicologoPage implements OnInit {
       const data = this.apiService.obtenerHistorialPsicologo(IdPsicologo);
       const respuesta = await lastValueFrom(data) as any[];
       this.historialCitas = respuesta;
+      this.showHistorialCitasEmptyMessage = !this.historialCitas || this.historialCitas.length === 0;
     } catch (error) {
+      this.showHistorialCitasEmptyMessage = true;
       this.isAlertOpen = true;
       this.error_mensaje = 'Error al obtener el historial de citas';
       console.error('Error al obtener el historial de citas', error);
@@ -162,5 +171,4 @@ export class HistorialpsicologoPage implements OnInit {
       this.router.navigate(['home'], parametros);
     }
   }
-
 }

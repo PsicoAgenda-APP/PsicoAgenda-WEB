@@ -18,31 +18,39 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Historial de Atenciones</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col>Fecha</ion-col>
-          <ion-col>Hora</ion-col>
-          <ion-col>Paciente</ion-col>
-          <ion-col>Acciones</ion-col>
-        </ion-row>
-        <ion-row *ngFor="let cita of historialCitas; let i = index">
-          <ion-col>{{ cita.FechaCita }}</ion-col>
-          <ion-col>{{ cita.HoraCita }}</ion-col>
-          <ion-col>{{ cita.Nombre_Paciente }}</ion-col>
-          <p hidden id="id_paciente_{{i}}">{{ cita.IdPaciente }}</p>
-          <ion-col>
-            <ion-button (click)="verFicha(i)">Ver Ficha</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+<ion-content *ngIf="!loading" >
+  <ion-img class="imagen_carga" src="../../../assets/icon/loading (1).gif"></ion-img>
+</ion-content>
+<ion-content *ngIf="loading">
+  <div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Historial de Atenciones</ion-card-title>
+      </ion-card-header>
+      <ion-card-content *ngIf="!showHistorialCitasEmptyMessage">
+        <ion-grid>
+          <ion-row>
+            <ion-col>Fecha</ion-col>
+            <ion-col>Hora</ion-col>
+            <ion-col>Paciente</ion-col>
+            <ion-col>Acciones</ion-col>
+          </ion-row>
+          <ion-row *ngFor="let cita of historialCitas; let i = index">
+            <ion-col>{{ cita.FechaCita }}</ion-col>
+            <ion-col>{{ cita.HoraCita }}</ion-col>
+            <ion-col>{{ cita.Nombre_Paciente }}</ion-col>
+            <p hidden id="id_paciente_{{i}}">{{ cita.IdPaciente }}</p>
+            <ion-col>
+              <ion-button (click)="verFicha(i)">Ver Ficha</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+      <ion-card-content *ngIf="showHistorialCitasEmptyMessage" class="center-content">
+        <p>No hay historial de citas asignadas.</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
 
 <ion-footer>
@@ -59,4 +67,3 @@
     </div>
   </ion-toolbar>
 </ion-footer>
-

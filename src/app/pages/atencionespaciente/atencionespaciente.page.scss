@@ -139,3 +139,20 @@
     align-self: center; 
     border-color: transparent;
   }
+
+  .center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Ajusta la altura según sea necesario */
+    text-align: center;
+  }
+  
+  
+  .imagen_carga {
+    width: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15%;
+  
+  }

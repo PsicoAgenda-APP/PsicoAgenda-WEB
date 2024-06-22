@@ -86,9 +86,14 @@ const routes: Routes = [
   {
     path: 'editarpsicologo',
     loadChildren: () => import('./pages/editarpsicologo/editarpsicologo.module').then( m => m.EditarPsicologoPageModule)
-  },  {
+  },
+  {
     path: 'soportepsicologo',
     loadChildren: () => import('./pages/soportepsicologo/soportepsicologo.module').then( m => m.SoportepsicologoPageModule)
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
   },
 
 

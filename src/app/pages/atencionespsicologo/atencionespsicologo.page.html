@@ -18,29 +18,36 @@
   </ion-toolbar>
 </ion-header>
 
-
-<ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Próximas Atenciones</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col>Fecha</ion-col>
-          <ion-col>Hora</ion-col>
-          <ion-col>ID Cita</ion-col>
-          <ion-col>Paciente</ion-col>
-        </ion-row>
-        <ion-row *ngFor="let cita of atencionesCitas">
-          <ion-col>{{ cita.FechaCita }}</ion-col>
-          <ion-col>{{ cita.HoraCita }}</ion-col>
-          <ion-col>{{ cita.IdCita }}</ion-col>
-          <ion-col>{{ cita.Nombre_Paciente }}</ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+<ion-content *ngIf="!loading" >
+  <ion-img class="imagen_carga" src="../../../assets/icon/loading (1).gif"></ion-img>
+</ion-content>
+<ion-content *ngIf="loading">
+  <div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Próximas Atenciones</ion-card-title>
+      </ion-card-header>
+      <ion-card-content *ngIf="!showAtencionesCitasEmptyMessage">
+        <ion-grid>
+          <ion-row>
+            <ion-col>Fecha</ion-col>
+            <ion-col>Hora</ion-col>
+            <ion-col>ID Cita</ion-col>
+            <ion-col>Paciente</ion-col>
+          </ion-row>
+          <ion-row *ngFor="let cita of atencionesCitas">
+            <ion-col>{{ cita.FechaCita }}</ion-col>
+            <ion-col>{{ cita.HoraCita }}</ion-col>
+            <ion-col>{{ cita.IdCita }}</ion-col>
+            <ion-col>{{ cita.Nombre_Paciente }}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+      <ion-card-content *ngIf="showAtencionesCitasEmptyMessage" class="center-content">
+        <p>No hay próximas citas asignadas.</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
 
 <ion-footer>
@@ -57,4 +64,3 @@
     </div>
   </ion-toolbar>
 </ion-footer>
-

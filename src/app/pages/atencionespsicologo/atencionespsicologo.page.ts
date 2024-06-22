@@ -10,6 +10,8 @@ import { lastValueFrom } from 'rxjs';
 })
 export class AtencionespsicologoPage implements OnInit {
   atencionesCitas: any[] = [];
+  showAtencionesCitasEmptyMessage: boolean = false;
+  loading: boolean = false;
   isAlertOpen = false;
   alertButtons = ['OK'];
   error_mensaje: any = '';
@@ -21,10 +23,12 @@ export class AtencionespsicologoPage implements OnInit {
   idPaciente: number = 0;
   correo: string = '';
 
-
   constructor(private router: Router, private apiService: ApiService) {}
 
   ngOnInit() {
+    setTimeout(() => {
+      this.loading = true;
+    }, 1500);
     let parametros = this.router.getCurrentNavigation();
     if (parametros?.extras.state) {
       this.idPsicologo = parametros?.extras.state['idPsicologo'];
@@ -48,7 +52,9 @@ export class AtencionespsicologoPage implements OnInit {
       const data = this.apiService.obtenerAtencionesPsicologo(IdPsicologo);
       const respuesta = await lastValueFrom(data) as any[];
       this.atencionesCitas = respuesta;
+      this.showAtencionesCitasEmptyMessage = !this.atencionesCitas || this.atencionesCitas.length === 0;
     } catch (error) {
+      this.showAtencionesCitasEmptyMessage = true;
       this.isAlertOpen = true;
       this.error_mensaje = 'Error al obtener las atenciones';
       console.error('Error al obtener las atenciones', error);

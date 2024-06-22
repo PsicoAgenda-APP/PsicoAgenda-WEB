@@ -14,6 +14,9 @@ import 'jspdf-autotable';
 export class AtencionesPacientePage implements OnInit {
   proximaCita: any = {};
   historialCitas: any[] = [];
+  showProximaCitaEmptyMessage: boolean = false;
+  showHistorialCitasEmptyMessage: boolean = false;
+  loading: boolean = false;
   isAlertOpen = false;
   alertButtons = ['OK'];
   error_mensaje: any = '';
@@ -23,10 +26,18 @@ export class AtencionesPacientePage implements OnInit {
   idPersona: number = 0;
   idUsuario: string = '';
   correo: string = '';
+  
+  
+  
+  
+  
 
   constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.loading = true;
+    }, 1500);
     let parametros = this.router.getCurrentNavigation();
     if (parametros?.extras.state) {
       this.idTipo = parametros?.extras.state['idTipoUsuario'];
@@ -45,30 +56,47 @@ export class AtencionesPacientePage implements OnInit {
   }
 
   async obtenerDetallesCitas() {
-    const IdPaciente = this.idPaciente; // Reemplaza esto con el IdPaciente real
+    const IdPaciente = this.idPaciente;
     try {
       const data = this.apiService.obtenerDetallesCitas(IdPaciente);
       const respuesta = await lastValueFrom(data);
       this.historialCitas = Array.isArray(respuesta) ? respuesta : [];
+      if (this.historialCitas.length === 0) {
+        this.showHistorialCitasEmptyMessage = true;
+      } else {
+        this.showHistorialCitasEmptyMessage = false;
+      }
     } catch (error) {
+      this.showHistorialCitasEmptyMessage = true;
       this.isAlertOpen = true;
       this.error_mensaje = 'Error al obtener detalles de citas';
       console.error('Error al obtener detalles de citas', error);
     }
   }
-
+  
   async obtenerProximaCita() {
-    const IdPaciente = this.idPaciente; // Reemplaza esto con el IdPaciente real
+    const IdPaciente = this.idPaciente;
     try {
       const data = this.apiService.obtenerProximaCita(IdPaciente);
       const respuesta = await lastValueFrom(data);
       this.proximaCita = respuesta;
+      if (!this.proximaCita || Object.keys(this.proximaCita).length === 0) {
+        this.showProximaCitaEmptyMessage = true;
+      } else {
+        this.showProximaCitaEmptyMessage = false;
+      }
     } catch (error) {
+      this.showProximaCitaEmptyMessage = true;
       this.isAlertOpen = true;
       this.error_mensaje = 'Error al obtener la próxima cita';
       console.error('Error al obtener la próxima cita', error);
     }
   }
+  
+  
+  
+  
+  
 
   setOpen(isOpen: boolean) {
     this.isAlertOpen = isOpen;
