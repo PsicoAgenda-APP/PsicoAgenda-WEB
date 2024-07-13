@@ -33,6 +33,8 @@ export class ApiService {
   rutaAsignadas = 'https://psicoagenda-api.azurewebsites.net/usuarios/citas_asignadas/'
   rutaPersona = 'https://psicoagenda-api.azurewebsites.net/usuarios/datosPaciente/'
   rutaFinalizarCita = 'https://psicoagenda-api.azurewebsites.net/paciente/finalizarCita/'
+  rutaInsertarCitas = 'https://psicoagenda-api.azurewebsites.net/paciente/insertarCitas/'
+  rutaBorraCita = 'https://psicoagenda-api.azurewebsites.net/paciente/borrarCita/'
   
   constructor(private http: HttpClient) { }
 
@@ -45,6 +47,10 @@ export class ApiService {
       html: html
     }
     return this.http.post(url, body);
+  }
+
+  insertarCitas(fechaInicio: string, fechaFin: string) {
+    return this.http.get(this.rutaInsertarCitas + '?fechaInicio=' + fechaInicio + '&fechaFin=' + fechaFin).pipe();
   }
 
   adminCita(criterio: number, dato: string) {
@@ -73,6 +79,10 @@ export class ApiService {
 
   especilidades() {
     return this.http.get(this.rutaEspecialidades)
+  }
+
+  borrarCita(idCita: number) {
+    return this.http.get(this.rutaBorraCita + '?IdCita=' + idCita)
   }
   
   obtenerComunas(): Observable<any> {

@@ -63,7 +63,7 @@
       align-items: center;
       justify-content: center;
       width: 100%; /* Ajuste para responsividad */
-      max-width: 600px; /* Ancho máximo para el contenedor */
+      max-width: 800px; /* Ancho máximo para el contenedor */
       margin: 20px auto;
       padding: 20px;
       box-sizing: border-box;
@@ -141,5 +141,18 @@
       --color: var(--ion-text-color);
       /* Restablece el color del icono */
     }
+    
   }
+
+  ion-input {
+    margin-bottom: 15px;
+    margin-right: 10px;
+  }
+
+  ion-select {
+    margin-bottom: 15px;
+    margin-right: 10px;
+  }
+
+  
   

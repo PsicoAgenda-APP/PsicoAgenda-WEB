@@ -43,7 +43,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-input label="Teléfono" label-placement="floating" fill="outline" type="text" [(ngModel)]="mdl_telefono"></ion-input>
+            <ion-input label="Teléfono" label-placement="floating" fill="outline" type="text" [(ngModel)]="mdl_telefono" maxlength="9" (ionInput)="validatePhone($event)"></ion-input>
           </ion-col>
           <ion-col>
             <ion-input label="Calle" label-placement="floating" fill="outline" type="text" [(ngModel)]="mdl_calle"></ion-input>
@@ -51,7 +51,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-input label="Número" label-placement="floating" fill="outline" type="number" [(ngModel)]="mdl_numero"></ion-input>
+            <ion-input label="Número" label-placement="floating" fill="outline" type="number"  [(ngModel)]="mdl_numero" (ionInput)="validateNumero($event)" min="1" max="99999"></ion-input>
           </ion-col>
           <ion-col>
             <ion-select label="Comuna" label-placement="floating" fill="outline" [(ngModel)]="mdl_comuna">

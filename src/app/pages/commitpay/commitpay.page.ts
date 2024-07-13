@@ -129,25 +129,30 @@ export class CommitpayPage implements OnInit {
   }
 
   downloadPDF() {
-    const element = document.getElementById('tbl-transaction-detail');
-
+    const element = document.getElementById('PDF');
+  
     if (element) {
       const scale = 2; // Aumenta este valor para mejorar la calidad
       html2canvas(element, { scale }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('landscape', 'mm', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-
-        // Calcular nuevas dimensiones de la imagen para que se ajuste a la página A4 en landscape
-        const imgWidth = pdfWidth - 20; // margen de 10mm en cada lado
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight); // agregar la imagen con márgenes
+  
+        // Calcula las dimensiones necesarias para el PDF con márgenes
+        const imgWidth = canvas.width / scale;
+        const imgHeight = canvas.height / scale;
+        const margin = 20; // 1 cm de margen en cada lado
+        const pageWidth = 350; // Ancho en mm para el PDF
+        const pageHeight = (pageWidth * imgHeight) / imgWidth;
+  
+        const pdf = new jsPDF('landscape', 'mm', [pageWidth, pageHeight]);
+  
+        // Agrega la imagen al PDF con márgenes
+        pdf.addImage(imgData, 'PNG', margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
         pdf.save('Comprobante.pdf');
+      }).catch(error => {
+        console.error('Error al generar el PDF:', error);
       });
     } else {
-      console.error('El elemento con id "tbl-transaction-detail" no se encontró.');
+      console.error('El elemento con id "PDF" no se encontró.');
     }
   }
 

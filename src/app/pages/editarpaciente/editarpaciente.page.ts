@@ -89,6 +89,28 @@ export class EditarPacientePage implements OnInit {
       console.error('Error al cargar las comunas', error);
     }
   }
+  //VALIDADOR PARA NUMERO TELEFONICO
+  validatePhone(event: any) {
+    const pattern = /^[0-9]*$/;
+    let input = event.target.value;
+  
+    if (!pattern.test(input)) {
+      event.target.value = input.replace(/[^0-9]/g, '');
+    }
+  }
+
+  validateNumero(event: any) {
+    const pattern = /^[0-9]*$/;
+    let input = event.target.value;
+  
+    if (input.length > 5) {
+      event.target.value = input.slice(0, 5); // Limita la longitud a 5 dígitos
+    }
+  
+    if (!pattern.test(input)) {
+      event.target.value = input.replace(/[^0-9]/g, '');
+    }
+  }
 
   guardarDatos() {
     if (this.idDireccion != 0) {

@@ -32,7 +32,7 @@ export class SoportepsicologoPage implements OnInit {
   boton: boolean = false;
   mdl_detalle: any = [];
   mdl_hora: any = [];
-  correoCorp: string = 'psicoagendaapp@hotmail.com';
+  correoCorp: string = 'soporte@psicoagenda.online';
   isAlertOpen = false;
   isAlertOpen2 = false;
   isAlertOpen3 = false;

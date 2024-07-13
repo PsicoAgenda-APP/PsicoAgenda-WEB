@@ -23,6 +23,7 @@ export class LoginPage implements OnInit {
   isAlertOpen = false;
   isAlertOpen2 = false;
   isAlertOpen3 = false;
+  isAlertOpen4 = false; // Nueva alerta
   alertButtons = ['OK'];
   error_mensaje: any = '';
   idTipo: number = 0;
@@ -183,6 +184,7 @@ export class LoginPage implements OnInit {
             this.apiService.sendEmail(this.mdl_correo, subject, text, html).subscribe(
               response => {
                 console.log('Email Enviado Correctamente', response);
+                this.isAlertOpen4 = true; // Mostrar alerta cuando el correo se envía correctamente
               },
               error => {
                 console.error('Error al enviar correo', error);
@@ -197,8 +199,6 @@ export class LoginPage implements OnInit {
                 console.error('Error al guardar token', error);
               }
             );
-
-            this.isAlertOpen3 = true;
 
           } else if (this.mdl_contrasena != this.contrasena || this.mdl_correo != this.correo) {
             this.isAlertOpen2 = true;

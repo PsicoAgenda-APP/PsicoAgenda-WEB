@@ -10,7 +10,6 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./registropsico.page.scss'],
 })
 export class RegistropsicoPage implements OnInit {
-  //userForm: FormGroup;
   showOptions: boolean = false;  // Añade esta propiedad para manejar el despliegue de opciones
   mdl_rut: string = '';
   rut: string = '';
@@ -29,37 +28,21 @@ export class RegistropsicoPage implements OnInit {
   idComuna: number = 0;
   idTipo: number = 2;
   idEspecialidad: number = 1;
-  mdl_numeracion: number = 0;
+  mdl_numeracion: number | null = null; // Inicializa como null para que esté vacío al principio
   mdl_telefono: string = '';
   mdl_fecha: string = '';
   mdl_correo: string = '';
   mdl_contrasena: string = '';
   mdl_valor: string = '';
   mdl_calle: string = '';
+  isAlertOpen4: boolean = false;
+  isAlertOpen5: boolean = false;
 
-  constructor(private router: Router, private apiService: ApiService) { // Router ya está inyectado aquí
-    /*this.userForm = new FormGroup({
-      Calle: new FormControl('', Validators.required),
-      Numero: new FormControl('', Validators.required),
-      IdComuna: new FormControl('', Validators.required),
-      PrimerNombre: new FormControl('', Validators.required),
-      SegundoNombre: new FormControl(''),
-      ApellidoPaterno: new FormControl('', Validators.required),
-      ApellidoMaterno: new FormControl('', Validators.required),
-      Telefono: new FormControl('', Validators.required),
-      FechaNacimiento: new FormControl('', Validators.required),
-      CorreoElectronico: new FormControl('', [Validators.required, Validators.email]),
-      Contrasena: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      Rut: new FormControl('', Validators.required),
-      ValorSesion: new FormControl('', Validators.required),
-      IdEspecialidad: new FormControl('', Validators.required)
-    });*/
-  }
+  constructor(private router: Router, private apiService: ApiService) {}
 
   async ngOnInit() {
     await this.cargarComunas();
   }
-
 
   async cargarComunas() {
     try {
@@ -69,7 +52,14 @@ export class RegistropsicoPage implements OnInit {
     } catch (error) {
       console.error('Error al cargar las comunas', error);
     }
-  
+  }
+
+  transformDate(dateString: string): string {
+    // Divide la fecha en día, mes y año
+    const [day, month, year] = dateString.split('-');
+    
+    // Retorna la fecha en el nuevo formato
+    return `${year}-${month}-${day}`;
   }
 
   async validarPrestador() {
@@ -80,7 +70,7 @@ export class RegistropsicoPage implements OnInit {
     if (this.mdl_rut != '') {
       console.log('Validando prestador con rut:', this.mdl_rut);
       try {
-        let data = this.apiService.validarPrestadores(this.mdl_rut)
+        let data = this.apiService.validarPrestadores(this.mdl_rut);
         let respuesta = await lastValueFrom(data);
         console.log('Respuesta de la API:', respuesta);
         let jsonTexto = JSON.stringify(respuesta);
@@ -92,12 +82,13 @@ export class RegistropsicoPage implements OnInit {
           console.log('Rut validado:', this.rut);
           if (this.mdl_rut == this.rut) {
             this.rutValido = true;
-            this.nombre_completo = this.lista_respuesta[x].nombres
-            let nombres_separados = this.nombre_completo.split(" ");
-            this.mdl_nombre = nombres_separados[0]
-            this.mdl_nombre2 = nombres_separados[1]
-            this.mdl_apellido = this.lista_respuesta[x].apellido_paterno
-            this.mdl_apellido2 = this.lista_respuesta[x].apellido_materno
+            this.nombre_completo = this.lista_respuesta[x].nombres;
+            let nombres_separados = this.nombre_completo.split(' ');
+            this.mdl_nombre = nombres_separados[0];
+            this.mdl_nombre2 = nombres_separados[1];
+            this.mdl_apellido = this.lista_respuesta[x].apellido_paterno;
+            this.mdl_apellido2 = this.lista_respuesta[x].apellido_materno;
+            this.mdl_fecha = this.transformDate(this.lista_respuesta[x].fecha_nacimiento);
             console.log('Rut válido:', this.mdl_rut);
           }
         }
@@ -110,17 +101,6 @@ export class RegistropsicoPage implements OnInit {
     }
   }
 
-  /*onSubmit() {
-    if (this.userForm.valid) {
-      console.log('Formulario válido:', this.userForm.value);
-      // Aquí puedes manejar la lógica para enviar datos o navegar
-      // this.router.navigate(['/alguna-ruta']); // Navegar a otra ruta al enviar el formulario
-    } else {
-      console.log('Formulario no válido');
-    }
-  }*/
-
-  // Métodos adicionales para el manejo de opciones y redirección
   toggleOptions() {
     this.showOptions = !this.showOptions;
   }
@@ -128,33 +108,61 @@ export class RegistropsicoPage implements OnInit {
   redirectTo(route: string) {
     let parametros: NavigationExtras = {
       replaceUrl: true
-    }
+    };
     this.router.navigate([route], parametros);
   }
+
   setOpen(isOpen: boolean) {
     this.isAlertOpen = isOpen;
   }
 
+  setOpen2(isOpen: boolean) {
+    this.isAlertOpen2 = isOpen;
+  }
+
+  setOpen3(isOpen: boolean) {
+    this.isAlertOpen3 = isOpen;
+  }
+
+  setOpen4(isOpen: boolean) {
+    this.isAlertOpen4 = isOpen;
+  }
+
+  setOpen5(isOpen: boolean) {
+    this.isAlertOpen5 = isOpen;
+  }
+
+
   register() {
     this.isAlertOpen = false;
+    this.isAlertOpen2 = false;
     this.isAlertOpen3 = false;
+    this.isAlertOpen4 = false;
+    this.isAlertOpen5 = false;
+  
     if (
-      this.mdl_calle !== '' && this.mdl_numeracion !== 0 && this.mdl_rut !== '' && this.idComuna !== 0 &&
+      this.mdl_calle !== '' && this.mdl_numeracion !== null && this.mdl_rut !== '' && this.idComuna !== 0 &&
       this.mdl_nombre !== '' && this.mdl_nombre2 !== '' && this.mdl_apellido !== '' &&
       this.mdl_apellido2 !== '' && this.mdl_telefono !== '' && this.mdl_fecha !== '' && this.mdl_contrasena !== ''
     ) {
+      if (!this.validateEmail(this.mdl_correo)) {
+        this.isAlertOpen4 = true; // Set the alert state for email
+        return;
+      }
+  
       const transformarFecha = (fecha: string): string => fecha.split('-').reverse().join('-');
       const fechaTransformada = transformarFecha(this.mdl_fecha);
+  
       this.apiService.registrarPsicologo(
         this.mdl_calle,
-        this.mdl_numeracion,
+        this.mdl_numeracion!,
         this.idComuna,
         this.mdl_nombre,
         this.mdl_nombre2,
         this.mdl_apellido,
         this.mdl_apellido2,
         this.mdl_telefono,
-        fechaTransformada,
+        this.mdl_fecha,
         this.mdl_correo,
         this.mdl_contrasena,
         this.idTipo,
@@ -169,6 +177,7 @@ export class RegistropsicoPage implements OnInit {
         },
         error => {
           console.error('Error al registrarse', error);
+          this.isAlertOpen5 = true;
         }
       );
     } else {
@@ -176,10 +185,39 @@ export class RegistropsicoPage implements OnInit {
     }
   }
 
+  //VALIDADOR PARA NUMERO TELEFONICO
+  validatePhone(event: any) {
+    const pattern = /^[0-9]*$/;
+    let input = event.target.value;
+  
+    if (!pattern.test(input)) {
+      event.target.value = input.replace(/[^0-9]/g, '');
+    }
+  }
+
+  validateNumero(event: any) {
+    const pattern = /^[0-9]*$/;
+    let input = event.target.value;
+  
+    if (input.length > 5) {
+      event.target.value = input.slice(0, 5); // Limita la longitud a 5 dígitos
+    }
+  
+    if (!pattern.test(input)) {
+      event.target.value = input.replace(/[^0-9]/g, '');
+    }
+  }
+
+  validateEmail(email: string): boolean {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+
   goHome() {
     let parametros: NavigationExtras = {
       replaceUrl: true
-    }
+    };
     this.router.navigate(['home'], parametros);
   }
 
@@ -193,7 +231,7 @@ export class RegistropsicoPage implements OnInit {
     const html = `
               <p>Hola ${this.mdl_nombre},</p>
               <p>Te registrate correctamente en PsicoAgenda APP.</p>
-              <p><strong>Psicologo: ${this.mdl_correo}</strong></p>
+              <p><strong>Usuario: ${this.mdl_correo}</strong></p>
               <p>Te Saluda,</p>
               <p>Equipo de PsicoAgenda APP.</p>
           `;
@@ -207,7 +245,4 @@ export class RegistropsicoPage implements OnInit {
       }
     );
   }
-
-
 }
-
